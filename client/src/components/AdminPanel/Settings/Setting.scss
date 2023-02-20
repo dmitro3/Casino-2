@@ -1,0 +1,294 @@
+.settings {
+    position: absolute;
+    left: 13%;
+    right: 5%;
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 10px 5px 5px black;
+    background-color: rgba(209, 209, 209, 0.438);
+    display: flex;
+    flex-wrap: wrap;
+    width: 85%;
+
+    button {
+        background-color: rgb(57, 168, 57);
+        border-radius: 5px;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 15px;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            background-color: grey;
+        }
+    }
+
+    .resetBalance {
+        .onvoff {
+            display: flex;
+            justify-content: space-between;
+            width: 70%;
+            margin: auto;
+            margin-top: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            text-align: left;
+            width: 70%;
+            display: block;
+            margin: auto;
+        }
+    }
+
+    .turtle {
+        .mint {
+            .input {
+                display: flex;
+                justify-content: space-between;
+                margin: 5px;
+            }
+        }
+
+        .onvoff {
+            display: flex;
+            justify-content: space-between;
+            width: 50%;
+            margin: auto;
+        }
+    }
+
+    .setting {
+        border: 1px solid black;
+        border-radius: 10px;
+        width: 400px;
+        margin: auto;
+        padding: 20px;
+        margin-top: 20px;
+        height: 250px;
+
+
+
+        .title {
+            font-size: 20px;
+            font-weight: 600;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .setGroup {
+            display: block;
+            text-align: left;
+            margin: auto;
+            margin-bottom: 10px;
+            padding: 20px px;
+
+            label {
+                margin-bottom: 10px;
+                font-size: 16px;
+            }
+
+            .inputGroup {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-evenly;
+                margin-top: 5px;
+
+                input {
+                    border-radius: 5px;
+                    padding: 10px;
+                    font-size: 15px;
+                }
+            }
+        }
+
+        .newRaffle {
+            margin-top: 10px;
+            font-weight: 600;
+        }
+
+        .upImg {
+            width: 120px;
+            height: 120px;
+        }
+    }
+
+    .uploadImg {
+        .title {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .images {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+            margin-bottom: 10px;
+
+            .buttonGroup {
+                display: flex;
+                align-items: center;
+
+                .update {
+                    margin-top: 10px;
+                }
+
+                .delete {
+                    margin-top: 10px;
+                    background-color: red;
+                    padding: 12px;
+                    font-size: 10px;
+                }
+            }
+        }
+
+        .Button_addhome {
+            background-color: rgb(57, 168, 57);
+            border-radius: 5px;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 15px;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                background-color: grey;
+            }
+        }
+    }
+
+    .raffle {
+
+
+        .inputGroup {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-around;
+
+            .timer {
+                display: flex;
+
+                .timerGroup {
+                    display: flex;
+
+                    input {
+                        width: 100px;
+                    }
+                }
+            }
+        }
+
+        .buttonGroup {
+            margin-top: 60px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+
+            a {
+                background-color: rgb(57, 168, 57);
+                border-radius: 5px;
+                color: white;
+                border: none;
+                padding: 10px;
+                font-size: 15px;
+                text-decoration: none;
+
+                &:hover {
+                    cursor: pointer;
+                }
+
+                &:disabled {
+                    cursor: not-allowed;
+                    background-color: grey;
+                }
+            }
+        }
+
+        .nft {
+            margin-top: 10px;
+        }
+    }
+
+    .payout {
+        .title {
+            margin-bottom: 45px;
+        }
+
+        .inputGroup {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            margin-bottom: 20px;
+
+            label {
+                width: 30%;
+            }
+        }
+    }
+
+    .resetDB {
+        margin: auto;
+        width: 400px;
+        padding: 20px;
+
+        button {
+            background-color: rgb(226, 28, 28);
+            border-radius: 5px;
+            color: white;
+            border: none;
+            padding: 10px;
+            font-size: 15px;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            &:disabled {
+                cursor: not-allowed;
+                background-color: grey;
+            }
+        }
+    }
+}
+
+.confirm {
+    position: absolute;
+    top: 45%;
+    left: 45%;
+    background: #2a2a2af0;
+    padding: 40px;
+    color: aliceblue;
+    border-radius: 10px;
+
+    button {
+        background-color: rgb(226, 28, 28);
+        border-radius: 5px;
+        color: white;
+        border: none;
+        padding: 10px;
+        font-size: 15px;
+        margin-top: 20px;
+        margin-left: 35%;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        &:disabled {
+            cursor: not-allowed;
+            background-color: grey;
+        }
+    }
+}

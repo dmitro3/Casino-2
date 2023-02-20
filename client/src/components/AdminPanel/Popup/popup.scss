@@ -1,0 +1,38 @@
+.popup {
+    .inputGroup {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+        width: 61%;
+        margin-top: 10%;
+        border: 1px solid #e7e7e7;
+        box-shadow: 10px 5px 5px black;
+        padding: 50px;
+
+        label {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        textarea {
+            height: 250px;
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        button {
+            padding: 10px;
+            width: 50%;
+            margin: auto;
+            margin-top: 20px;
+            background: rgb(0, 153, 0);
+            color: white;
+            border: none;
+            border-radius: 10px;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}

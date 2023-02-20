@@ -1,0 +1,74 @@
+.mine {
+  background: #cfdbff;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 7px;
+  margin: 0px;
+  padding: 10px;
+  cursor: pointer;
+
+  .mine-image {
+    object-fit: cover;
+    width: 80%;
+    height: auto;
+  }
+}
+
+.mine-black {
+  background: #22262f;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+  margin: 0px;
+  padding: 10px;
+  cursor: pointer;
+
+  .mine-image {
+    object-fit: cover;
+    width: 80%;
+    height: auto;
+  }
+}
+
+.mine.mine-bomb {
+  padding: 2px;
+  background-color: red;
+}
+
+.mine-black.mine-bomb {
+  padding: 2px;
+  background-color: red;
+}
+
+.bgred {
+  background-color: red;
+}
+
+.mine:hover {
+  transition: 0.5s;
+  transform: scale(1.2, 1.2);
+}
+
+.mine-black:hover {
+  transition: 0.5s;
+  transform: scale(1.2, 1.2);
+}
+
+.animation {
+  animation: reveal 0.2s linear 0s 1 normal;
+}
+
+@keyframes reveal {
+  from {
+    transform: rotateY(0);
+  }
+  to {
+    transform: rotateY(180deg);
+  }
+}
+
+.revealed {
+  opacity: 30%;
+}
+
+.revealed-black {
+  opacity: 10%;
+}

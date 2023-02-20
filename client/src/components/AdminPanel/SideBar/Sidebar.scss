@@ -1,0 +1,41 @@
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    background-color: #171d22;
+    padding: 10px;
+    color: white;
+    width: 10%;
+    box-shadow: 2px 2px 5px black;
+
+    .item {
+        padding: 15px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+    }
+
+    .items {
+        padding: 15px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+
+        &:hover {
+            background-color: rgb(34, 34, 34);
+        }
+    }
+
+    .selected {
+        background-color: #0f1113;
+    }
+
+    .game {
+        text-decoration: none;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}

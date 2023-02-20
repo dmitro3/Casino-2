@@ -1,0 +1,23 @@
+.alert {
+    min-width: 30%;
+    max-width: 50%;
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    z-index: 20000;
+    color: white;
+
+    .success {
+        padding: 10px;
+        border-radius: 10px;
+        background: #f7be44;
+        color: #000000;
+    }
+
+    .error {
+        padding: 10px;
+        border-radius: 10px;
+        background: #f7be44;
+        color: #000000;
+    }
+}

@@ -1,0 +1,333 @@
+.gameInfo-container {
+    margin-top: 15px;
+
+    .gameInfo-grid {
+        width: 100;
+        border: 12px solid #fff;
+        border-radius: 10px;
+        background-color: #121519;
+        padding: 20px;
+
+        .title {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .title1 {
+                display: flex;
+                align-items: center;
+
+                .left {
+                    padding: 10px;
+                    background: linear-gradient(#131b32, #21272d);
+                    border-radius: 10px;
+                    width: 75px;
+                    height: 75px;
+
+                    img {
+                        width: 60px;
+                    }
+                }
+
+                .right {
+                    margin-left: 10px;
+
+                    p {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+
+            .title2 {
+                margin: 20px;
+
+                a {
+                    border-radius: 5px;
+                    padding: 10px 20px;
+                    color: grey;
+                    text-decoration: none;
+                    border: 1px solid grey;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .showMore {
+            display: flex;
+            margin-top: 5px;
+            color: grey;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            p {
+                color: rgb(184, 233, 134);
+            }
+        }
+
+        .main {
+            display: flex;
+            // margin-top: 30px;
+            // flex-wrap: wrap;
+
+            .gameInfo {
+                .title {
+                    color: white;
+                    font-size: 16px;
+                    text-align: left;
+                    font-weight: bold;
+                }
+
+                .info {
+                    color: white;
+
+                    .infoRow {
+                        display: flex;
+                        align-items: center;
+                        flex-wrap: wrap;
+                        justify-content: center;
+
+                        .infoItem {
+                            display: flex;
+                            justify-content: space-between;
+                            background: #22262f;
+                            padding: 20px 15px;
+                            margin: 3px;
+                            width: 20vw;
+                            min-width: 200px;
+                        }
+                    }
+                }
+            }
+
+            .about {
+                color: white;
+                text-align: left;
+                margin-left: 10px;
+                min-width: 250px;
+
+                .title {
+                    color: white;
+                    font-size: 16px;
+                    text-align: left;
+                    font-weight: bold;
+                }
+            }
+        }
+    }
+
+    .gameInfo-grid-black {
+        // width: 80vw;
+        border: 10px solid #22262f;
+        border-radius: 10px;
+        background-color: #101014;
+        padding: 20px;
+        margin-top: 4%;
+        .title {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+
+            .title1 {
+                display: flex;
+                align-items: center;
+
+                .left {
+                    padding: 10px;
+                    
+                    border-radius: 10px;
+                    width: 75px;
+                    height: 75px;
+
+                    img {
+                        width: 60px;
+                    }
+                }
+
+                .right {
+                    margin-left: 10px;
+
+                    p {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+
+            .title2 {
+                margin: 20px;
+
+                a {
+                    border-radius: 5px;
+                    padding: 10px 20px;
+                    color: grey;
+                    text-decoration: none;
+                    border: 1px solid grey;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+
+        .showMore {
+            display: flex;
+            margin-top: 5px;
+            color: grey;
+            align-items: center;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            p {
+                color: rgb(184, 233, 134);
+                font-size: 14px;
+            }
+        }
+
+        .main {
+            display: flex;
+            margin-top: 30px;
+            // flex-wrap: wrap;
+
+            .gameInfo {
+                width: 65%;
+                margin-bottom: 30px!important;
+
+                .title {
+                    color: white;
+                    font-size: 16px;
+                    text-align: left;
+                    font-weight: bold;
+                    font-family: "Mada";
+                }
+
+                .info {
+                    color: white;
+
+                    .infoRow {
+                        display: flex;
+                        align-items: center;
+                        // flex-wrap: wrap;
+                        justify-content: center;
+
+                        .infoItem {
+                            display: flex;
+                            justify-content: space-between;
+                            background: #22262f;
+                            padding: 20px 15px;
+                            margin: 3px;
+                            // width: 20vw;
+                            min-width: 170px;
+
+                            .left,
+                            .right {
+                                font-size: 14px;
+                                font-family: "Mada";
+                            }
+                        }
+                    }
+                }
+            }
+
+            .about {
+                color: white;
+                text-align: left;
+                margin-left: 10px;
+                width: 40%;
+                font-family: "Mada" !important;
+
+                .title {
+                    color: white;
+                    font-size: 16px;
+                    text-align: left;
+                    font-weight: bold;
+                    font-family: "Mada";
+                }
+            }
+        }
+
+        .hidden1 {
+            height: 0;
+            overflow: hidden;
+            animation: scrollup1 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        @keyframes scrollup1 {
+            0% {
+                height: 360px;
+            }
+
+            100% {
+                height: 0;
+            }
+        }
+
+        .show1 {
+            animation: scrolldown1 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        @keyframes scrolldown1 {
+            0% {
+                height: 0;
+            }
+
+            100% {
+                height: 360px;
+            }
+        }
+        .hidden2 {
+            height: 0;
+            overflow: hidden;
+            animation: scrollup1 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        @keyframes scrollup2 {
+            0% {
+                height: 360px;
+            }
+
+            100% {
+                height: 0;
+            }
+        }
+
+        .show2 {
+            animation: scrolldown1 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        @keyframes scrolldown2 {
+            0% {
+                height: 0;
+            }
+
+            100% {
+                height: 360px;
+            }
+        }
+
+    }
+}

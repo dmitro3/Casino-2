@@ -1,0 +1,336 @@
+.fontBlack {
+    color: black !important;
+}
+
+.fontWhite {
+    color: white !important;
+    font-size: 18px;
+}
+
+.backgroundBlack {
+    background-color: black !important;
+}
+
+.backgroundWhite {
+    background-color: #cbcbcb !important;
+}
+
+.loot-container {
+    .mainBoard {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .gameboard {
+        background: #fff;
+        border-radius: 7px;
+        padding: 40px 20px;
+        display: block;
+        margin: 0 !important;
+    }
+
+    .octo {
+        position: relative;
+        width: 90%;
+        margin: auto;
+        z-index: 1;
+        // left: 0;
+        // right: 0;
+        top: 40px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .gameboard-black {
+        background: #101014;
+        border-radius: 7px;
+        padding: 40px 20px;
+        display: block;
+        margin: 0 !important;
+    }
+
+    .title {
+        padding: 0 20px;
+        margin: auto;
+        margin-bottom: 20px;
+
+        .mainTitle {
+            color: white;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .mainTitle-white {
+            color: black;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .subTitle {
+            color: white;
+            font-size: 12px;
+        }
+
+        .subTitle-white {
+            columns: black;
+            font-size: 12px;
+        }
+    }
+
+    // .boxGroups {
+    //     display: flex;
+    //     flex-wrap: wrap;
+    //     justify-content: space-around;
+    //     margin-bottom: 30px;
+
+    //     .boxGroup {
+    //         padding: 10px;
+    //         background: #0a0a0a;
+    //         border-radius: 10px;
+    //         margin: 10px;
+    //         min-width: 180px;
+
+    //         .box {
+    //             width: 100%;
+    //             background: black;
+
+    //             img {
+    //                 width: 100%;
+    //                 transform: scale(1.5)
+    //             }
+    //         }
+
+    //         .bottom {
+    //             display: flex;
+    //             justify-content: space-between;
+    //             align-items: center;
+    //             margin-top: 10px;
+
+    //             .nug {
+    //                 display: flex;
+    //                 align-items: center;
+
+    //                 img {
+    //                     background: black;
+    //                     border-radius: 50%;
+    //                     padding: 5px;
+    //                 }
+
+    //                 p {
+    //                     padding-left: 5px;
+    //                 }
+    //             }
+
+    //             button {
+    //                 background-color: #f7be44;
+    //                 padding: 5px 15px;
+    //                 border-radius: 5px;
+    //                 border: none;
+    //                 font-size: 16px;
+
+    //                 &:hover {
+    //                     cursor: pointer;
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+
+    .oddGroup {
+        .odds {
+            padding: 10px;
+            background: #0a0a0a;
+            border: none;
+            margin: 5px;
+            width: 91%;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .tables {
+            width: 90%;
+            margin: auto;
+            padding: 0 10px;
+
+            .tableContainer {
+                border: 1px solid;
+                border-radius: 5px;
+                width: 30vw;
+                margin: auto;
+                margin-top: 10px;
+                margin-bottom: 20px;
+            }
+
+            th {
+                font-weight: 800;
+            }
+
+            th,
+            td {
+                text-align: center;
+                padding: 2px 16px !important;
+            }
+        }
+
+        .hidden1 {
+            height: 0;
+            overflow: hidden;
+            animation: scrollup1 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        @keyframes scrollup1 {
+            0% {
+                height: 360px;
+            }
+
+            100% {
+                height: 0;
+            }
+        }
+
+        .show1 {
+            animation: scrolldown1 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        @keyframes scrolldown1 {
+            0% {
+                height: 0;
+            }
+
+            100% {
+                height: 360px;
+            }
+        }
+
+        .hidden2 {
+            height: 0;
+            overflow: hidden;
+            animation: scrollup2 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+        }
+
+        @keyframes scrollup2 {
+            0% {
+                height: 50px;
+            }
+
+            100% {
+                height: 0;
+            }
+        }
+
+        .show2 {
+            animation: scrolldown2 0.5s;
+            animation-timing-function: ease-in-out;
+            animation-iteration-count: 1;
+            backface-visibility: hidden;
+            perspective: 1000px;
+            overflow: hidden;
+        }
+
+        @keyframes scrolldown2 {
+            0% {
+                height: 0;
+            }
+
+            100% {
+                height: 50px;
+            }
+        }
+    }
+
+    // .treasure {
+    //     position: fixed;
+    //     top: 0;
+    //     right: 0;
+    //     bottom: 0;
+    //     left: 0;
+    //     z-index: 2;
+    //     animation: fadeOff 6s;
+    //     animation-timing-function: ease-in-out;
+    //     animation-iteration-count: 1;
+    //     // transform: translate3d(0, 0, 0);
+    //     // backface-visibility: hidden;
+    //     // perspective: 1000px;
+    //     background-color: #000000bd;
+    //     opacity: 1;
+
+    //     .boxContainer {
+    //         position: absolute;
+    //         top: 10vw;
+    //         bottom: 20vw;
+    //         left: 10px;
+    //         right: 10px;
+
+    //         video {
+    //             width: 35vw;
+    //         }
+    //     }
+    // }
+
+    // @keyframes fadeOff {
+
+    //     0%,
+    //     10%,
+    //     70% {
+    //         opacity: 1;
+    //     }
+
+    //     80% {
+    //         opacity: 0.8;
+    //     }
+
+    //     100% {
+    //         opacity: 0;
+    //     }
+    // }
+
+    // .alerts {
+    //     position: fixed;
+    //     top: 10px;
+    //     bottom: 10px;
+    //     left: 10px;
+    //     right: 10px;
+    //     z-index: 2;
+    //     text-align: center;
+    //     color: white;
+    //     display: flex;
+    //     align-items: center;
+    //     width: 100vw;
+
+    //     div {
+    //         min-width: 30vw;
+    //         margin: auto;
+    //         background: #282828;
+    //         min-height: 100px;
+    //         display: flex;
+    //         align-items: center;
+    //         justify-content: center;
+    //         border-radius: 10px;
+    //         font-weight: 600;
+    //         text-transform: uppercase;
+    //         color: white;
+    //     }
+    // }
+}

@@ -1,0 +1,66 @@
+.pirateDeposit {
+    padding-top: 90px;
+
+    .pirateNFTs {
+        border: 5px solid grey;
+        border-radius: 10px;
+        background: #1c1f20;
+        padding: 10px;
+
+        .title {
+            font-weight: 400;
+            font-size: 3rem;
+            line-height: 1.167;
+            letter-spacing: 0em;
+            color: #F7BE44;
+            font-size: 40px;
+            font-family: Mada;
+            margin-top: 20px;
+        }
+
+        .content {
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+            // align-content: center;
+            overflow-y: scroll;
+
+            .avatar-image {
+                width: 100px;
+                border-radius: 39px;
+                padding: 2px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .active {
+                border: solid 2px black;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            flex-wrap: wrap;
+
+            button {
+                background: #f7be44 !important;
+                color: black !important;
+                font-size: 15px;
+                font-weight: 600;
+                padding: 10px !important;
+                border-radius: 5px !important;
+                width: 50% !important;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                margin-left: 0 !important;
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+}

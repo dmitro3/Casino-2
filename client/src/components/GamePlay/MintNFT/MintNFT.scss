@@ -1,0 +1,260 @@
+.mintNFTs {
+    padding-top: 50px;
+
+    .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: #0c0c0c85;
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .alert {
+        min-width: 30%;
+        max-width: 50%;
+        position: fixed;
+        bottom: 10px;
+        left: 10px;
+        z-index: 20000;
+        color: white;
+    }
+
+    .header {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background-color: #101014;
+        color: #fff;
+        border-radius: 5px;
+    }
+
+    .success {
+        padding: 10px;
+        border-radius: 10px;
+        background: #f7be44;
+        color: #000000;
+    }
+
+    .error {
+        padding: 10px;
+        border-radius: 10px;
+        background: #f7be44;
+        color: #000000;
+    }
+
+    .pirateNFTs {
+        // border: 5px solid #ff00008a;
+        border-radius: 10px;
+        background: rgba(28, 31, 32, 0.6705882353);
+        padding: 10px;
+        box-shadow: 0px 0px 10px 5px rgb(247 161 45);
+
+        .title {
+            font-weight: 400;
+            font-size: 3rem;
+            line-height: 1.167;
+            letter-spacing: 0em;
+            color: #F7BE44;
+            font-size: 40px;
+            font-family: Mada;
+            margin-top: 20px;
+        }
+
+        .content {
+            height: 300px;
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+            // align-content: center;
+            // overflow-y: scroll;
+
+            .avatar-image {
+                width: 100px;
+                border-radius: 39px;
+                padding: 2px;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .active {
+                border: solid 2px black;
+            }
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            flex-wrap: wrap;
+
+            .mintButton {
+                background: #292C31;
+                padding: 20px;
+                width: 85%;
+
+                p {
+                    font-family: "Mada";
+                }
+
+                .top {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                    font-family: "mada";
+
+                    .left {
+                        display: flex;
+                        align-items: center;
+                        margin-right: 10px;
+
+                        .remain {
+                            color: white;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: flex-start;
+                            margin-right: 10px;
+
+                            p {
+                                font-family: 'mada';
+                                // font-size: 16px;
+                            }
+
+                            img {
+                                width: 20px;
+                                margin-right: 5px;
+                            }
+                        }
+                    }
+
+                    .timerBox {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        color: white;
+
+                        .timer {
+                            display: flex;
+                            align-items: center;
+
+                            .timeCard {
+                                background: #171614;
+                                padding: 5px 10px 5px;
+                                border-radius: 5px;
+                                margin: 5px;
+                                margin-top: 0;
+
+                                .num {
+                                    font-family: 'mada';
+                                    font-size: 20px;
+                                    font-weight: bold;
+                                }
+
+                                .clock {
+                                    font-family: 'mada';
+                                    font-size: 13px;
+                                    line-height: 0.8;
+                                }
+                            }
+                        }
+
+                        .until {
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            font-size: 14px;
+                            font-weight: bold;
+                        }
+                    }
+                }
+
+                button {
+                    background: linear-gradient(180deg, #6852F2, #6C54A2);
+                    color: white;
+                    border: none;
+                    width: 100%;
+                    padding: 10px;
+                    font-family: 'mada';
+                    font-size: 18px;
+                    font-weight: 500;
+                    border-radius: 5px !important;
+                    margin-top: 15px;
+                    margin-left: 0 !important;
+                    display: flex;
+                    justify-content: center;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .walletButton {
+                background: #f7be44 !important;
+                color: black !important;
+                font-size: 15px;
+                font-weight: 600;
+                padding: 10px !important;
+                border-radius: 5px !important;
+                // width: 50% !important;
+                margin-top: 15px;
+                margin-bottom: 15px;
+                margin-left: 0 !important;
+                display: flex;
+                justify-content: center;
+            }
+        }
+    }
+
+    .container {
+        // background: #1B1F20;
+        // padding: 50px;
+        display: flex;
+        align-items: center;
+        // border: 5px solid grey;
+        border-radius: 5px;
+        /* background: #1c1f20; */
+        /* padding: 10px; */
+        justify-content: space-around;
+        margin-top: 60px;
+        /* height: 100%; */
+        flex-wrap: nowrap;
+        flex-direction: column;
+
+        .videoContainer {
+            // border: 5px solid #303136;
+            width: 100%;
+            height: 100%;
+
+            iframe {
+                border-radius: 5px;
+                width: 750px;
+                height: 380px;
+            }
+        }
+
+        .desc {
+            margin-top: 20px;
+
+            .line {
+                display: flex;
+                margin: 5px;
+
+                svg {
+                    color: #BFE1A4;
+                }
+
+                p {
+                    font-family: mada;
+                    color: white;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,737 @@
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(133, 133, 133);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #535353;
+}
+
+.css-yem0l2-MuiPopper-root-MuiTooltip-popper {
+  z-index: 99999!important;
+}
+.recent-link {
+  text-decoration: none;
+}
+
+.css-ja5taz-MuiTooltip-tooltip {
+  font-size: 14px !important;
+  padding: 5px 10px !important;
+  margin-top: 20px !important;
+}
+
+.header {
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 3vw;
+    flex-wrap: wrap-reverse;
+    flex-direction: row-reverse;
+    background-color: #191c23db;
+    box-shadow: 0 3px 4px rgb(0 0 0 / 25%);
+    width: 95%;
+    position: fixed;
+    z-index: 9999;
+    
+    .navbar-group {
+      // background-color: rgba(16, 16, 20, 0.21);
+      border-radius: 5px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0px;
+      // margin-right: 10px;
+
+      .navbar-item {
+        padding: 10px;
+        background-color: #ffffff;
+        display: inline-flex;
+        height: 39px;
+        border-radius: 5px;
+        margin: 0px 10px;
+        font-size: 16px;
+        color: black;
+        font-family: "Mada";
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        cursor: pointer;
+
+        .control-option-image {
+          width: 16px;
+          height: 16px;
+        }
+      }
+
+      .navbar-item-black {
+        padding: 10px;
+        background-color: #121519;
+        display: inline-flex;
+        height: 39px;
+        border-radius: 5px;
+        margin: 0px 10px;
+        font-size: 16px;
+        color: white;
+        font-family: "Mada";
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        cursor: pointer;
+
+        .control-option-image {
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+
+    // .raffleDet {
+    //   p {
+    //     padding-left: 10px;
+    //     padding-right: 50px;
+    //     display: flex;
+    //     align-items: center;
+    //     flex-direction: row;
+    //   }
+    // }
+
+    .raffleDet {
+      .select {
+        min-width: 20rem;
+        background: #00000045;
+        margin-left: 10px;
+        border-radius: 5px;
+
+
+
+        .selectBox {
+          padding: 8px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .selectOptions {
+          position: relative;
+
+          .selectOption {
+            position: absolute;
+            top: 10px;
+            left: -25px;
+            right: 0;
+            border: 10px solid #212535;
+            border-radius: 15px;
+            padding: 15px;
+            background: #111010;
+            z-index: 2;
+
+            .desc {
+              text-decoration: underline;
+              font-size: 0.7rem;
+              padding-top: 10px;
+              font-family: "Mada";
+              z-index: 999;
+              position: relative;
+            }
+
+            .option {
+              background: #22262f;
+              padding: 5px 5px;
+              border-radius: 5px;
+              margin-bottom: 5px;
+
+              &:hover {
+                cursor: pointer;
+
+                .balance {
+                  color: rgb(189, 189, 189);
+                }
+              }
+            }
+          }
+        }
+
+        .wallet {
+          display: flex;
+          align-items: center;
+
+          p {
+            font-size: 13px;
+            background: #181818;
+            font-weight: bold;
+            line-height: 13px;
+            padding: 5px 8px;
+            border-radius: 5px;
+            font-family: "Mada";
+          }
+        }
+
+        .balance {
+          display: flex;
+          align-items: center;
+          font-family: "Mada";
+        }
+
+        .solana {
+          width: 25px;
+          margin: 0 4px 0 2px;
+        }
+      }
+
+      #walletIcon {
+        margin-left: 8px;
+        padding: 21px;
+        color: black !important;
+        background: linear-gradient(rgb(216, 255, 184) 0%, rgb(160, 189, 137) 100%);
+      }
+    }
+
+    .raffleDet_white {
+      .select {
+        min-width: 20rem;
+        background: #00000045;
+        margin-left: 10px;
+        border-radius: 5px;
+
+        .selectBox {
+          padding: 8px;
+
+          &:hover {
+            cursor: pointer;
+          }
+        }
+
+        .selectOptions {
+          position: relative;
+
+          .selectOption {
+            position: absolute;
+            top: 10px;
+            left: -10px;
+            right: 0;
+            border: 10px solid #cfdbff;
+            border-radius: 15px;
+            padding: 15px;
+            background: white;
+            z-index: 2;
+
+            .desc {
+              text-decoration: underline;
+
+              .tooltip {
+                position: absolute;
+              }
+            }
+
+            .option {
+              background: #cfdbff;
+              padding: 5px 5px;
+              border-radius: 5px;
+              margin-bottom: 5px;
+
+              &:hover {
+                cursor: pointer;
+
+                .balance {
+                  color: rgb(36, 36, 36);
+                }
+              }
+            }
+          }
+        }
+
+        .wallet {
+          display: flex;
+          align-items: center;
+
+          p {
+            font-size: 13px;
+            background: #b7b7b7;
+            font-weight: bold;
+            line-height: 13px;
+            padding: 5px 8px;
+            border-radius: 5px;
+            color: black;
+          }
+        }
+
+        .balance {
+          display: flex;
+          align-items: center;
+          color: black;
+        }
+
+        .solana {
+          width: 25px;
+          margin: 0 4px 0 2px;
+        }
+      }
+
+      button {
+        min-width: 5rem;
+        margin-left: 5px;
+        padding: 21px;
+        color: white !important;
+        background: linear-gradient(rgb(0, 0, 0) 0%, rgb(1, 1, 1) 100%);
+      }
+    }
+
+    .navlinks {
+      .balance-image {
+        width: 39px;
+        border: solid 2px white;
+        border-radius: 39px;
+        padding: 2px;
+
+        &:hover {
+          cursor: pointer;
+        }
+
+        margin-left: 10px;
+      }
+    }
+
+  }
+}
+
+.raffles {
+  // position: absolute;
+  right: 2vw;
+  width: 100vw;
+
+  .timer {
+    display: flex;
+
+    .clock {
+      display: flex;
+      flex-direction: column;
+      margin-right: 5px;
+      align-items: center;
+
+      .pointer {
+        font-size: 25px;
+      }
+
+      .desc {
+        font-size: 5px;
+      }
+    }
+  }
+}
+
+.sol-balance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: end;
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: white;
+
+  // margin-right: 3vw;
+  // align-items: flex-end;
+  // .balance {
+  //   display: flex;
+  //   align-items: center;
+  // }
+
+  // .wallet {
+  //   // background: #202020;
+  //   padding: 5px 8px;
+  //   font-size: 13px;
+  //   border-radius: 5px;
+  //   font-weight: bold;
+  //   line-height: 13px;
+  // }
+
+
+}
+
+// .form {
+//   ul {
+//     background-color: white;
+//   }
+// }
+// .formBlack {
+ul {
+  background-color: #101014;
+}
+
+// }
+
+
+.sol-balance-black {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  text-align: end;
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 26px;
+  letter-spacing: 0.05em;
+  color: white;
+
+  // margin-right: 3vw;
+  // align-items: flex-end;
+
+}
+
+.rectangle-image {
+  width: 65%;
+  height: 2px;
+  margin: 5px;
+}
+
+.yellow-image {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  width: 270px;
+}
+
+.balance-image-profile {
+  width: 100px;
+  // border: solid 2px white;
+  border-radius: 39px;
+  padding: 2px;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  margin-top: 15px;
+}
+
+.btn-change-avatar {
+  background-color: #f7be44 !important;
+  color: #000000 !important;
+  // margin: 10px !important;
+  width: 90%;
+  font-family: "Mada" !important;
+
+}
+
+.saveBtn {
+  padding: 10px;
+  margin-top: 18px !important;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-bottom: 23px !important;
+  // background: #060606a8;
+  padding-top: 15px !important;
+}
+
+.wallet-adapter-button {
+  background-color: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: "mada";
+  font-size: 16px;
+  font-weight: 600;
+  height: 39px !important;
+  padding: 0 11px !important;
+  border-radius: 7px !important;
+  margin-right: 9px !important;
+  margin-left: 12px !important;
+  white-space: nowrap;
+
+}
+
+.wallet-adapter-button-trigger {
+  background-color: #ffffff !important;
+  color: black !important;
+}
+
+.wallet-adapter-button-trigger-black {
+  background-color: #101014 !important;
+  color: #fff !important;
+}
+.wallet-adapter-button-trigger-black-mobile {
+  // background-color: #101014 !important;
+  color: #fff !important;
+  width: 47px;
+  i {
+    margin: 0!important;
+  }
+}
+
+.wallet-adapter-dropdown-list-item {
+  display: none !important;
+}
+
+.wallet-adapter-button-start-icon {
+  margin-right: 8px;
+}
+
+.wallet-adapter-button-start-icon img {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.avatar-view {
+  width: 250px;
+  height: 150px;
+  margin-left: 20px;
+  overflow-y: scroll;
+  scrollbar-width: 1px;
+
+  .avatar-image {
+    width: 100px;
+    border-radius: 39px;
+    padding: 2px;
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    margin-top: 15px;
+  }
+
+  .avatar-image.active {
+    border: solid 2px black;
+  }
+}
+
+.avatar-view::-webkit-scrollbar {
+  width: 20px;
+}
+
+.walletModal {
+  border: 5px solid #2c2c2c;
+  min-width: 340px !important;
+  max-height: 50vh;
+  overflow-y: scroll;
+
+  .walletNavGroup {
+    background-color: rgba(128, 128, 128, 0.1490196078);
+    border-radius: 10px;
+    margin-bottom: 25px !important;
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    padding: 5px;
+    max-height: 500px;
+    // min-height: 300px;
+
+    .walletNav {
+      font-family: "Mada";
+    }
+
+    .walletNavFocused {
+      background: #8b8b8b29 !important;
+      font-family: "Mada";
+    }
+  }
+
+  .gameTHistory {
+    background-color: #2e3136;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    font-family: "Mada";
+
+    &:hover {
+      background-color: #171a20;
+    }
+  }
+
+  .noResult {
+    min-height: 200px;
+    background-size: contain;
+    position: relative;
+    background: no-repeat;
+    background-position: center;
+
+    .text {
+      position: absolute;
+      top: 90%;
+      left: 25%;
+      font-family: "Mada";
+      font-weight: 800;
+    }
+  }
+
+  .walletAction {
+    display: flex;
+    flex-direction: column;
+
+    .balance {
+      display: flex;
+      align-items: center;
+    }
+
+    .walletForm {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      input {
+        background-color: #ffffff;
+        color: rgb(0, 0, 0);
+        padding: 10px;
+        padding-left: 5px;
+        font-size: 15px;
+        border-radius: 5px;
+        width: 65%;
+        font-family: "Mada";
+      }
+
+      .walletActionButton {
+        background: #f7be44;
+        color: black;
+        // font-size: 10px;
+        font-weight: 600;
+        margin-left: 3px;
+        padding: 10px;
+        width: 25%;
+        font-family: "Mada";
+      }
+    }
+  }
+}
+
+.howTo {
+  min-height: 650px;
+  background-color: #101014 !important;
+  border: 1px solid white;
+  overflow-y: scroll;
+
+  button {
+    background: #f7be44;
+    color: black;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .description {
+    padding: 20px 40px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+
+    .header {
+      font-size: 20px;
+    }
+  }
+
+  // .content {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   p {
+  //     img {
+  //       margin-left: 5px;
+  //     }
+  //   }
+  //   div {
+  //     a {
+  //       color: white;
+  //       text-decoration: underline;
+  //     }
+  //   }
+  // }
+  .buttonGroup {
+    display: flex;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    button {
+      width: 100%;
+      margin-bottom: 0;
+      font-size: 15px;
+      overflow: hidden;
+      padding: 5px;
+      margin-left: 5px;
+    }
+  }
+}
+
+// .spin {
+//   width: 40vw !important;
+//   height: 40vw;
+
+//   .h1 {
+//     font-size: 3vw;
+//   }
+
+//   .wheel {
+//     position: relative;
+
+//     .bhdLno {
+//       width: 30vw !important;
+//       height: 30vw !important;
+//       position: absolute;
+//       object-fit: contain;
+//       flex-shrink: 0;
+//       z-index: 5;
+//       pointer-events: none;
+//       bottom: -30vw;
+//       left: 5vw;
+//       right: 5vw;
+//     }
+
+//     button {
+//       position: absolute;
+//       /* top: 14vw; */
+//       bottom: -18.5vw;
+//       left: 16.5vw;
+//       right: 16.5vw;
+//       z-index: 20;
+//       width: 7vw;
+//       height: 7vw;
+//       border-radius: 50%;
+//       background: #2fd18d;
+//       color: white;
+//       border: 1px solid white;
+//       font-weight: 800;
+//       cursor: pointer;
+//       font-size: 1.5vw;
+//     }
+//   }
+
+//   .spinTxt {
+//     color: #ff00e0;
+//     z-index: 30 !important;
+//     position: absolute;
+//     left: 5px;
+//     right: 5px;
+//     font-size: 3vw;
+//     font-weight: 600;
+//     top: 50%;
+//   }
+// }

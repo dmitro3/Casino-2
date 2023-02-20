@@ -1,0 +1,123 @@
+.footer-container {
+  margin-top: 30px;
+
+  .footer-grid {
+    display: flex;
+    flex-direction: column;
+
+    .itemGroup {
+      border-bottom: 1px solid grey;
+      border-top: 1px solid grey;
+    }
+  }
+
+}
+
+.footer-icons {
+  width: 36px;
+  margin: 5px;
+}
+
+.copyright {
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12.5405px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+}
+
+.copyright-mobile {
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12.5405px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  color: #000;
+}
+
+.footer-items {
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
+  padding-top: 0px !important;
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12.5405px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  // margin-left: 50px;
+}
+
+.playNum {
+  background: rgb(197 3 3);
+  width: 50px;
+  height: 50px;
+  display: flex;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+
+.solana-speed {
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12.5405px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  img {
+    width: auto;
+    height: 16px;
+  }
+}
+
+.solana-speed-mobile {
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12.5405px;
+  line-height: 16px;
+  letter-spacing: 0.05em;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  img {
+    width: auto;
+    height: 16px;
+  }
+}
+
+.footer-divider {
+  background: #212535;
+}
+
+.recentplays-text {
+  font-family: "Mada";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 24px;
+  letter-spacing: 0.155em;
+  color: #ffffff;
+}
+.pirate {
+  margin: auto;
+  width: 55%;
+  margin-bottom: 37px;
+}

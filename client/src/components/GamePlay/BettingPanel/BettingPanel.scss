@@ -1,0 +1,438 @@
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(133, 133, 133);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #535353;
+}
+
+.iframe {
+  position: fixed;
+  right: 20px;
+  bottom: 10px;
+  z-index: 2;
+  border-radius: 10px;
+}
+.bettingpanel-container {
+  .settings-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .setting-amount {
+      font-family: "Mada";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 12px;
+      line-height: 18px;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    .setting-amount-mobile {
+      font-family: "Mada";
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 18px;
+      letter-spacing: 0.05em;
+      color: #000;
+    }
+
+    .minmax-values {
+      font-family: "Mada";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 12px;
+      line-height: 17px;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+    }
+
+    .betsetting-value {
+      color: #f7be44;
+    }
+
+    .payout-values {
+      font-family: "Mada";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 17px;
+      letter-spacing: 0.05em;
+      color: #fff;
+    }
+
+    .payout-value-num {
+      color: #3cb371;
+    }
+  }
+
+  .betting-buttons {
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    margin: 20px 0px;
+    padding: 5px 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .betting-amount {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .betting-amount-value {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+
+        .solana-image {
+          height: 1.5rem;
+          width: auto;
+        }
+
+        .betting-value-text {
+          font-family: "Mada";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 1.25rem;
+          line-height: 23px;
+          letter-spacing: 0.05em;
+
+          color: #000;
+        }
+      }
+
+      .betting-amount-control {
+        display: flex;
+        flex-direction: column;
+
+        .betting-amount-addition {
+          font-family: "Mada";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 1.25rem;
+          line-height: 1rem;
+          letter-spacing: 0.05em;
+          color: #000;
+          background: #eef2ff;
+          border-radius: 2px;
+          padding: 0px 5px;
+          margin: 5px;
+          min-width: 2.5rem;
+        }
+      }
+    }
+
+    .betting-play {
+      background: #f7be44;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+        0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+
+      font-family: "Mada";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 26px;
+      letter-spacing: 0.05em;
+      color: #000000;
+
+      padding-top: 5px;
+      padding-bottom: 5px;
+      width: 250px;
+    }
+
+    .betting-options {
+      background: #e4e4e4;
+      padding: 5px;
+      border-radius: 5rem;
+      display: flex;
+      align-items: center;
+
+      .options-image {
+        height: 50px;
+        width: 48px;
+        font-family: "Mada";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 30px;
+
+        text-align: center;
+        color: #000;
+      }
+    }
+  }
+
+  .betting-houseedge {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    align-items: center;
+
+    label {
+      color: white;
+      margin-right: 10px;
+    }
+
+    input {
+      font-size: 15px;
+      background: #F7B344;
+      padding: 5px;
+      width: 70px;
+      text-align: center;
+    }
+
+    .betting-values {
+      height: 30px;
+      background: #b8e986;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+        0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+      color: black;
+      font-weight: 550;
+      margin-left: 15px;
+
+      &:hover {
+        background: #f7be44;
+      }
+    }
+  }
+
+  .betting-buttons-black {
+    width: 100%;
+    background: #22262f;
+    border-radius: 7px;
+    margin: 20px 0px;
+    padding: 5px 5px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    .betting-amount {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .betting-amount-value {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+
+        .solana-image {
+          height: 1.5rem;
+          width: auto;
+        }
+
+        .betting-value-text {
+          font-family: "Mada";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 1.25rem;
+          line-height: 23px;
+          letter-spacing: 0.05em;
+          color: #fff;
+        }
+      }
+
+      .betting-amount-control {
+        display: flex;
+        flex-direction: column;
+
+        .betting-amount-addition {
+          font-family: "Mada";
+          font-style: normal;
+          font-weight: 600;
+          font-size: 1.25rem;
+          line-height: 1rem;
+          letter-spacing: 0.05em;
+          color: #fff;
+          background: #181a20;
+          border-radius: 2px;
+          padding: 0px 5px;
+          margin: 5px;
+          min-width: 2.5rem;
+        }
+      }
+    }
+
+    .betting-play {
+      background: #f7be44;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+        0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+
+      font-family: "Mada";
+      font-style: normal;
+      font-weight: 500;
+      font-size: 1.1rem;
+      line-height: 26px;
+      letter-spacing: 0.05em;
+      color: #000000;
+
+      padding-top: 5px;
+      padding-bottom: 5px;
+      width: 250px;
+    }
+
+    .betting-options {
+      background: #1c1f26;
+      padding: 5px;
+      border-radius: 5rem;
+      display: flex;
+      align-items: center;
+
+      .options-image {
+        height: 50px;
+        width: 48px;
+        font-family: "Mada";
+        font-style: normal;
+        font-weight: 700;
+        font-size: 30px;
+
+        text-align: center;
+        color: #fff;
+      }
+    }
+  }
+
+  .betting-values-group {
+    width: 100%;
+    background: #fff;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 5px;
+
+    .betting-values {
+      width: 53px;
+      height: 24px;
+      background: #f7be44;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+        0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+      color: black;
+    }
+  }
+
+  .betting-values-group-black {
+    width: 100%;
+    background: #22262f;
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 5px;
+
+    .betting-values {
+      width: 53px;
+      height: 24px;
+      background: #f7be44;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25),
+        0px 4px 4px rgba(0, 0, 0, 0.25);
+      border-radius: 5px;
+      color: black;
+      font-family: "Mada";
+    }
+  }
+
+  .betting-values-group-mobile {
+    width: 100%;
+
+    border-radius: 7px;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 5px;
+
+    .bomb-amounts {
+      width: 53px;
+      height: 24px;
+      background: #22262f;
+
+      border-radius: 7px;
+      color: white;
+    }
+
+    .bomb-amounts.active {
+      background-color: #2b3953;
+    }
+  }
+
+  .messaging-container {
+    display: flex;
+    text-align: end;
+    padding-right: 3vw;
+    justify-content: flex-end;
+    align-items: center;
+
+    .message-link {
+      position: fixed;
+      bottom: 10px;
+      right: 5px;
+      width: 57px;
+      height: 57px;
+      border-radius: 57px;
+      padding: 0px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
+
+  .pinWheel {
+    position: fixed;
+    right: 65px;
+    bottom: 6px;
+
+    .container {
+      position: relative;
+
+      img {
+        width: 57px;
+        height: 57px;
+      }
+
+      .badge {
+        position: absolute;
+        top: -40px;
+        left: 5px;
+        color: white;
+        background: red;
+        padding: 3px;
+        border-radius: 50%;
+        width: 5px;
+        height: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+.yellow-image-claim {
+  margin-top: 20px;
+  width: 245px;
+}
+
+.control-option-image {
+  width: 16px;
+  height: 16px;
+}

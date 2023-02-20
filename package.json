@@ -1,0 +1,42 @@
+{
+  "name": "minesrush-server",
+  "version": "1.0.0",
+  "description": "A sample node application",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm start\" \"npm run client\""
+  },
+  "author": "soham kamani",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^15.0.3",
+    "@metaplex-foundation/js": "^0.18.0",
+    "@metaplex-foundation/js-plugin-nft-storage": "^0.18.0",
+    "@solana/web3.js": "^1.73.0",
+    "axios": "^1.2.1",
+    "body-parser": "^1.19.0",
+    "bs58": "^5.0.0",
+    "concurrently": "^7.4.0",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.1.1",
+    "dotenv": "^16.0.2",
+    "express": "^4.17.1",
+    "fs": "^0.0.1-security",
+    "log4js": "^6.7.0",
+    "mongodb": "^4.6.0",
+    "mongoose": "^5.13.14",
+    "multer": "^1.4.5-lts.1",
+    "node-cron": "^3.0.2",
+    "nodemon": "^2.0.19",
+    "path": "^0.12.7",
+    "socket.io": "^4.5.1"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "devDependencies": {
+    "mongoose": "^6.6.5"
+  }
+}

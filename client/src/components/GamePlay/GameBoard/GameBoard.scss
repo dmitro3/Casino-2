@@ -1,0 +1,385 @@
+.alert {
+  min-width: 30%;
+  max-width: 50%;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  z-index: 20000;
+  color: white;
+}
+
+.success {
+  padding: 10px;
+  border-radius: 10px;
+  background: #f7be44;
+  color: #000000;
+}
+
+.error {
+  padding: 10px;
+  border-radius: 10px;
+  background: #f7be44;
+  color: #000000;
+}
+
+.multiplier {
+  text-align: center;
+  font-family: "Mada" !important;
+  font-style: normal;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  line-height: 20px;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(16, 16, 20, 0.75);
+  border-radius: 5px;
+  padding-left: 7px;
+  padding-right: 7px;
+  margin-bottom: 5px;
+
+  .multiplier-value {
+    font-family: "Mada" !important;
+    font-style: normal;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    color: #f7be44;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.gameboard-container {
+  .gameboard {
+    background: #fff;
+    border-radius: 7px;
+    margin: 0px !important;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    width: 100%;
+
+    .mine-block {
+      padding: 4px;
+      margin: 2px 0px;
+    }
+  }
+
+  .mainBoard {
+
+    position: relative;
+    top: -15px;
+
+    .octo {
+      position: relative;
+      width: 90%;
+      margin: auto;
+      z-index: 1;
+      // left: 0;
+      // right: 0;
+      top: 40px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  .gameboard-black {
+    background: #101014;
+    border-radius: 7.31473px;
+    margin: 0px !important;
+    padding-top: 30px;
+    padding-bottom: 20px;
+    width: 100%;
+
+    .mine-block {
+      padding: 4px;
+      margin: 2px 0px;
+    }
+  }
+}
+
+.gameModeGroup {
+  display: flex;
+  flex-direction: column !important;
+  position: absolute;
+  top: 120px;
+  left: 40px;
+
+  .gameMode {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    position: relative;
+
+    &:hover {
+      cursor: pointer;
+
+      .minesrushMode {
+        width: 65px;
+        height: 65px;
+      }
+
+      .menuTxt {
+        width: 110px;
+        opacity: 1;
+      }
+    }
+
+    .minesrushMode {
+      width: 55px;
+      height: 55px;
+      // padding: 1px;
+      z-index: 1;
+      transition: all 0.2s ease-in-out;
+      // &:hover {
+      //   width: 75px;
+      //   height: 75px;
+      // }
+    }
+
+    .modeFocused {
+      width: 65px;
+      height: 65px;
+    }
+
+    .menuTxt {
+      width: 0vw;
+      // height: 10vw;
+      margin-left: -30px;
+      opacity: 0;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
+.gameModeGroup_mobile {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(16, 16, 20, 0.21);
+  width: 50%;
+  margin: auto;
+  border-radius: 10px;
+
+  .minesrushMode {
+    width: 50px;
+    height: 50px;
+    margin: 15px;
+  }
+
+  .modeFocused {
+    width: 60px;
+    height: 60px;
+  }
+
+  .menuTxt {
+    display: none;
+  }
+}
+
+.rectangle-image {
+  width: 65%;
+  height: 2px;
+  margin: 5px;
+}
+
+.yellow-image {
+  margin-top: 25px;
+  margin-bottom: 10px;
+  width: 270px;
+}
+
+.doubleBoard {
+  background-color: #101014;
+  border-radius: 10px;
+  position: relative !important;
+
+  .playHistoryContainer {
+    padding: 50px 20px 0;
+
+    .playHistory {
+      background: #181b21;
+      display: flex;
+      overflow: hidden;
+      border-radius: 4px;
+      border: 1px solid rgb(36 41 50);
+      height: 50px;
+      flex-direction: row-reverse;
+
+      .card {
+        margin: 10px;
+        padding: 3px 20px;
+        border-radius: 4px;
+        color: #242424;
+        font-weight: 600;
+      }
+
+      .fail {
+        background: #c52727;
+      }
+
+      .doubled {
+        background: #afeb7f;
+      }
+
+      .question {
+        background: rgb(128 128 128 / 7%);
+        color: grey;
+      }
+
+      ;
+    }
+  }
+
+  // .octo {
+  //   position: relative;
+  //   width: 90%;
+  //   margin: auto;
+  //   // left: 0;
+  //   // right: 0;
+  //   top: 33px;
+  //   img {
+  //     width: 100%;
+  //   }
+  // }
+  .doubleBoardImgs {
+    // display: flex;
+    // justify-content: center;
+    // margin-top: 120px;
+    // margin-bottom: 40px;
+    // position: relative;
+    // height: 150px;
+    display: flex;
+    padding: 40px 10px 10px;
+
+
+    img {
+      // width: 150px;
+      // height: 150px;
+      margin-left: 10px;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    .disappear {
+      animation: shake1 0.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: 10;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    @keyframes shake1 {
+
+      10%,
+      90% {
+        transform: translate(15px, -7px);
+      }
+
+      20%,
+      80% {
+        transform: translate(-5px, 9px);
+      }
+
+      30%,
+      70% {
+        transform: translate(8px, 3px);
+      }
+
+      40%,
+      60% {
+        transform: translate(-6px, -13px);
+      }
+
+      50% {
+        transform: translate(14px, 9px);
+      }
+    }
+
+    .doubleBoardImg2 {
+      animation: shake 0.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: 10;
+      transform: translate3d(0, 0, 0);
+      backface-visibility: hidden;
+      perspective: 1000px;
+    }
+
+    @keyframes shake {
+
+      10%,
+      90% {
+        transform: translate(15px, -7px);
+      }
+
+      20%,
+      80% {
+        transform: translate(-5px, 9px);
+      }
+
+      30%,
+      70% {
+        transform: translate(8px, 3px);
+      }
+
+      40%,
+      60% {
+        transform: translate(-6px, -13px);
+      }
+
+      50% {
+        transform: translate(14px, 9px);
+      }
+    }
+  }
+
+  // .treasure {
+  //   position: absolute;
+  //   top: 0;
+  //   right: 0;
+  //   bottom: 0;
+  //   left: 0;
+  //   z-index: 1;
+  //   animation: shake 5s;
+  //   animation-timing-function: ease-in-out;
+  //   animation-iteration-count: 10;
+  //   transform: translate3d(0, 0, 0);
+  //   backface-visibility: hidden;
+  //   perspective: 1000px;
+  //   opacity: 1;
+
+  //   img {
+  //     width: 100%;
+  //     height: 100%;
+  //   }
+  // }
+
+  // @keyframes shake {
+
+  //   0%,
+  //   10%,
+  //   70% {
+  //     opacity: 1;
+  //   }
+
+  //   75% {
+  //     opacity: 0.8;
+  //   }
+
+  //   100% {
+  //     opacity: 0;
+  //   }
+  // }
+}
+
+.doubleButton {
+  margin-top: 20px;
+  margin-bottom: 50px;
+  z-index: 1;
+}

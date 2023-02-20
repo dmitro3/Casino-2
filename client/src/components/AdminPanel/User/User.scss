@@ -1,0 +1,19 @@
+.subdomain {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.delete {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+    &:hover {
+        cursor: pointer;
+    }
+    &:disabled {
+        cursor: not-allowed;
+        background-color: grey;
+    }
+}

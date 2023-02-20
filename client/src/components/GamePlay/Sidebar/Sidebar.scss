@@ -1,0 +1,528 @@
+.side {
+    position: fixed;
+    top: 0%;
+    left: 0;
+    background-color: #1010148f;
+    // width: 75px;
+    padding: 10px 8px;
+    padding-top: 25px;
+    transition: all 0.3s ease-in-out;
+    z-index: 10000;
+
+    .iconGroup {
+        display: flex;
+        flex-direction: column;
+        height: 85vh;
+        justify-content: space-between;
+
+        .bonus {
+            position: relative;
+
+            .badge {
+                position: absolute;
+                top: 0px;
+                right: 0;
+                color: white;
+                background: red;
+                padding: 3px;
+                border-radius: 50%;
+                width: 5px;
+                height: 5px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 13px;
+            }
+        }
+
+        .bonusGroup {
+            display: none;
+        }
+    }
+
+    .buttons {
+        cursor: pointer;
+        background-color: #1010148F;
+        // height: 40px;
+        padding: 4px 0px;
+        display: flex;
+        -webkit-box-align: center;
+        align-items: center;
+        color: rgb(183, 199, 208);
+        font-family: "Mada";
+        font-size: 16px;
+        font-weight: bold;
+        border: 1px solid #8080805e;
+        border-radius: 5px;
+        margin-bottom: 8px;
+        position: relative;
+        box-sizing: border-box;
+        transition: all 200ms ease-out 0s;
+
+        &:hover {
+            background-color: #8080805e;
+            color: white;
+        }
+
+        img {
+            width: 30px;
+            height: 30px;
+            margin-left: 7.5px;
+        }
+
+        .description {
+            margin-left: 5px;
+            pointer-events: none;
+            font-family: Primary, DefaultFont, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: all 300ms ease 0s;
+            color: white;
+            opacity: 1;
+            text-align: left;
+            width: 0;
+            opacity: 0;
+            transition: all 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+
+        // .small {
+        //     font-size: 14px;
+        // }
+
+        .gameModes {
+            width: 0;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 65px;
+            bottom: 0;
+            background-color: #16191fd1;
+            padding-top: 10vh;
+            transition: all 0.3s ease-in-out;
+
+            img {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 6px;
+                margin-left: 5px;
+                transition: all 0.2s ease-in-out;
+            }
+
+            .gameMode {
+                display: flex;
+                justify-content: left;
+                padding: 5px;
+                margin-bottom: 6px;
+                text-decoration: none;
+                font-family: "Mada";
+
+                &:hover {
+                    .icon {
+                        // width: 60px;
+                        // height: 60px;
+                        transform: scale(1.2);
+                        // margin-left: 0px;
+                        // margin-bottom: 0px;
+                        transition: all 0.2s ease-in-out;
+                    }
+                }
+            }
+        }
+
+        .gameModes_mobile {
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            width: 100%;
+
+            img {
+                width: 50px;
+                height: 50px;
+                margin: 0px;
+                margin-top: 5px;
+                transition: all 0.2s ease-in-out;
+            }
+        }
+    }
+
+    .game {
+        &:hover {
+            .gameModes {
+                width: 60px;
+                padding: 10vh 10px;
+
+                .gameMode {
+                    align-items: center;
+
+                    .description {
+                        width: 0;
+                        left: 125px;
+                        opacity: 1;
+                        margin-bottom: 6px;
+                    }
+                }
+
+                &:hover {
+                    width: 180px;
+
+                    .description {
+                        width: 180px;
+
+                    }
+                }
+            }
+
+            .clicked {
+                // border: 1px solid grey;
+
+                img {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    .game_clicked {
+        border: 1px solid grey;
+
+        .gameModes {
+            width: 60px;
+            overflow: hidden;
+            position: fixed;
+            top: 0;
+            left: 65px;
+            bottom: 0;
+            background-color: #1010148f;
+            transition: all 0.3s ease-in-out;
+            padding: 10vh 10px;
+
+            img {
+                width: 50px;
+                height: 50px;
+                margin-bottom: 6px;
+                margin-left: 5px;
+                transition: all 200ms ease 0s;
+            }
+
+            .gameMode {
+                display: flex;
+                justify-content: left;
+                padding: 5px;
+                margin-bottom: 6px;
+                align-items: left;
+
+                .description {
+                    width: 0;
+                    left: 125px;
+                    opacity: 1;
+                    margin-bottom: 6px;
+                }
+
+                &:hover {
+                    .icon {
+                        // width: 60px!important;
+                        // height: 60px!important;
+                        transform: scale(1.2);
+                        transition: all 200ms ease 0s;
+                        // margin-left: 0px;
+                        // margin-bottom: 0px;
+                    }
+                }
+            }
+
+            &:hover {
+                width: 180px;
+
+                .description {
+                    width: 180px;
+                }
+            }
+
+            .clicked {
+                img {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+.side_extend {
+    width: 270px;
+    padding: 25px 8px;
+
+    .iconGroup {
+        .bonusGroup {
+            display: block;
+            background-size: contain;
+            background-color: #101014e3;
+
+            .contain {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                // cursor: pointer;
+                // height: 40px;
+                background-color: rgb(16, 16, 20, 83%);
+                padding: 4px 0px;
+                display: flex;
+                -webkit-box-align: center;
+                align-items: center;
+                color: rgb(183, 199, 208);
+                font-family: Primary, DefaultFont, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+                font-size: 16px;
+                font-weight: bold;
+                border: 1px solid #dbdbdb5e;
+                border-radius: 5px;
+                margin-bottom: 8px;
+                position: relative;
+                box-sizing: border-box;
+                transition: all 200ms ease-out 0s;
+                padding: 15px;
+                overflow: hidden;
+
+                .tooltip {
+                    font-weight: bold;
+                }
+
+                .container {
+                    display: flex;
+                    align-items: center;
+                    transition: all 200ms ease-out 0s;
+
+                    &:hover {
+                        transform: scale(1.2);
+                    }
+
+                    img {
+                        width: 35px;
+                        height: 35px;
+                        padding: 2px;
+                        border: 2px solid #8080805e;
+                        border-radius: 50%;
+                    }
+                }
+            }
+
+
+        }
+    }
+
+    .buttons {
+        text-decoration: none;
+
+        .description {
+            width: 100%;
+            opacity: 1;
+            display: flex;
+            align-items: center;
+            font-family: "Mada";
+        }
+    }
+
+    .game {
+        .gameModes {
+            left: 270px;
+        }
+
+        &:hover {
+            .gameModes {
+                width: 60px;
+            }
+        }
+    }
+
+    .game_clicked {
+        border: 1px solid grey;
+
+        .gameModes {
+            left: 270px;
+
+            .gameMode {
+
+                &:hover {
+                    .icon {
+                        transform: scale(1.2);
+                        transition: all 300ms ease 0s;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.howTo {
+    min-height: 550px;
+    background-color: #101014 !important;
+    border: 1px solid white;
+    overflow-y: scroll;
+    z-index: 10001;
+
+    button {
+        background: #f7be44;
+        color: black;
+        font-size: 15px;
+        font-weight: 600;
+        padding: 10px;
+        border-radius: 5px;
+        width: 100%;
+        margin-top: 15px;
+        margin-bottom: 15px;
+
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .description {
+        font-weight: bold;
+        padding: 20px 40px;
+        color: white;
+        display: flex;
+        flex-direction: column;
+
+        .header {
+            font-size: 20px;
+        }
+    }
+
+    .buttonGroup {
+        display: flex;
+        padding-left: 30px;
+        padding-right: 30px;
+
+        button {
+            width: 100%;
+            margin-bottom: 0;
+            font-size: 15px;
+            overflow: hidden;
+            padding: 5px;
+            margin-left: 5px;
+        }
+    }
+}
+
+.spin {
+    // width: 40vw !important;
+    // height: 40vw;
+    border: 5px solid #494646;
+    border-radius: 18px;
+    background: #111111;
+    padding: 5vw;
+
+
+    .spinContainer {
+        position: relative;
+
+        .header {
+            font-size: 3vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 4vw;
+                height: 4vw;
+                padding: 2px;
+            }
+
+            p {
+                font-weight: 600;
+            }
+        }
+
+        .sub {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 10px;
+
+            .prize {
+                margin-top: 5px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 3px solid #F5B14A;
+                padding: 5px;
+                width: 15%;
+                border-radius: 5px;
+            }
+        }
+
+        .wheel {
+            position: relative;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .free {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2vw;
+            font-weight: 600;
+
+            p {
+                background-color: #F5B14A;
+                font-size: 2vw;
+                margin-left: 5px;
+                padding: 0 10px;
+                border-radius: 5px;
+                color: black;
+                font-weight: 600;
+            }
+        }
+
+
+        .clocks {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            font-family: "Mada";
+
+            .clockGroup {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+
+                .title {
+                    text-decoration: underline;
+                    font-family: "Mada";
+                }
+
+                .timerGroup {
+                    display: flex;
+                    justify-content: center;
+
+                    // flex-direction: column;
+                    .clock {
+                        font-size: 1.5vw;
+                        font-family: "Mada";
+                    }
+                }
+            }
+        }
+
+    }
+
+    .spinTxt {
+        color: #ff00e0;
+        z-index: 30 !important;
+        position: absolute;
+        left: 5px;
+        right: 5px;
+        font-size: 3vw;
+        font-weight: 600;
+        top: 50%;
+    }
+}

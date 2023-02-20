@@ -1,0 +1,61 @@
+.home {
+    position: absolute;
+    right: 8%;
+    left: 12%;
+
+    .listModeGroup {
+        display: flex;
+        justify-content: space-evenly;
+
+        .listMode {
+            padding: 20px;
+            width: 100%;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
+
+        .focused {
+            background-color: rgba(209, 209, 209, 0.438);
+            box-shadow: 2px 3px 6px black;
+            margin-bottom: 10px
+        }
+    }
+
+    .fhoGqu {
+        border: 1px solid black;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 10px 5px 5px black;
+        height: 90%;
+    }
+
+    .rdt_TableCell div,
+    .rdt_TableCol div {
+        margin: auto;
+    }
+
+    .caJkga {
+        position: relative;
+        width: 100%;
+    }
+
+    .rdt_TableHead {
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .rdt_TableRow {
+
+        &:hover {
+            background-color: rgba(150, 150, 150, 0.781);
+            cursor: pointer;
+        }
+    }
+    .ticketSubComponent {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
+}

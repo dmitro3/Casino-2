@@ -1,0 +1,267 @@
+.recentplays-container {
+  .recentplays-title {
+    text-align: start;
+    font-family: "Mada";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15.6757px;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    color: #fff;
+  }
+
+  .recentplays-title-mobile {
+    text-align: start;
+    font-family: "Mada";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 15.6757px;
+    line-height: 20px;
+    letter-spacing: 0.05em;
+    color: #000;
+  }
+
+  .recentplays-text {
+    font-family: "Mada";
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 24px;
+    letter-spacing: 0.155em;
+    padding-top: 37px;
+    color: #ffffff;
+  }
+
+  .table-image {
+    width: 100%;
+    height: 100%;
+  }
+
+  .recentplays-grid {
+    width: 100;
+    border: 12px solid #fff;
+    border-radius: 40px;
+    background-color: #121519;
+    padding: 20px;
+
+    .table-container {
+      width: 100%;
+
+      .table-row {
+        padding: 0;
+      }
+
+      .table-header {
+        .table-row th {
+          font-family: "Mada";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 15.6757px;
+          line-height: 20px;
+          letter-spacing: 0.05em;
+          color: #ffffff;
+        }
+      }
+
+      .table-body {
+        .table-row {
+          background-color: #cfdbff;
+          border-top: 5px solid #121519;
+
+          td {
+            padding: 5px;
+          }
+
+          td:nth-child(1) {
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+          }
+
+          td:nth-child(4) {
+            margin-top: 10px;
+          }
+
+          &:hover {
+            background-color: #a8b5dd;
+          }
+        }
+
+        .table-row td:nth-child(1),
+        .table-row td:nth-child(3) {
+          color: #000;
+        }
+
+        .table-row td:nth-child(2) {
+          color: #746e6e;
+        }
+
+        .table-row td:nth-child(4) {
+          // display: flex;
+          // justify-content: center;
+          // align-items: center;
+
+          img {
+            margin-left: 5px;
+          }
+        }
+      }
+
+      th,
+      td {
+        border: 0px;
+      }
+
+      .recentplays-point {
+        width: 14px;
+        height: 14px;
+      }
+    }
+  }
+
+  .recentplays-grid-black {
+    // width: 80vw;
+    border: 10px solid #22262f;
+    border-radius: 40px;
+    background-color: #101014;
+    padding: 20px;
+
+    .table-container {
+      width: 100%;
+
+      .player {
+        width: 200px;
+        margin: auto;
+        display: flex!important;
+        justify-content: flex-start;
+        align-items: center;
+        height: 2.5vw;
+        margin-top: 10px;
+        margin-left: 10px;
+        padding-top: 8px;
+      }
+
+      .rest {
+        width: 15%;
+        margin: auto;
+        text-align: right;
+        padding-right: 10px!important;
+        // display: flex;
+        // align-items: center;
+      }
+
+      .img {
+        height: 3.5vw;
+        // display: flex;
+        align-items: left;
+      }
+
+      .table-header {
+        .table-row th {
+          font-family: "Mada";
+          font-style: normal;
+          font-weight: 500;
+          font-size: 15.6757px;
+          line-height: 20px;
+          letter-spacing: 0.05em;
+          color: #ffffff;
+        }
+      }
+
+      .table-body {
+        .table-row {
+          background-color: #22262f;
+          border-top: 5px solid #121519;
+
+          td {
+            padding: 5px;
+          }
+
+          td:nth-child(1) {
+            margin-top: 5px;
+            display: flex;
+            justify-content: center;
+          }
+
+          td:nth-child(4) {
+            margin-top: 10px;
+          }
+
+          &:hover {
+            background-color: #171a20;
+          }
+        }
+
+        .table-row td:nth-child(1),
+        .table-row td:nth-child(3) {
+          color: #767272;
+        }
+
+        .table-row td:nth-child(2) {
+          color: #fff;
+        }
+
+        .table-row td:nth-child(4) {
+          // display: flex;
+          // justify-content: center;
+          // align-items: center;
+
+          img {
+            margin-left: 5px;
+          }
+        }
+      }
+
+      th,
+      td {
+        border: 0px;
+      }
+
+      .recentplays-point {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+}
+
+.footer-item {
+  display: inline-flex;
+  width: 40px;
+  height: 30px;
+  border-radius: 15px;
+  margin: 0px 10px;
+  font-size: 16px;
+  font-family: "Mada";
+  background-color: white !important;
+  color: Black !important;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .control-option-image {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+.footer-item-black {
+  background-color: #292d2c !important;
+  display: inline-flex;
+  width: 40px;
+  height: 30px;
+  border-radius: 15px;
+  margin: 0px 10px;
+  font-size: 16px;
+  color: white !important;
+  font-family: "Mada";
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  .control-option-image {
+    width: 16px;
+    height: 16px;
+  }
+}
+

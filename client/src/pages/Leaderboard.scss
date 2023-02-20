@@ -1,0 +1,170 @@
+.leaderboard {
+  min-height: 100vh;
+  overflow: "hidden";
+  background-color: #101014;
+
+  .header {
+    width: 100%;
+    height: 20vh;
+    background-color: #101014;
+    margin: 0px;
+
+    .title {
+      display: flex;
+      align-items: center;
+
+      .mine-logo {
+        width: 70px;
+        top: 20px;
+        left: 100px;
+      }
+
+      .mine-link {
+        text-align: left;
+
+        .nav-link {
+          text-decoration: none;
+          display: flex;
+          align-items: center;
+        }
+
+        .minerush-text {
+          display: block;
+          margin: 2px;
+          font-family: "Mada";
+          font-style: normal;
+          font-size: 30px;
+          color: #fff;
+          font-weight: 600;
+        }
+
+        .link-img {
+          width: 20px;
+        }
+
+        .minerush-link {
+          font-family: "Mada";
+          font-style: normal;
+          font-size: 20px;
+          color: #fff;
+          font-weight: 600;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+
+  .body {
+    width: 100%;
+
+    .date-select {
+      display: flex;
+      align-items: center;
+      margin: 30px;
+
+      .date-select-button {
+        margin-left: 10px;
+        background-color: #f43f5e;
+        border-radius: 10px;
+
+        .button-text {
+          font-family: "Mada";
+          font-size: 15px;
+          font-weight: 600;
+          font-style: normal;
+          color: white;
+          text-transform: none;
+        }
+      }
+
+      .date-select-button-disabled {
+        margin-left: 10px;
+        background-color: #fff;
+        border-radius: 10px;
+
+        .button-text {
+          font-family: "Mada";
+          font-size: 15px;
+          font-weight: 600;
+          font-style: normal;
+          color: black;
+          text-transform: none;
+        }
+      }
+    }
+
+    .history-list {
+      background-color: #1b1e25;
+      border-radius: 20px;
+      padding: 10px;
+
+      .list-title {
+        display: flex;
+        align-items: center;
+        margin-left: 40px;
+
+        .title-text {
+          font-family: "Mada";
+          font-size: 20px;
+          font-weight: 600;
+          color: white;
+        }
+      }
+
+      .table-container {
+        width: 100%;
+
+        .table-header {
+          .table-row th {
+            font-family: "Mada";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15.6757px;
+            line-height: 20px;
+            letter-spacing: 0.05em;
+            color: #ffffff;
+          }
+        }
+
+        .table-body {
+          .table-row:nth-child(odd) {
+            background-color: #22262f;
+          }
+
+          .table-row:nth-child(even) {
+            background-color: #343840;
+          }
+
+          .table-row td:nth-child(1),
+          .table-row td:nth-child(3) {
+            color: #fff;
+          }
+
+          .table-row td:nth-child(2) {
+            color: #fff;
+          }
+
+          .table-row td:nth-child(4) {
+            // display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+              margin-left: 5px;
+            }
+          }
+        }
+
+        th,
+        td {
+          border: 0px;
+        }
+
+        .recentplays-point {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+  }
+}
