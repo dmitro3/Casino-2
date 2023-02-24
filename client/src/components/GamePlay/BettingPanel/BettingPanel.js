@@ -1148,28 +1148,6 @@ const BettingPanel = ({
           >
             {1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
           </Button>
-          {/* <Button
-            className="betting-values"
-            disabled={gameState === 0 ? false : true}
-            style={
-              isDesktop
-                ? { background: "#413F3C" }
-                : { background: "#413F3C", width: "90px", height: "35px" }
-            }
-          >
-            {1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
-          </Button>
-          <Button
-            className="betting-values"
-            disabled={gameState === 0 ? false : true}
-            style={
-              isDesktop
-                ? { background: "#413F3C" }
-                : { background: "#413F3C", width: "90px", height: "35px" }
-            }
-          >
-            {2 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
-          </Button> */}
         </Box>
         {!isDesktop && gameMode === "minesrush" && (
           <>
@@ -1222,7 +1200,6 @@ const BettingPanel = ({
               </Button>
               <Button
                 className="bomb-amounts"
-                // onClick={(e) => onBNumberClick(e, 24)}
                 onClick={onOpen}
                 disabled={gameState === 0 ? false : true}
                 style={
@@ -1251,25 +1228,13 @@ const BettingPanel = ({
         sx={{ display: isDesktop ? "block" : "none!important" }}
         onClick={() => setShowDiscord(true)}
       >
-        {/* <a href="https://discord.com/channels/1001809381446393886/1001811649415626752"> */}
         <img
           className="message-link"
           src={messaging}
           alt="msg"
           onClick={onClickDiscordMsg}
         />
-        {/* </a> */}
       </Grid>
-      {/* {isDesktop && */}
-      {/* // <Box className="pinWheel">
-        //   <NavLink className="container" to="/bonuses" >
-        //     {!isReward && <Typography className="badge"></Typography>}
-        //     <img src={spinImg} alt="SPIN" />
-        //   </NavLink>
-        // </Box> */}
-      {/* // } */}
-      {/* src="https://e.widgetbot.io/channels/923082086372483183/963457221939826738/?preset=crate&api=e3128267-dd62-4343-b921-6622a4877302&avatar=https%3A%2F%2Fi.imgur.com%2FWtWzHUL.png" */}
-      {/* <iframe src="https://e.widgetbot.io/channels/1001809381446393886/1001811649415626752/?preset=crate&api=e3128267-dd62-4343-b921-6622a4877302&avatar=https%3A%2F%2Fi.imgur.com%2FWtWzHUL.png" */}
       <Modal
         open={showDiscord}
         onClose={() => setShowDiscord(false)}

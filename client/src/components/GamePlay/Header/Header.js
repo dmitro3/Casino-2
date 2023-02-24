@@ -278,7 +278,6 @@ const Header = () => {
     getTransactionHistory();
     ttt();
     getHolders();
-    // getAllNftData();
     const unloadCallback = async () => {
       if (publicKey?.toBase58()) {
         const body = { walletAddress: publicKey.toBase58() }
@@ -288,24 +287,9 @@ const Header = () => {
     };
     window.addEventListener("beforeunload", unloadCallback);
     return () => window.removeEventListener("beforeunload", unloadCallback);
-    // getSpinData();
   }, [connected]);
 
-  // const getSpinDate = async () => {
-  //   if (publicKey?.toBase58()) {
-  //     const body = {
-  //       walletAddress: publicKey.toBase58()
-  //     }
-  //     const res = await axios.post(
-  //       `${process.env.REACT_APP_BACKEND_URL}/api/play/getSpinDate`, body);
-  //     if (res.data.status) {
-  //       setRemain(res.data.content.spinNum);
-  //       setSpinDate(res.data.content.spinDate);
-  //       // spinCount(res.data.content);
-  //     } else {
-  //     }
-  //   }
-  // }
+
   const getTransactionHistory = async () => {
     const body = { type: "Get THistory", walletAddress: publicKey?.toBase58() }
     if (body.walletAddress) {
@@ -324,16 +308,6 @@ const Header = () => {
       );
       let balance = await connection.getBalance(publicKey);
       balance = balance / LAMPORTS_PER_SOL;
-      // let nftData = await getAllNftData();
-      // let data = Object.keys(nftData).map((key) => nftData[key]);
-
-      // const arr = [];
-      // let n = data.length;
-      // for (let i = 0; i < n; i++) {
-      //   let val = await axios.get(data[i].data.uri);
-      //   arr.push(val);
-      // }
-      // setNftAvatars(arr);
       setSolAmount(balance);
       let deviceId = localStorage.getItem("id");
       if (!deviceId) {
@@ -342,33 +316,24 @@ const Header = () => {
       }
       const body = {
         walletAddress: publicKey?.toBase58(),
-        // avatar: nftAvatars[0],//do not need
         deviceId: deviceId//do not need
       };
       if (body.walletAddress) {
         await axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/getUserData`, body)
           .then((res) => {
-            // if (res.data.userName === "hhh") {
-            //   setNugAmount(res.data.amount.toFixed(3));
-            //   setHack("hack");
-            // } else {
             if (res.data) {
-              // setNumber(res.data.data);
               setSUserName(res.data.userName);
               setNugAmount(parseFloat(res.data.amount).toFixed(3));
               setUserName(res.data.userName);
               setRaffles(res.data.raffles)
               setRaffleMode(res.data.raffleMode);
               setBonusNugAmount(parseFloat(res.data.bonusNugAmount).toFixed(3));
-              // if (typeof res.data.avatarURL == "string") {
               setNftAvatar(res.data.avatar || "");
               setGemAmount(parseFloat(res.data.gemAmount).toFixed(3));
             } else {
               setLoggedIn(true);
             }
-            // }
-            // }
           })
           .catch((err) => {
             console.log("Error while fetching user.", err);
@@ -379,7 +344,6 @@ const Header = () => {
   };
 
   const handleChange = (mode) => {
-    // mode = "mainNug"
     setCurrencyMode(mode);
     if (mode === "mainNug" && currencyMode !== mode)
       setBettingAmount(bettingAmount / bNugRatio)
@@ -531,13 +495,11 @@ const Header = () => {
               content: "Deposit Success - Goodluck Matey!"
             });
             setNugAmount(res.data.content.toFixed(3));
-            // return true;
           } else {
             setAlerts({
               type: "error",
               content: res.data.content
             })
-            // return false;
           }
         } catch (err) {
           console.log("Error while getting balance", err);
@@ -554,7 +516,6 @@ const Header = () => {
           };
           let data = false;
           data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawFundstart`, body)
-          // num = await getNum(data, factor1, factor2, factor3, factor4)
           if (data) {
             body = {
               type: "Withdraw",
@@ -643,26 +604,7 @@ const Header = () => {
     setDepositModal(true);
     setAvatarLoading(true);
     let nftDatas
-    // if (nftData?.length) {
-    //   nftDatas = nftData
-    // }
-    // else
     nftDatas = await getAllNftData();
-    // let tempData = Object.keys(nftData).map((key) => nftData[key]);
-    // let data = [];
-    // tempData.map((tData, key) => {
-    //   if (tData.data.creators[0].address === process.env.REACT_APP_CREATOR_ADDR) {
-    //     data.push(tData);
-    //   }
-    // })
-    // setNftData(data);
-    // const arr = [];
-    // let n = data.length;
-    // for (let i = 0; i < n; i++) {
-    //   let val = await axios.get(data[i].data.uri);
-    //   arr.push(val);
-    // }
-    // setNftAvatars(arr);
     let tempData = [];
     nftDatas.forEach((data) => {
       if (data.data.symbol && data.data.symbol === "Nuggets") {
@@ -683,19 +625,12 @@ const Header = () => {
   const onClickChangeAvatar = async () => {
     setAvatarModalOpen(true);
     setAvatarLoading(true);
-    // let nftData = await getAllNftData();
-    // let data = Object.keys(nftData).map((key) => nftData[key]);
     let nftDatas
-    // if (nftData?.length) {
-    //   nftDatas = nftData
-    // }
-    // else
     nftDatas = await getAllNftData();
     const arr = [];
     let n = nftDatas.length;
     for (let i = 0; i < n; i++) {
       try {
-        // let val = await axios.get("https://bafybeibfoxqnjqmtaidnu6qfe7fragzeuk5kjmlpd5jhb4ubzmrhpzcyoa.ipfs.nftstorage.link/ocG5RcGfgNDL8ZQfVvKjAWqYwwR3R2YxkLgReT2kSDZ.json")
         let val = await axios.get(nftDatas[i].data.uri);
         if (val) {
           arr.push(val);
@@ -712,9 +647,6 @@ const Header = () => {
 
   const getAllNftData = async () => {
     try {
-      // const connect = createConnectionConfig(
-      //   solanaWeb3.clusterApiUrl("mainnet-beta")
-      // );
       const connect = new solanaWeb3.Connection(
         process.env.REACT_APP_QUICK_NODE
       );
@@ -729,10 +661,6 @@ const Header = () => {
       tempData.forEach((tData) => {
         data.push(tData);
       })
-      // tempData.map((tData, key) => {
-      //   let i = key+1;
-      //   i++;
-      // })
       setNftData(data);
       return data
     } catch (error) {
@@ -877,15 +805,6 @@ const Header = () => {
       })
     const t1 = solanaWeb3.Transaction.from(signedTx.serialize());
     let stringfyTx = JSON.stringify(t1.serialize());
-    // let hash = await connection.sendRawTransaction(JSON.parse(stringfyTx));
-
-    // if (transaction) {
-    //   let response = await ownerPublicKey.sendTransaction(transaction, connection);
-
-    // } else {
-    // }
-
-
 
     const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
     if (num) {
@@ -1044,9 +963,6 @@ const Header = () => {
             {showOption && <Box
               className="selectOptions"
               style={{ position: !matchUpSm && "inherit" }}
-            // onClose={() => setShowOption(false)}
-            // aria-labelledby="parent-modal-title"
-            // aria-describedby="parent-modal-description"
             >
               <Box className="selectOption" style={{ top: !matchUpSm && 70, left: !matchUpSm && 20, right: !matchUpSm && 20 }}>
                 <Box onClick={() => { handleChange("mainNug"); setShowOption(false) }} className="option" >
@@ -1090,16 +1006,6 @@ const Header = () => {
                 <Box style={{}}>
                   {!matchUpSm &&
                     <Button onClick={onWalletClick} id="walletIcon" className={navbarItemClass()} style={{ width: "100%", marginLeft: 0, padding: 0 }}>WALLET</Button>}
-                  {/* <Tooltip
-                    title="Nuggets are promotional and reward credit that allows you to wager and play the game. Any winnings from nuggets can be converted at the rate of 25% into SOL"
-                    placement="bottom-start"
-                    className="desc"
-                    open={showTooltip}
-                    onOpen={() => setShowTooltip(true)}
-                    onClose={() => setShowTooltip(false)}
-                  >
-                    <Typography className={themeBlack ? "fontWhite" : "fontBlack"} onClick={() => setShowTooltip(!showTooltip)}>What Are Nuggets?</Typography>
-                  </Tooltip> */}
                 </Box>
               </Box>
             </Box>}
@@ -1179,7 +1085,6 @@ const Header = () => {
         aria-describedby="parent-modal-description"
       >
         <Box sx={styleFair} className="howTo" style={{
-          // overflowY: (!isDesktop && "scroll"),
           width: (isDesktop ? "35%" : "50%")
         }}>
           <Typography
@@ -1418,7 +1323,6 @@ const Header = () => {
           <Box className="walletNavGroup">
             <Button onClick={() => changeWalletMode("deposit")} className={walletMode === "deposit" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>DEPOSIT</Button>
             <Button onClick={() => changeWalletMode("withdraw")} className={walletMode === "withdraw" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>WITHDRAW</Button>
-            {/* <Button onClick={displayNFTs} className={"walletNav"} style={{ color: themeBlack ? "white" : "black" }}>NFT</Button> */}
             <Button onClick={() => changeWalletMode("history")} className={walletMode === "history" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>HISTORY</Button>
           </Box>
           {walletMode === "deposit" && (!loading ?
