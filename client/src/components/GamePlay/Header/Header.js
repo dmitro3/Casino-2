@@ -1,6 +1,8 @@
+// eslint-disable-next-line
+
 import axios from "axios";
 import useSound from "use-sound";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -19,11 +21,13 @@ import {
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 
+import ContractUtils from '../Tools/contractUtils';
+import { WalletContext } from '../Tools/wallet';
 import coin from "../../../assets/images/coin.png";
 import nug from "../../../assets/images/nugget.png";
 import solana from "../../../assets/images/solana.svg"
 import gemImg from "../../../assets/images/gem.png";
-import sol from "../../../assets/images/sol.png"
+import eth from "../../../assets/images/eth.png";
 import historyBackground from "../../../assets/images/historyBackground.png"
 import cashLoader from "../../../assets/images/frog.gif";
 import raffleImg from "../../../assets/images/raffle.png";
@@ -48,10 +52,12 @@ const Header = () => {
 
   const isDesktop = useMediaQuery("(min-width:1300px)");
   const isSmall = useMediaQuery("(min-width:900px)");
+  const [walletAddress, setWalletAddress] = useContext(WalletContext);
   const { setAlerts } = useGameStore();
   const { bNugRatio } = useGameStore();
   const { raffles, setRaffles } = useGameStore();
   const { raffleMode, setRaffleMode } = useGameStore();
+  const { showToast, setShowToast } = useGameStore();
   const { setIsAdmin } = useGameStore();
   const { setFactor1 } = useGameStore();
   const { setFactor2 } = useGameStore();
@@ -112,6 +118,7 @@ const Header = () => {
   const [nftData, setNftData] = useState();
   const [showOption, setShowOption] = useState(false);
   const [height, setHeight] = useState(60);
+  const [address, setAddress] = useState("");
 
   let count = false;
   let raffleHeight = 0;
@@ -278,6 +285,7 @@ const Header = () => {
     getTransactionHistory();
     ttt();
     getHolders();
+    // getAllNftData();
     const unloadCallback = async () => {
       if (publicKey?.toBase58()) {
         const body = { walletAddress: publicKey.toBase58() }
@@ -287,8 +295,8 @@ const Header = () => {
     };
     window.addEventListener("beforeunload", unloadCallback);
     return () => window.removeEventListener("beforeunload", unloadCallback);
+    // getSpinData();
   }, [connected]);
-
 
   const getTransactionHistory = async () => {
     const body = { type: "Get THistory", walletAddress: publicKey?.toBase58() }
@@ -308,6 +316,7 @@ const Header = () => {
       );
       let balance = await connection.getBalance(publicKey);
       balance = balance / LAMPORTS_PER_SOL;
+      
       setSolAmount(balance);
       let deviceId = localStorage.getItem("id");
       if (!deviceId) {
@@ -495,11 +504,13 @@ const Header = () => {
               content: "Deposit Success - Goodluck Matey!"
             });
             setNugAmount(res.data.content.toFixed(3));
+            // return true;
           } else {
             setAlerts({
               type: "error",
               content: res.data.content
             })
+            // return false;
           }
         } catch (err) {
           console.log("Error while getting balance", err);
@@ -516,6 +527,7 @@ const Header = () => {
           };
           let data = false;
           data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawFundstart`, body)
+          // num = await getNum(data, factor1, factor2, factor3, factor4)
           if (data) {
             body = {
               type: "Withdraw",
@@ -553,6 +565,28 @@ const Header = () => {
       })
     }
   }
+
+// connect Metamask wallet
+  const onClickConnect = async () => {
+    let res = await ContractUtils.connectWallet();
+    if (res.address) {
+      setShowToast(true);
+      setAddress(res.address);
+      window.localStorage.setItem('walletLocalStorageKey', res.address);
+    }
+    else {
+      setShowToast(true);
+      setAddress("");
+    }
+  }
+// disconnect Metamask wallet
+  const onClickDisconnect = async () => {
+    await ContractUtils.disconnectWallet();
+    await window.localStorage.removeItem('walletLocalStorageKey');
+    setShowToast(false);
+    setAddress("");
+}
+
   const changeWalletMode = (mode) => {
     if (loading) return
     setFocused(!focused);
@@ -891,7 +925,7 @@ const Header = () => {
               <Button className={navbarItemClass()}>RECENT</Button>
             </a>
 
-            {solWallet()}
+             {/* {solWallet()} */}
             <img
               alt="coin"
               className="balance-image"
@@ -917,12 +951,12 @@ const Header = () => {
                 <Box value={"mainNug"}  >
                   <Box className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ fontWeight: 600 }}>
                     <Box className="balance">
-                      <img className="solana" src={sol} alt="SOL" style={{ width: 30, margin: 0 }} />
+                      <img className="ethSign" src={eth} alt="ETH" style={{ width: 30, margin: 0 }} />
                       {nugAmount}
                     </Box>
                     <Box className="wallet">
                       <Typography>
-                        {matchUpSm ? "SOL" : "WALLET"}
+                        {matchUpSm ? "ETH" : "WALLET"}
                       </Typography>
                       <ExpandMore />
                     </Box>
@@ -933,7 +967,7 @@ const Header = () => {
                 <Box value={"bonusNug"} >
                   <Box className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ fontWeight: 600 }}>
                     <Box className="balance">
-                      <img className="solana" src={nug} alt="NUG" />{bonusNugAmount}
+                      <img className="ethereum" src={nug} alt="NUG" />{bonusNugAmount}
                     </Box>
                     <Box className="wallet">
                       <Typography>
@@ -948,7 +982,7 @@ const Header = () => {
                 <Box value={"gem"} >
                   <Box className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ fontWeight: 600 }}>
                     <Box className="balance">
-                      <img className="solana" src={gemImg} alt="GEM" /> &nbsp;{gemAmount}
+                      <img className="ethereum" src={gemImg} alt="GEM" /> &nbsp;{gemAmount}
                     </Box>
                     <Box className="wallet">
                       <Typography>
@@ -968,12 +1002,12 @@ const Header = () => {
                 <Box onClick={() => { handleChange("mainNug"); setShowOption(false) }} className="option" >
                   <Box className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ fontWeight: 600 }}>
                     <Box className="balance">
-                      <img className="solana" src={sol} alt="SOL" style={{ width: 30, margin: 0 }} />
+                      <img className="ethereum" src={eth} alt="ETH" style={{ width: 30, margin: 0 }} />
                       {nugAmount}
                     </Box>
                     <Box className="wallet">
                       <Typography>
-                        SOL
+                        ETH
                       </Typography>
                     </Box>
                   </Box>
@@ -981,7 +1015,7 @@ const Header = () => {
                 <Box onClick={() => { handleChange("bonusNug"); setShowOption(false) }} className="option">
                   <Box className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ fontWeight: 600 }}>
                     <Box className="balance">
-                      <img className="solana" src={nug} alt="NUG" />{bonusNugAmount}
+                      <img className="ethereum" src={nug} alt="NUG" />{bonusNugAmount}
                     </Box>
                     <Box className="wallet">
                       <Typography color="#ec4f5b">
@@ -993,7 +1027,7 @@ const Header = () => {
                 <Box onClick={() => { handleChange("gem"); setShowOption(false) }} className="option" >
                   <Box className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ fontWeight: 600 }}>
                     <Box className="balance">
-                      <img className="solana" src={gemImg} alt="GEM" style={{ width: 30, margin: 0 }} />&nbsp;
+                      <img className="ethereum" src={gemImg} alt="GEM" style={{ width: 30, margin: 0 }} />&nbsp;
                       {gemAmount}
                     </Box>
                     <Box className="wallet">
@@ -1010,8 +1044,13 @@ const Header = () => {
               </Box>
             </Box>}
           </Box>
-          {matchUpSm &&
-            <Button onClick={onWalletClick} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>WALLET</Button>
+          {matchUpSm && address? 
+            <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
+              <span>{address.substr(0, 4)}...{address.slice(38)}</span>
+            </Button>: 
+              <Button onClick={onClickConnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
+                <span>WALLET</span>
+            </Button>
           }
           {!matchUpSm && solWallet()}
         </Box>
@@ -1033,7 +1072,7 @@ const Header = () => {
         <span className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ flexDirection: matchUpSm ? "column" : "row-reverse", alignItems: matchUpSm ? "flex-end" : "center", marginRight: matchUpSm && "3vw" }}>
           <Box style={{ display: "flex", alignItems: "center" }}>
             {connected ? raffles : 0}x
-            <img className="solana" src={raffleImg} style={{ width: "40px" }} alt="Tickets" />
+            <img className="ethereum" src={raffleImg} style={{ width: "40px" }} alt="Tickets" />
           </Box>
           <Box style={{ display: "flex", flexWrap: "nowrap" }}>
             {images}
@@ -1085,6 +1124,7 @@ const Header = () => {
         aria-describedby="parent-modal-description"
       >
         <Box sx={styleFair} className="howTo" style={{
+          // overflowY: (!isDesktop && "scroll"),
           width: (isDesktop ? "35%" : "50%")
         }}>
           <Typography
@@ -1328,7 +1368,7 @@ const Header = () => {
           {walletMode === "deposit" && (!loading ?
             <Box className="walletAction">
               <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" >(SOL Balance:&nbsp;
-                <img src={sol} alt="SOL" style={{ width: "20px", height: "20px" }} />
+                <img src={eth} alt="SOL" style={{ width: "20px", height: "20px" }} />
                 {solAmount.toFixed(3)})
               </Typography>
               <Box className="walletForm">
@@ -1345,7 +1385,7 @@ const Header = () => {
           {walletMode === "withdraw" && (!loading ?
             <Box className="walletAction">
               <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ textTransform: "uppercase" }} >(SOL Balance:&nbsp;
-                <img src={sol} alt="SOL" style={{ width: "20px", height: "20px" }} />
+                <img src={eth} alt="SOL" style={{ width: "20px", height: "20px" }} />
                 {parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)})
               </Typography>
               <Box className="walletForm">
@@ -1374,7 +1414,8 @@ const Header = () => {
       </Modal>
     </Grid>
   );
-};
+  
+        }
 
 const styleFair = {
   textAlign: "center",

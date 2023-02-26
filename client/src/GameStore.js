@@ -100,6 +100,7 @@ const useGameStore = create((set) => ({
   raffleMode: true,
   remain: 0,
   showSidebar: false,
+  showToast: false,
   spinCount: 2,
   solanaTps: 2835,
   solAmount: 0,
@@ -309,6 +310,9 @@ const useGameStore = create((set) => ({
   },
   setShowSidebar: (val) => {
     set({ showSidebar: val });
+  },
+  setShowToast: (val) => {
+    set({showToast: val});
   },
   setSolAmount: (val) => {
     set({ solAmount: val });
