@@ -9,13 +9,13 @@ import background_blacktheme from "../assets/images/piraterushback2new-min2-min.
 
 import useGameStore from "../GameStore";
 
-import "./PirateLoot.scss";
+import "./ArbiCasino.scss";
 import Sidebar from "../components/GamePlay/Sidebar";
 import Loot from "../components/GamePlay/Pirates/Loot";
 import RecentPlays from "../components/GamePlay/RecentPlays";
 import Logo from "../components/GamePlay/Logo";
 import GameInfo from "../components/GamePlay/GameInfo/GameInfo";
-const PirateLoot = () => {
+const ArbiCasino = () => {
   const [loading, setLoading] = useState(true);
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("sm"));
@@ -66,4 +66,4 @@ const PirateLoot = () => {
   );
 };
 
-export default PirateLoot;
+export default ArbiCasino;

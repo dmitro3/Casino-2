@@ -6,19 +6,18 @@ import Content from "../components/GamePlay/Content";
 import Footer from "../components/GamePlay/Footer";
 import Splash from "../components/GamePlay/Splash";
 import background from "../assets/images/hero.png";
-// import background_blacktheme from "../assets/images/MinesRushHeader.jpg";
 import background_blacktheme from "../assets/images/piraterushback2new-min.jpg";
 import useGameStore from "../GameStore";
 import useSound from "use-sound";
 import backgroundmusic from "../assets/audios/backgroundmusic.mp3";
 import publicDir from "../assets/images/axe.png";
 
-import "./PirateLoot.scss";
+import "./ArbiCasino.scss";
 import Sidebar from "../components/GamePlay/Sidebar";
 import Loot from "../components/GamePlay/FAQs/Loot";
 import RecentPlays from "../components/GamePlay/RecentPlays";
 import Logo from "../components/GamePlay/Logo";
-const PirateLoot = ({ /*socket*/ }) => {
+const ArbiCasino = ({ /*socket*/ }) => {
   const [loading, setLoading] = useState(true);
   const [depositText, setDepositText] = useState(false);
   const theme = useTheme();
@@ -60,13 +59,6 @@ const PirateLoot = ({ /*socket*/ }) => {
             <Box className="main" style={{paddingLeft: isDesktop ? "60px" : "0", width: "100vw"}}>
               <Header />
               <Logo />
-              {/* <Content
-                loading={loading}
-                setLoading={setLoading}
-                depositText={depositText}
-                setDepositText={setDepositText}
-              // socket={socket}
-              /> */}
               <Loot />
               <RecentPlays />
               <Footer />
@@ -79,4 +71,4 @@ const PirateLoot = ({ /*socket*/ }) => {
   );
 };
 
-export default PirateLoot;
+export default ArbiCasino;

@@ -6,14 +6,10 @@ import {
   Typography,
 } from "@mui/material";
 import DataTable from "react-data-table-component";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useWallet } from "@solana/wallet-adapter-react";
 
-// import * as process.env from "../../../private";
-// import FilterComponent from "./FilterComponent";
 import useGameStore from "../../../GameStore";
 import user from "../../../assets/images/defaultUser.jpg"
-import double from "../../../assets/images/double.svg";
-import minesrush from "../../../assets/images/minesrush.svg";
 
 import "./User.scss";
 import getNum from "../../GamePlay/Tools/Calculate";
@@ -50,7 +46,6 @@ const User = () => {
   const [holderResetPaginationToggle, setHolderResetPaginationToggle] = useState(false);
   const [whiteResetPaginationToggle, setWhiteResetPaginationToggle] = useState(false);
   const [withdrawBanResetPaginationToggle, setWithdrawBanResetPaginationToggle] = useState(false);
-  const solscan = "https://solscan.io/";
 
   useEffect(() => {
     getUserList();
@@ -537,49 +532,42 @@ const User = () => {
     },
     {
       name: "Name",
-      // selector: (list) => <img src={list.game === "double" ? double : minesrush} style={{ width: "30px", display: "flex", "alignItems": "center" }} alt={list.game} />,
       selector: (list) => list.userName,
       sortable: true,
       grow: 0.4
     },
     {
       name: "WalletAddress",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => list.walletAddress,
       sortable: true,
       grow: 1.5
     },
     {
       name: "SOL Balance",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => parseFloat(parseFloat(list.nugAmount).toFixed(3)),
       sortable: true,
       grow: 0.5
     },
     {
       name: "Nug Balance",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => parseFloat(parseFloat(list.bonusNugAmount).toFixed(3)),
       sortable: true,
       grow: 0.5
     },
     {
       name: "GEM Balance",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => parseFloat(parseFloat(list.gemAmount).toFixed(3)),
       sortable: true,
       grow: 0.5
     },
     {
       name: "DeviceId",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => list.deviceId,
       sortable: true,
       grow: 0.8
     },
     {
       name: "Is Holder?",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => list.holder ? "Yes" : "No",
       sortable: true,
       grow: 0.5
@@ -651,14 +639,12 @@ const User = () => {
     },
     {
       name: "NFT Amount",
-      // selector: (list) => <img src={list.game === "double" ? double : minesrush} style={{ width: "30px", display: "flex", "alignItems": "center" }} alt={list.game} />,
       selector: (list) => list.nftAmount,
       sortable: true,
       grow: 0.4
     },
     {
       name: "Player",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => list.player ? "Player" : "Not Player",
       sortable: true,
       grow: 0.4
@@ -667,20 +653,17 @@ const User = () => {
   const hackColumns = [
     {
       name: "WalletAddress",
-      // selector: (list) => <img src={list.game === "double" ? double : minesrush} style={{ width: "30px", display: "flex", "alignItems": "center" }} alt={list.game} />,
       selector: (list) => list.walletAddress,
       sortable: true,
       grow: 1
     },
     {
       name: "Reason",
-      // selector: (list) => <img src={list.game === "double" ? double : minesrush} style={{ width: "30px", display: "flex", "alignItems": "center" }} alt={list.game} />,
       selector: (list) => list.reason,
       grow: 1
     },
     {
       name: "Date",
-      // selector: (list) => {return (<Box style={{display: "flex", "alignItems": "center"}}>{parseFloat(list.payout ? list.payout : 0-list.wager).toFixed(3)}<img src={nug} style={{ width: "30px" }} alt="NUG" /></Box>)},
       selector: (list) => list.timeStamp,
       sortable: true,
     },

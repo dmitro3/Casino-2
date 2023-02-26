@@ -13,7 +13,7 @@ import Sidebar from "../components/GamePlay/Sidebar";
 
 import coin from "../assets/images/coin.png";
 import game from "../assets/images/game.png";
-import sol from "../assets/images/sol.png";
+import eth from "../assets/images/eth.png";
 import nugget from "../assets/images/nugget.png";
 import bomb from "../assets/images/original1.png";
 import turtle1 from "../assets/images/turtle1.png";
@@ -30,10 +30,10 @@ const Landing = () => {
   const isDesktop = useMediaQuery(theme.breakpoints.up("sm"));
 
 
-  const [totalSOLGames, setTotalSOLGames] = useState(50200);
+  const [totalETHGames, setTotalETHGames] = useState(50200);
   const [totalNugGames, setTotalNugGames] = useState(50200);
-  const [totalSOLWager, setTotalSOLWager] = useState(200005.008);
-  const [totalSOLEarning, setTotalSOLEarning] = useState(304876.05);
+  const [totalETHWager, setTotalETHWager] = useState(200005.008);
+  const [totalETHEarning, setTotalETHEarning] = useState(304876.05);
   const [totalNugWager, setTotalNugWager] = useState(200005.008);
   const [totalNugEarning, setTotalNugEarning] = useState(304876.05);
   const [is_backgroundmusic, setIs_backgroundMusic] = useState(false);
@@ -57,10 +57,10 @@ const Landing = () => {
       .get(`${process.env.REACT_APP_BACKEND_URL}/api/history/statistics`)
       .then((res) => {
         if (res.data.status) {
-          setTotalSOLGames(res.data.data.totalSOLGames)
+          setTotalETHGames(res.data.data.totalETHGames)
           setTotalNugGames(res.data.data.totalNugGames)
-          setTotalSOLWager(parseFloat(res.data.data.totalSOLWager).toFixed(3))
-          setTotalSOLEarning(parseFloat(res.data.data.totalSOLEarning).toFixed(3))
+          setTotalETHWager(parseFloat(res.data.data.totalETHWager).toFixed(3))
+          setTotalETHEarning(parseFloat(res.data.data.totalETHEarning).toFixed(3))
           setTotalNugWager(parseFloat(res.data.data.totalNugWager).toFixed(3))
           setTotalNugEarning(parseFloat(res.data.data.totalNugEarning).toFixed(3))
         }
@@ -150,16 +150,16 @@ const Landing = () => {
               </Carousel>
             </Box>
             <Box className="bottom">
-              <Typography className="title">PIRATERUSH ORIGINALS</Typography>
+              <Typography className="title">ArbiCasino ORIGINALS</Typography>
               <Box className="bottomCarousel" style={{ flexWrap: isSmall && "wrap" }}>
                 <NavLink to="/mines" onClick={() => clickNavLink("minesrush")}>
-                  {pirateOriginal(bomb, bomb, "#2a4f7f", "#141924", "PIRATERUSH ORIGINAL", "MINES")}
+                  {pirateOriginal(bomb, bomb, "#2a4f7f", "#141924", "ArbiCasino ORIGINAL", "MINES")}
                 </NavLink>
                 <NavLink to="/loot">
-                  {pirateOriginal(lootyBox2, lootyBox1, "#5c4087", "#5c4087", "PIRATERUSH ORIGINAL", "PIRATELOOT")}
+                  {pirateOriginal(lootyBox2, lootyBox1, "#5c4087", "#5c4087", "ArbiCasino ORIGINAL", "ArbiCasino")}
                 </NavLink>
                 <NavLink to="/coins" onClick={() => clickNavLink("double")}>
-                  {pirateOriginal(coin, coin, "#F8CE3F", "#F7AA01", "PIRATERUSH ORIGINAL", "PIRATECOIN")}
+                  {pirateOriginal(coin, coin, "#F8CE3F", "#F7AA01", "ArbiCasino ORIGINAL", "PIRATECOIN")}
                 </NavLink>
                 <NavLink to="/beta-turtles">
                   {pirateOriginal(turtle1, turtle2, "#187973", "#108059", "LAUNCHING SOON", "TURTLES OF TORTUGA")}
@@ -167,11 +167,11 @@ const Landing = () => {
               </Box>
             </Box>
             <Box className="statistics">
-              <Typography className="title">SOL STATISTICS</Typography>
+              <Typography className="title">ETH STATISTICS</Typography>
               <Box className="boxGroup">
-                {boxGroup("TOTAL GAMES PLAYED", game, totalSOLGames)}
-                {boxGroup("TOTAL SOLS WAGERED", sol, totalSOLWager)}
-                {boxGroup("TOTAL SOLS WON", sol, totalSOLEarning)}
+                {boxGroup("TOTAL GAMEs PLAYED", game, totalETHGames)}
+                {boxGroup("TOTAL ETHs WAGERED", eth, totalETHWager)}
+                {boxGroup("TOTAL ETHs WON", eth, totalETHEarning)}
               </Box>
             </Box>
             <Box className="statistics">

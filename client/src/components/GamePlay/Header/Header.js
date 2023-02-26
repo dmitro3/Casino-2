@@ -15,17 +15,14 @@ import * as solanaWeb3 from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
-import { WalletMultiButton, WalletDisconnectButton, } from "@solana/wallet-adapter-react-ui";
 import {
   Token,
   TOKEN_PROGRAM_ID,
 } from "@solana/spl-token";
 
 import ContractUtils from '../Tools/contractUtils';
-import { WalletContext } from '../Tools/wallet';
 import coin from "../../../assets/images/coin.png";
 import nug from "../../../assets/images/nugget.png";
-import solana from "../../../assets/images/solana.svg"
 import gemImg from "../../../assets/images/gem.png";
 import eth from "../../../assets/images/eth.png";
 import historyBackground from "../../../assets/images/historyBackground.png"
@@ -34,6 +31,7 @@ import raffleImg from "../../../assets/images/raffle.png";
 import rectangleImage from "../../../assets/images/rectangle.png";
 import playgame_sound from "../../../assets/audios/MinesClickSound.mp3";
 import yellowrectangle from "../../../assets/images/yellowrectangle.png";
+import { StoreContext } from '../../../store';
 
 import "./Header.scss";
 import useGameStore from "../../../GameStore";
@@ -48,11 +46,11 @@ const Header = () => {
   const { connection } = useConnection();
   const [playgamesoundplay] = useSound(playgame_sound);
   const matchUpSm = useMediaQuery(theme.breakpoints.up("sm"));
-  const { publicKey, connected, signTransaction } = useWallet();
+  const { publicKey, signTransaction } = useWallet();
 
   const isDesktop = useMediaQuery("(min-width:1300px)");
   const isSmall = useMediaQuery("(min-width:900px)");
-  const [walletAddress, setWalletAddress] = useContext(WalletContext);
+  const global = useContext(StoreContext);
   const { setAlerts } = useGameStore();
   const { bNugRatio } = useGameStore();
   const { raffles, setRaffles } = useGameStore();
@@ -65,7 +63,6 @@ const Header = () => {
   const { setFactor4 } = useGameStore();
   const { gameState } = useGameStore();
   const { userName, setUserName } = useGameStore();
-  const { number, setNumber } = useGameStore();
   const { nugAmount, setNugAmount } = useGameStore();
   const { gemAmount, setGemAmount } = useGameStore();
   const { bettingAmount, setBettingAmount } = useGameStore();
@@ -93,11 +90,9 @@ const Header = () => {
   const { mineGameLose, setMineGameLose } = useGameStore();
   const { doubleGameWin, setDoubleGameWin } = useGameStore();
   const { doubleGameLose, setDoubleGameLose } = useGameStore();
-  // const { nftData, setNftData } = useGameStore();
 
   const [focused, setFocused] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [showTooltip, setShowTooltip] = useState(false);
   const [nftAvatar, setNftAvatar] = useState("");
   const [suserName, setSUserName] = useState(userName);
   const [walletModal, setWalletModal] = useState(false);
@@ -247,7 +242,6 @@ const Header = () => {
 
 
         if (remain >= 0) {
-          // setTimer(`${date}: ${hour}: ${mins}: ${secs}`)
           setTimer(
             <>
               <Box className="clock">
@@ -285,7 +279,6 @@ const Header = () => {
     getTransactionHistory();
     ttt();
     getHolders();
-    // getAllNftData();
     const unloadCallback = async () => {
       if (publicKey?.toBase58()) {
         const body = { walletAddress: publicKey.toBase58() }
@@ -295,8 +288,7 @@ const Header = () => {
     };
     window.addEventListener("beforeunload", unloadCallback);
     return () => window.removeEventListener("beforeunload", unloadCallback);
-    // getSpinData();
-  }, [connected]);
+  }, [global.walletConnected]);
 
   const getTransactionHistory = async () => {
     const body = { type: "Get THistory", walletAddress: publicKey?.toBase58() }
@@ -310,7 +302,7 @@ const Header = () => {
     }
   }
   const ttt = async () => {
-    if (connected) {
+    if (global.walletConnected) {
       const connection = new solanaWeb3.Connection(
         process.env.REACT_APP_QUICK_NODE
       );
@@ -387,36 +379,9 @@ const Header = () => {
     setGameOverModalOpen(false);
   };
 
-  const solWallet = () => {
-    if (!connected) {
-      return (
-        <WalletMultiButton
-          className={
-            themeBlack
-              ? (matchUpSm ? "wallet-adapter-button-trigger-black" : "wallet-adapter-button-trigger-black-mobile")
-              : (matchUpSm ? "wallet-adapter-button-trigger" : "wallet-adapter-button-trigger-mobile")
-          }
-          style={{ textTransform: "uppercase", fontSize: !matchUpSm && 0, background: !matchUpSm && "linear-gradient(#fa233d, #fe576a)", marginRight: !matchUpSm && "0px!important" }}
-        />
-      );
-    } else if (connected) {
-
-      return (
-        <WalletDisconnectButton
-          className={
-            themeBlack
-              ? (matchUpSm ? "wallet-adapter-button-trigger-black" : "wallet-adapter-button-trigger-black-mobile")
-              : (matchUpSm ? "wallet-adapter-button-trigger" : "wallet-adapter-button-trigger-mobile")
-          }
-          style={{ textTransform: "uppercase", fontSize: !matchUpSm && 0, background: !matchUpSm && "linear-gradient(#23fe7b, #57fe9a)", marginRight: !matchUpSm && "0px!important" }}
-        />
-      );
-    }
-  };
-
   const onWalletClick = () => {
     playgamesoundplay();
-    if (connected) {
+    if (global.walletConnected) {
       setWalletModal(true);
       setShowOption(false);
     } else {
@@ -573,6 +538,8 @@ const Header = () => {
       setShowToast(true);
       setAddress(res.address);
       window.localStorage.setItem('walletLocalStorageKey', res.address);
+      global.setWalletConnected(true);
+      global.setWalletAddress(res.address);
     }
     else {
       setShowToast(true);
@@ -585,6 +552,8 @@ const Header = () => {
     await window.localStorage.removeItem('walletLocalStorageKey');
     setShowToast(false);
     setAddress("");
+    global.setWalletConnected(false);
+    global.setWalletAddress('');
 }
 
   const changeWalletMode = (mode) => {
@@ -598,7 +567,7 @@ const Header = () => {
   };
 
   const onClickProfile = () => {
-    if (!connected) {
+    if (!global.walletConnected) {
       setConnectWalletModalOpen(true);
       return;
     }
@@ -874,11 +843,6 @@ const Header = () => {
     setWalletModal(false);
   }
 
-  const onClickLight = () => {
-    if (themeBlack) setThemeBlack(false);
-    else setThemeBlack(true);
-  };
-
   const showOptions = () => {
     if (gameState) return
     setShowOption(!showOption);
@@ -925,7 +889,6 @@ const Header = () => {
               <Button className={navbarItemClass()}>RECENT</Button>
             </a>
 
-             {/* {solWallet()} */}
             <img
               alt="coin"
               className="balance-image"
@@ -1038,8 +1001,14 @@ const Header = () => {
                   </Box>
                 </Box>
                 <Box style={{}}>
-                  {!matchUpSm &&
-                    <Button onClick={onWalletClick} id="walletIcon" className={navbarItemClass()} style={{ width: "100%", marginLeft: 0, padding: 0 }}>WALLET</Button>}
+                   {!matchUpSm && address? 
+                    <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ width: "100%", marginLeft: 0, padding: 0 }}>
+                      <span>{address.substr(0, 4)}...{address.slice(38)}</span>
+                    </Button>: 
+                      <Button onClick={onClickConnect} id="walletIcon" className={navbarItemClass()} style={{ width: "100%", marginLeft: 0, padding: 0 }}>
+                        <span>WALLET</span>
+                    </Button>
+                  }
                 </Box>
               </Box>
             </Box>}
@@ -1052,7 +1021,6 @@ const Header = () => {
                 <span>WALLET</span>
             </Button>
           }
-          {!matchUpSm && solWallet()}
         </Box>
 
         {isSmall && (
@@ -1071,7 +1039,7 @@ const Header = () => {
       {raffleMode && window.location.href.includes("game/") && <Box className="raffles" style={{ position: matchUpSm ? "absolute" : "relative", top: raffleHeight }}>
         <span className={themeBlack ? "sol-balance-black" : "sol-balance"} style={{ flexDirection: matchUpSm ? "column" : "row-reverse", alignItems: matchUpSm ? "flex-end" : "center", marginRight: matchUpSm && "3vw" }}>
           <Box style={{ display: "flex", alignItems: "center" }}>
-            {connected ? raffles : 0}x
+            {global.walletConnected ? raffles : 0}x
             <img className="ethereum" src={raffleImg} style={{ width: "40px" }} alt="Tickets" />
           </Box>
           <Box style={{ display: "flex", flexWrap: "nowrap" }}>
@@ -1124,7 +1092,6 @@ const Header = () => {
         aria-describedby="parent-modal-description"
       >
         <Box sx={styleFair} className="howTo" style={{
-          // overflowY: (!isDesktop && "scroll"),
           width: (isDesktop ? "35%" : "50%")
         }}>
           <Typography
@@ -1315,7 +1282,7 @@ const Header = () => {
               fontSize="15px"
               fontFamily="Mada"
             >
-              Your PirateRush Nugget NFTs will load here.
+              Your ArbiCasino Nugget NFTs will load here.
             </Typography>
             <Typography
               color="white"

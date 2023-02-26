@@ -37,7 +37,7 @@ const Footer = () => {
         {isDesktop && (
           <Box style={{marginBottom: 37}}>
             <p className="recentplays-text">
-              The #1 most trusted gaming on Solana
+              The #1 most trusted gaming on Arbitrum
             </p>
             <img src={logo} className="pirate" alt="logo" />
           </Box>
@@ -68,7 +68,7 @@ const Footer = () => {
               <span
                 className={isDesktop ? "solana-speed" : "solana-speed-mobile"}
               >
-                Solana Network: <span style={{ color: "#b8e986" }}> &nbsp;{solanaTps}</span>&nbsp; TPS
+                Arbitrum Network: <span style={{ color: "#b8e986" }}> &nbsp;{solanaTps}</span>&nbsp; TPS
                 <img src={axe} alt="axe" />
               </span>
             </Grid>

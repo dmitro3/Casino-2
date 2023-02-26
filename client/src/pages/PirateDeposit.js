@@ -1,18 +1,14 @@
 import { useState, useEffect } from "react";
-// import * as solanaWeb3 from "@solana/web3.js";
 import { useMediaQuery, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Header from "../components/GamePlay/Header";
 import Footer from "../components/GamePlay/Footer";
-import Splash from "../components/GamePlay/Splash";
 import background from "../assets/images/hero.png";
-// import background_blacktheme from "../assets/images/MinesRushHeader.jpg";
 import background_blacktheme from "../assets/images/slider1.jpg";
 
 import useGameStore from "../GameStore";
 import useSound from "use-sound";
 import backgroundmusic from "../assets/audios/backgroundmusic.mp3";
-import publicDir from "../assets/images/axe.png";
 
 import "./Turtle.scss";
 import Sidebar from "../components/GamePlay/Sidebar";

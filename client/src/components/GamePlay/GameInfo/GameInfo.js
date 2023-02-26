@@ -53,7 +53,7 @@ const GameInfo = () => {
                                 </Box>
                                 <Box className="right">
                                     <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>Mines</Typography>
-                                    <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >PirateRush</span></Typography>
+                                    <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >ArbiCasino</span></Typography>
                                     <Typography fontSize="14px" style={{ color: "grey" }}>Release: 09/10/2022</Typography>
                                 </Box>
                             </Box>
@@ -81,7 +81,7 @@ const GameInfo = () => {
                                             </Box>
                                             <Box className="infoItem" style={{ width: !isMedium ? "85%" : size * 0.15 }}>
                                                 <Typography className="left">Provider</Typography>
-                                                <Typography className="right">PirateRush</Typography>
+                                                <Typography className="right">ArbiCasino</Typography>
                                             </Box>
                                         </Box>
                                         <Box className="infoRow" style={{ flexWrap: !matchUpSm && "wrap" }}>
@@ -109,7 +109,7 @@ const GameInfo = () => {
                                 <Box className="about" style={{ width: !isMedium && "100%" }}>
                                     <Typography className="title">Game Description</Typography>
                                     <Box style={{ overflowY: "scroll", height: 200 }}>
-                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>Mines at PirateRush is our original flagship game. The first game we brought to our platform. Mines is a thrilling game that allows player to set their wager amount and set the number of bombs they want to play with. Players can choose from 3 bombs to 24 bombs. Maximise your odds of winning by playing 13 bombs and trying to uncover all 12 remaining coins! </Typography>
+                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>Mines at ArbiCasino is our original flagship game. The first game we brought to our platform. Mines is a thrilling game that allows player to set their wager amount and set the number of bombs they want to play with. Players can choose from 3 bombs to 24 bombs. Maximise your odds of winning by playing 13 bombs and trying to uncover all 12 remaining coins! </Typography>
                                         <Typography fontSize="14px" style={{ marginBottom: 10 }}>Mines is a thrilling take on the classic Minesweeper game. Cautiously explore the grid for your chance to grow your earnings and take home the treasure!</Typography>
                                         <Typography fontSize="14px" style={{ marginBottom: 10 }}>Among several games built on the blockchain, Mines at Pirate Rush is unrivaled. Players in Mines, a thrilling update on the classic Minesweeper game, must cautiously explore a grid for multiplier coins while dodging explosives</Typography>
                                         <Typography fontSize="14px" style={{ marginBottom: 10 }}>Ready to embark on a game tip? Try Mines now!</Typography>
@@ -135,7 +135,7 @@ const GameInfo = () => {
                                 </Box>
                                 <Box className="right">
                                     <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>Pirate Coin</Typography>
-                                    <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >PirateRush</span></Typography>
+                                    <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >ArbiCasino</span></Typography>
                                     <Typography fontSize="14px" style={{ color: "grey" }}>Release: 10/15/2022</Typography>
                                 </Box>
                             </Box>
@@ -163,7 +163,7 @@ const GameInfo = () => {
                                             </Box>
                                             <Box className="infoItem" style={{ width: !isMedium ? "85%" : size * 0.15 }}>
                                                 <Typography className="left">Provider</Typography>
-                                                <Typography className="right">PirateRush</Typography>
+                                                <Typography className="right">ArbiCasino</Typography>
                                             </Box>
                                         </Box>
                                         <Box className="infoRow" style={{ flexWrap: !matchUpSm && "wrap" }}>
@@ -211,11 +211,11 @@ const GameInfo = () => {
                             <Box className="title1">
                                 <Box className="left" style={{ background: "linear-gradient(#9844F7, #3A174D)" }}>
                                     <img src={doubleImage} alt="MineGame" />
-                                    <Typography style={{ color: "white", fontWeight: "bold" }}>PirateLoot</Typography>
+                                    <Typography style={{ color: "white", fontWeight: "bold" }}>ArbiCasino</Typography>
                                 </Box>
                                 <Box className="right">
-                                    <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>PirateLoot</Typography>
-                                    <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >PirateRush</span></Typography>
+                                    <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>ArbiCasino</Typography>
+                                    <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >ArbiCasino</span></Typography>
                                     <Typography fontSize="14px" style={{ color: "grey" }}>Release: 12/08/2022</Typography>
                                 </Box>
                             </Box>
@@ -243,7 +243,7 @@ const GameInfo = () => {
                                             </Box>
                                             <Box className="infoItem" style={{ width: !isMedium ? "85%" : size * 0.15 }}>
                                                 <Typography className="left">Provider</Typography>
-                                                <Typography className="right">PirateRush</Typography>
+                                                <Typography className="right">ArbiCasino</Typography>
                                             </Box>
                                         </Box>
                                         <Box className="infoRow" style={{ flexWrap: !matchUpSm && "wrap" }}>
@@ -271,8 +271,8 @@ const GameInfo = () => {
                                 <Box className="about" style={{ width: !isMedium && "100%" }}>
                                     <Typography className="title">Game Description</Typography>
                                     <Box style={{ overflowY: "scroll", height: "200px" }}>
-                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>PirateLoot boxes allow players to wager their SOLs with a variety of odd tables for the risk tolerant or low-risk players. Will ye go for the safe 5x multiplier or risk it all for the 500x multiplier? Easy to access, master and incredibly fun to indulge in.</Typography>
-                                        <Typography fontSize="14px">Not only can you choose from a variety of loot box prices you can also choose from one of six different odds tables to open yer box with. This has become a very popular game in the recent years and for a good reason. Try your luck and open a PirateLoot box!</Typography>
+                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>ArbiCasino boxes allow players to wager their SOLs with a variety of odd tables for the risk tolerant or low-risk players. Will ye go for the safe 5x multiplier or risk it all for the 500x multiplier? Easy to access, master and incredibly fun to indulge in.</Typography>
+                                        <Typography fontSize="14px">Not only can you choose from a variety of loot box prices you can also choose from one of six different odds tables to open yer box with. This has become a very popular game in the recent years and for a good reason. Try your luck and open a ArbiCasino box!</Typography>
                                     </Box>
                                 </Box>
                             </Box>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -14,10 +14,10 @@ import spinImg from "../../../assets/images/spin.gif";
 import bonusPirate from "../../../assets/images/bonusPirate.png";
 import bonusGroup from "../../../assets/images/bonusGroup.webp";
 import nugget from "../../../assets/images/nugget.png";
-import sol from "../../../assets/images/sol.png";
+import eth from "../../../assets/images/eth.png";
 import cashoutsound from "../../../assets/audios/CashoutSound.mp3";
 import playgame_sound from "../../../assets/audios/MinesClickSound.mp3";
-
+import { StoreContext } from "../../../store";
 import "./Bonuse.scss";
 import useGameStore from "../../../GameStore";
 import getNum from "../Tools/Calculate";
@@ -27,10 +27,10 @@ import { NavLink } from "react-router-dom";
 library.add(fas);
 
 const Sidebar = () => {
-
+  const global = useContext(StoreContext);
   const theme = useTheme();
   const matchUpSm = useMediaQuery(theme.breakpoints.up("sm"));
-  const { publicKey, connected } = useWallet();
+  const { publicKey } = useWallet();
   const [playgamesoundplay] = useSound(playgame_sound);
   const [cashoutsoundplay] = useSound(cashoutsound);
 
@@ -43,7 +43,6 @@ const Sidebar = () => {
   const { isReward, setIsReward } = useGameStore();
   const { spinDate, setSpinDate } = useGameStore();
   const { remain, setRemain } = useGameStore();
-  const { number, setNumber } = useGameStore();
   const { themeBlack } = useGameStore();
   const { timer, setTimer } = useGameStore();
   const { factor1, factor2, factor3, factor4 } = useGameStore();
@@ -55,7 +54,6 @@ const Sidebar = () => {
   const [count, setCount] = useState(false);
   const [wheelSize, setWheelSize] = useState(0);
   const [claimAlert, setClaimAlert] = useState(false);
-  // const [ isFinished, setIsFinished] = useState(false);
 
 
   const style = themeBlack
@@ -87,17 +85,16 @@ const Sidebar = () => {
     };
 
   useEffect(() => {
-    if (connected) {
+    if (global.walletConnected) {
       getSpinDate();
       getHolders();
     }
-  }, [connected]);
+  }, [global.walletConnected]);
   useEffect(() => {
     if (!remain) {
       spinCount(remain)
     }
   }, [remain]);
-
 
 
   // Spining functions
@@ -211,10 +208,9 @@ const Sidebar = () => {
 
   const onReward = async () => {
     if (isMuted) playgamesoundplay();
-    // if (!number) return;
     if (!loading) {
       if (!isHolder) return
-      if (!connected) {
+      if (!global.walletConnected) {
         setConnectWalletModalOpen(true);
       } else {
         setSpinOpen(true)
@@ -222,11 +218,6 @@ const Sidebar = () => {
     }
   }
 
-  // const getRaffleWinners = async () => {
-  //   const res = await axios.get(
-  //     `${process.env.REACT_APP_BACKEND_URL}/api/admin/getRaffleWinners`);
-  //   setWinnerList(res.data);
-  // }
   const getHolders = async () => {
     setLoading(true);
     if (publicKey?.toBase58()) {
@@ -262,7 +253,6 @@ const Sidebar = () => {
       if (res.data.status) {
         setRemain(res.data.content.spinNum);
         setSpinDate(res.data.content.spinDate);
-        // spinCount(res.data.content);
       } else {
         console.log("err");
       }
@@ -276,7 +266,6 @@ const Sidebar = () => {
   };
 
   const size = document.getElementById("gamePlay")?.offsetWidth / 8
-
 
   useEffect(() => {
     function handleResize() {
@@ -307,15 +296,15 @@ const Sidebar = () => {
             X
           </Box>
           <Box className="parg title">
-            <img style={{ width: 20, height: 20, borderRadius: "50%", padding: 5, background: "grey" }} src={prize > 1 ? nugget : sol} alt="SOL" />
+            <img style={{ width: 20, height: 20, borderRadius: "50%", padding: 5, background: "grey" }} src={prize > 1 ? nugget : eth} alt="ETH" />
             <Typography fontSize="1.2rem">&nbsp;Claimed</Typography>
           </Box>
           <Box className="parg">
-            Credit to your <span style={{ fontWeight: "bold", color: "#F5B14A" }}>&nbsp;{prize > 1 ? "NUG" : "SOL"}&nbsp;</span> account
+            Credit to your <span style={{ fontWeight: "bold", color: "#F5B14A" }}>&nbsp;{prize > 1 ? "NUG" : "ETH"}&nbsp;</span> account
           </Box>
           <Box className="parg">
             Amount:
-            <img style={{ width: 20, height: 20 }} src={prize > 1 ? nugget : sol} alt={prize > 1 ? "NUGGET" : "SOL"} />
+            <img style={{ width: 20, height: 20 }} src={prize > 1 ? nugget : eth} alt={prize > 1 ? "NUGGET" : "ETH"} />
             {prize}
           </Box>
         </Box>}
@@ -326,15 +315,11 @@ const Sidebar = () => {
             <img src={spinImg} alt="Spin" />
             <Box color={themeBlack ? "white" : "black"} style={{ display: "flex", fontSize: matchUpSm ? "1.5vw" : "3vw", marginLeft: "10px", fontWeight: "bold" }}>
               FREE SPIN
-              {/* -
-              <Typography color="#F5B14A" fontSize={matchUpSm ? "1.5vw" : "3vw"}  >
-                WIN SOLS
-              </Typography> */}
             </Box>
 
           </Box>
           <Box style={{ fontSize: 15, fontFamily: "Mada" }}>
-            For PirateRush NFT Holders
+            For ArbiCasino NFT Holders
             <sup>
               <NavLink to="/FAQs" className="question" >?</NavLink>
             </sup>
@@ -387,30 +372,23 @@ const Sidebar = () => {
                 <img src={spinImg} style={{ border: "3px solid #494646", borderRadius: "50%" }} alt="Spin" />
                 <Box color={themeBlack ? "white" : "black"} style={{ display: "flex", alignItems: "center", fontFamily: "Mada", fontSize: matchUpSm ? "1.5vw" : "3vw", marginLeft: "10px", fontWeight: "bold" }}>
                   FREE SPIN &nbsp;
-                  {/* <Typography color="#F5B14A" fontFamily="Mada" fontSize={matchUpSm ? "1.5vw" : "3vw"} >
-                    WIN SOLS
-                  </Typography> */}
                 </Box>
 
               </Box>
               <Box className="sub">
                 <Typography fontSize={matchUpSm ? "1vw" : "2.5vw"} fontFamily="Mada">YOUR WINNINGS</Typography>
                 <Box className="prize">
-                  <img src={prize > 1 ? nugget : sol} alt="NUG" style={{ width: matchUpSm ? "1.5vw" : "3vw", height: matchUpSm ? "1.5vw" : "3vw" }} />
+                  <img src={prize > 1 ? nugget : eth} alt="NUG" style={{ width: matchUpSm ? "1.5vw" : "3vw", height: matchUpSm ? "1.5vw" : "3vw" }} />
                   <Typography fontSize={matchUpSm ? "1.5vw" : "3vw"} fontFamily="Mada" style={{ marginLeft: "5px" }}>{prize}</Typography>
                 </Box>
               </Box>
               <Box className="wheels" style={{
                 filter: isReward && "blur(10px)",
-                // left: isDesktop ? "5vw" : isSmall ? "3vw" : matchUpSm ? "0vw" : "-5vw"
               }}>
                 <Wheel
                   segments={segments}
                   segColors={segColors}
-                  // winningSegment={5.00}
                   onFinished={(prize) => onFinished(prize)}
-                  // primaryColor="black"
-                  // contrastColor="white"
                   buttonText="SPIN!"
                   isOnlyOnce={false}
                   size={matchUpSm ? size : 2 * size}
@@ -418,7 +396,7 @@ const Sidebar = () => {
                   downDuration={400}
                   fontFamily="Mada"
                   className="wheel"
-                  img={sol}
+                  img={eth}
                 />
               </Box>
               {remain ?
@@ -433,13 +411,6 @@ const Sidebar = () => {
               {isReward && <Box className="clocks">
                 {timer}
               </Box>}
-              {/* { isFinished && 
-              <Box>
-                <Typography>Congratulation!</Typography>
-                <Typography>{`You won ${prize}`}</Typography>
-                <button onClick={onFinished}>Gain Prize</button>
-              </Box>
-            } */}
             </Box>
           </Box>
         </Box>

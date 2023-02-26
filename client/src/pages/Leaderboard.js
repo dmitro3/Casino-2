@@ -13,7 +13,6 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import bomb from "../assets/images/bomb.png";
-import link from "../assets/images/link.png";
 import sol from "../assets/images/sol.png"
 import nugImg from "../assets/images/nugget.png"
 import gemImg from "../assets/images/gem.png"
@@ -22,8 +21,6 @@ import { useState } from "react";
 import useGameStore from "../GameStore";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-// import * as process.env from "../private";
-import { RestartAlt } from "@mui/icons-material";
 import Sidebar from "../components/GamePlay/Sidebar/Sidebar";
 
 const Leaderboard = () => {
@@ -35,7 +32,6 @@ const Leaderboard = () => {
   const [nuggetNetGainList, setNuggetNetGainList] = useState([]);
   const [gemNetGainList, setGemNetGainList] = useState([]);
   const [ticketList, setTicketList] = useState([]);
-  // const [lastplayedlist, setLastplayedlist] = useState([]);
   const [showMode, setDayOrWeek] = useState(0);
 
   const onClickToday = async () => {
@@ -76,28 +72,16 @@ const Leaderboard = () => {
         if (walletAddress[i] === data.walletAddress) {
           temp = true;
           if (data.currencyMode === "mainNug") {
-            // if (!solNetGain[i]) solNetGain[i] = 0;
             solNetGain[i] += data.payout;
           } else if (data.currencyMode === "bonusNug") {
-            // if (!nuggetNetGain[i]) nuggetNetGain[i] = 0;
             nuggetNetGain[i] += data.payout;
           } else if (data.currencyMode === "gem") {
-            // if (!gemNetGain[i]) gemNetGain[i] = 0;
             gemNetGain[i] += data.payout;
           }
           continue;
         }
       }
 
-      // if (temp === false) {
-      //   walletAddress.push(data.walletAddress);
-      //   // if (data.currencyMode === "mainNug") {
-      //   //   solNetGain.push(data.payout);
-      //   // } else if (data.currencyMode === "bonusNug") {
-      //   //   console.log("bonus", data.payout)
-      //   //   nuggetNetGain.push(data.payout);
-      //   // }
-      // }
     });
     const tempSolNetGain = Array.from(solNetGain);
     const tempnuggetNetGain = Array.from(nuggetNetGain);
@@ -107,12 +91,6 @@ const Leaderboard = () => {
     tempSolNetGain.sort((a, b) => {
       return b - a;
     });
-    // tempnuggetNetGain.sort((a, b) => {
-    //   return b - a;
-    // });
-    // tempGemNetGain.sort((a, b) => {
-    //   return b - a;
-    // });
 
     for (let j = 0; j < tempSolNetGain.length; j++) {
       for (let k = 0; k < solNetGain.length; k++) {
@@ -122,23 +100,6 @@ const Leaderboard = () => {
         }
       }
     }
-
-    // for (let j = 0; j < tempnuggetNetGain.length; j++) {
-    //   for (let k = 0; k < nuggetNetGain.length; k++) {
-    //     if (tempnuggetNetGain[j] === nuggetNetGain[k]) {
-    //       tempwalletAddress[j] = walletAddress[k];
-    //       nuggetNetGain[k] = -1;
-    //     }
-    //   }
-    // }
-    // for (let j = 0; j < tempGemNetGain.length; j++) {
-    //   for (let k = 0; k < gemNetGain.length; k++) {
-    //     if (tempGemNetGain[j] === gemNetGain[k]) {
-    //       tempwalletAddress[j] = walletAddress[k];
-    //       gemNetGain[k] = -1;
-    //     }
-    //   }
-    // }
 
     let tempDate = Date.parse("01/01/2022");
     for (let l = 0; l < tempwalletAddress.length; l++) {
@@ -155,7 +116,6 @@ const Leaderboard = () => {
     const tempNuggetG = Array.from(tempnuggetNetGain.slice(0, 20));
     const tempGemG = Array.from(tempGemNetGain.slice(0, 20));
     const tempW = Array.from(tempwalletAddress.slice(0, 20));
-    // setLastplayedlist(playdate);
     setSolNetGainList(tempSOLG);
     setNuggetNetGainList(tempNuggetG);
     setGemNetGainList(tempGemG);
@@ -183,41 +143,18 @@ const Leaderboard = () => {
       } 
     })
     result.data.forEach((data, key) => {
-      // let temp = false;
       for (let i = 0; i < walletAddress.length; i++) {
         if (walletAddress[i] === data.walletAddress) {
-          // temp = true;
           if (data.currencyMode === "mainNug") {
-            // if (!solNetGain[i]) {
-            //   solNetGain[i] = 0;
-            //   console.log("newSol", solNetGain[i])
-            // }
             solNetGain[i] += data.payout;
           } else if (data.currencyMode === "bonusNug") {
-            // if (!nuggetNetGain[i]) {
-            //   nuggetNetGain[i] = 0;
-            //   console.log("newNug", nuggetNetGain[i]);
-            // }
             nuggetNetGain[i] += data.payout;
           } else if (data.currencyMode === "gem") {
-            // if (!gemNetGain[i]) {
-            //   gemNetGain[i] = 0;
-            //   console.log("newGem", gemNetGain[i])
-            // }
             gemNetGain[i] += data.payout
           }
           continue;
         }
       }
-      // if (temp === false) {
-      //   console.log("wallet", data.walletAddress)
-      //   walletAddress.push(data.walletAddress);
-      //   // if (data.currencyMode === "mainNug") {
-      //   //   solNetGain.push(data.payout);
-      //   // } else if (data.currencyMode === "bonusNug") {
-      //   //   nuggetNetGain.push(data.payout)
-      //   // }
-      // }
     });
 
     const tempSolNetGain = Array.from(solNetGain);
@@ -336,10 +273,8 @@ const Leaderboard = () => {
           <Grid item xs={10} className="title">
             <img className="mine-logo" alt="bomb" src={bomb} />
             <div className="mine-link">
-              <p className="minerush-text">PirateRush Leaderboard</p>
+              <p className="minerush-text">ArbiCasino Leaderboard</p>
               <NavLink className="nav-link" to={`/`}>
-                {/* <img className="link-img" alt="bomb" src={link} /> */}
-                {/* <span className="minerush-link">piraterush.com</span> */}
               </NavLink>
             </div>
           </Grid>
@@ -393,7 +328,7 @@ const Leaderboard = () => {
                     <TableHead className="table-header">
                       <TableRow className="table-row">
                         <TableCell align="center">Miner</TableCell>
-                        <TableCell align="center">SOL Net Gain</TableCell>
+                        <TableCell align="center">ETH Net Gain</TableCell>
                         <TableCell align="center">Nugget Net Gain</TableCell>
                         <TableCell align="center">GEM Net Gain</TableCell>
                         <TableCell align="center">Last Played</TableCell>

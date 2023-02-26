@@ -99,7 +99,7 @@ const PirateDepositComponent = () => {
     return (
       <Grid key={key} style={{ margin: 10 }}>
         <img
-          alt="PirateRush"
+          alt="ArbiCasino"
           src={item.data.image}
           className={
             nftSelected?.includes(key) ? "avatar-image active" : "avatar-image"
@@ -259,7 +259,7 @@ const PirateDepositComponent = () => {
       <Grid item xs={0} sm={2} md={3} lg={4} />
       <Grid item xs={12} sm={8} md={6} lg={4} className="pirateNFTs">
         <Typography className="title">
-          OG PirateRush NFTs
+          OG ArbiCasino NFTs
         </Typography>
         <Typography className="subtitile" color="white">
           Deposit your OG Pirates here and recieve the new OG Pirate Airdrop on Mint Day!(Max <span style={{ fontSize: "bold" }}>6</span> NFTs at a time)
@@ -276,9 +276,6 @@ const PirateDepositComponent = () => {
               <img src={OGPirate} alt="OGPirate" style={{ display: "flex", flexWrap: "wrap", alignContent: "center" }} />
           }
         </Box>
-        {/* <Typography fontSize="16px" color="white">
-          Your PirateRush NFTs will load here.
-        </Typography> */}
         <Box className="buttons">
           {connected ?
             <Button onClick={depositNow}>

@@ -1,13 +1,13 @@
 import axios from "axios";
 import useSound from "use-sound";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { useTheme } from "@mui/material/styles";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Box, Grid, Button, Modal, Typography, Slider, useMediaQuery, } from "@mui/material";
 
 import nug from "../../../assets/images/nugget.png"
-import sol from "../../../assets/images/sol.png"
+import eth from "../../../assets/images/eth.png"
 import gemImg from "../../../assets/images/gem.png"
 import cashLoader from "../../../assets/images/ecb.gif";
 import options from "../../../assets/images/setting.png";
@@ -18,20 +18,20 @@ import playgame_sound from "../../../assets/audios/MinesClickSound.mp3";
 import yellowRectangle from "../../../assets/images/yellowrectangle.png";
 import mineamountsetting from "../../../assets/images/mineamountsetting.png";
 import { useWallet } from "@solana/wallet-adapter-react";
+import { StoreContext } from "../../../store";
 
 import "./BettingPanel.scss";
 import useGameStore from "../../../GameStore";
 import getNum from "../Tools/Calculate";
-import { CurrencyBitcoin } from "@mui/icons-material";
 
 const BettingPanel = ({
   setLoading,
   setDepositText,
 }) => {
 
+  const global = useContext(StoreContext);
   const theme = useTheme();
   const { isMuted } = useGameStore();
-  const { connected } = useWallet();
   const [cashoutsoundplay] = useSound(cashoutsound);
   const { publicKey } = useWallet();
   const [playgamesoundplay] = useSound(playgame_sound);
@@ -194,7 +194,7 @@ const BettingPanel = ({
     if (isMuted) playgamesoundplay();
     if (clicked) return;
     setClicked(true);
-    if (!connected) {
+    if (!global.walletConnected) {
       setConnectWalletModalOpen(true);
       setClicked(false)
       return;
@@ -276,19 +276,8 @@ const BettingPanel = ({
           setNumber(depoResult.data)
           random = depoResult.data
           setBettingAmount(depoResult.bettingAmount);
-          // setMineAmount(depoResult.mineAmount);
           setGameState(1);
         } else {
-          // setNumber(depoResult.data)
-          // random = depoResult.data
-          // if (bettingAmount * 1.135 > nugAmount) {
-          //   setAlerts({
-          //     type: "error",
-          //     content: "Not enough funds - Where’s yer money?!"
-          //   });
-          //   setClicked(false);
-          //   return;
-          // }
           depositResult = await deposit(depoResult.data);
           random = depositResult.content;
           if (!depositResult.status) {
@@ -1005,7 +994,6 @@ const BettingPanel = ({
                     ? 1
                     : parseFloat((nextMultiplier).toFixed(3))) :
                   2}
-                {/* {gameMode === "double" && 2} */}
               </Typography>
             </Typography>
           </div>
@@ -1035,7 +1023,7 @@ const BettingPanel = ({
           <Box className="betting-amount" style={{ margin: !isDesktop && "auto" }}>
             <Box className="betting-amount-value">
               {currencyMode === "mainNug" &&
-                <img className="solana-image" alt="SOL" src={sol} />}
+                <img className="solana-image" alt="ETH" src={eth} />}
               {currencyMode === "bonusNug" &&
                 <img className="solana-image" alt="NUG" src={nug} />
               }
@@ -1222,7 +1210,6 @@ const BettingPanel = ({
               </Button>
               <Button
                 className="bomb-amounts"
-                // onClick={(e) => onBNumberClick(e, 24)}
                 onClick={onOpen}
                 disabled={gameState === 0 ? false : true}
                 style={
@@ -1251,25 +1238,13 @@ const BettingPanel = ({
         sx={{ display: isDesktop ? "block" : "none!important" }}
         onClick={() => setShowDiscord(true)}
       >
-        {/* <a href="https://discord.com/channels/1001809381446393886/1001811649415626752"> */}
         <img
           className="message-link"
           src={messaging}
           alt="msg"
           onClick={onClickDiscordMsg}
         />
-        {/* </a> */}
       </Grid>
-      {/* {isDesktop && */}
-      {/* // <Box className="pinWheel">
-        //   <NavLink className="container" to="/bonuses" >
-        //     {!isReward && <Typography className="badge"></Typography>}
-        //     <img src={spinImg} alt="SPIN" />
-        //   </NavLink>
-        // </Box> */}
-      {/* // } */}
-      {/* src="https://e.widgetbot.io/channels/923082086372483183/963457221939826738/?preset=crate&api=e3128267-dd62-4343-b921-6622a4877302&avatar=https%3A%2F%2Fi.imgur.com%2FWtWzHUL.png" */}
-      {/* <iframe src="https://e.widgetbot.io/channels/1001809381446393886/1001811649415626752/?preset=crate&api=e3128267-dd62-4343-b921-6622a4877302&avatar=https%3A%2F%2Fi.imgur.com%2FWtWzHUL.png" */}
       <Modal
         open={showDiscord}
         onClose={() => setShowDiscord(false)}
@@ -1362,22 +1337,18 @@ const BettingPanel = ({
                 {currencyMode === "mainNug" &&
                   <span style={{ display: "flex", alignItems: "center" }}>
                     {parseFloat((gameMode === "minesrush" ? (gameStep + mineAmount > 24 ? nextMultiplier : previousMultiplier) : nextMultiplier) * bettingAmount).toFixed(3)}
-                    <img src={sol} alt="SOL" style={{ width: "20px", height: "20px" }} />
+                    <img src={eth} alt="ETH" style={{ width: "20px", height: "20px" }} />
                   </span>}
                 {currencyMode === "bonusNug" &&
                   <span style={{ display: "flex", alignItems: "center" }}>
                     {parseFloat((gameMode === "minesrush" ? (gameStep + mineAmount > 24 ? nextMultiplier : previousMultiplier) : nextMultiplier) * bettingAmount).toFixed(3)}
                     <img src={nug} alt="NUG" style={{ width: "20px", height: "20px" }} /> &nbsp;
-                    {/* ({parseFloat((gameMode === "minesrush" ? (gameStep + mineAmount > 24 ? nextMultiplier : previousMultiplier) : nextMultiplier) * bettingAmount * 0.25 * 0.001).toFixed(3)}
-                    <img src={sol} alt="SOL" style={{ width: "20px", height: "20px" }} />) */}
                   </span>
                 }
                 {currencyMode === "gem" &&
                   <span style={{ display: "flex", alignItems: "center" }}>
                     {parseFloat((gameMode === "minesrush" ? (gameStep + mineAmount > 24 ? nextMultiplier : previousMultiplier) : nextMultiplier) * bettingAmount).toFixed(3)}
                     <img src={gemImg} alt="NUG" style={{ width: "20px", height: "20px" }} /> &nbsp;
-                    {/* ({parseFloat((gameMode === "minesrush" ? (gameStep + mineAmount > 24 ? nextMultiplier : previousMultiplier) : nextMultiplier) * bettingAmount * 0.25 * 0.001).toFixed(3)}
-                    <img src={sol} alt="SOL" style={{ width: "20px", height: "20px" }} />) */}
                   </span>
                 }
               </span>

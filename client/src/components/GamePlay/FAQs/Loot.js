@@ -1,117 +1,21 @@
 import { useState } from "react";
-import axios from "axios";
 import useSound from "use-sound";
-import { useWallet } from "@solana/wallet-adapter-react";
 import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import useGameStore from "../../../GameStore";
 import minestickerPoster from "../../../assets/images/pirateOctor.png";
 import minesticker from "../../../assets/images/octopus.webm";
-import minesticker_white from "../../../assets/images/pirateOctor_light.png";
-import gold from "../../../assets/images/gold.svg";
 import lootBox from "../../../assets/audios/lootBox1.mp3";
 import "./Loot.scss";
-import GetNum from "../Tools/Calculate";
-import { AirlineSeatLegroomExtraSharp, KeyboardArrowDown, SettingsPhoneTwoTone } from "@mui/icons-material";
+import { KeyboardArrowDown } from "@mui/icons-material";
 import { useRef } from "react";
 
 const Loot = () => {
-  const theme = useTheme();
   const octoV = useRef(null);
-  const { publicKey, connected } = useWallet();
-  const [lootsoundplay] = useSound(lootBox);
   const isDesktop = useMediaQuery("(min-width:700px)");
-  const { isMuted } = useGameStore();
   const { themeBlack } = useGameStore();
-  const { setGameHistory } = useGameStore();
-  const { number, setNumber } = useGameStore();
-  const { alerts, setAlerts } = useGameStore();
-  const { nugAmount, setNugAmount } = useGameStore();
-  const { bonusNugAmount, setBonusNugAmount } = useGameStore();
-  const { currencyMode } = useGameStore();
-  const { factor1, factor2, factor3, factor4 } = useGameStore();
-
-  const [animation1, setAnimation1] = useState(false);
-  const [animation2, setAnimation2] = useState(false);
-  const [animation3, setAnimation3] = useState(false);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
-
-  // const getHistory = async () => {
-  //   await axios
-  //     .get(`${process.env.REACT_APP_BACKEND_URL}/api/history/get`)
-  //     .then((res) => {
-  //       const newGameHistory = res.data;
-  //       setGameHistory(newGameHistory);
-  //     });
-  // };
-
-  // const openBox = async (amount) => {
-  //   if (!connected) return
-  //   if (amount === 50)
-  //     setAnimation1(true);
-  //   if (amount === 250)
-  //     setAnimation2(true);
-  //   if (amount === 500)
-  //     setAnimation3(true);
-  //   const num = await GetNum(number, factor1, factor2, factor3, factor4)
-
-  //   const body = {
-  //     amount: amount,
-  //     walletAddress: publicKey.toBase58(),
-  //     num: num,
-  //     currencyMode: currencyMode,
-
-  //   }
-  //   if (isMuted) lootsoundplay();
-
-  //   setTimeout(async () => {
-  //     setAnimation1(false);
-  //     setAnimation2(false);
-  //     setAnimation3(false);
-  //     await axios
-  //       .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/lootBox`, body)
-  //       .then(async (res) => {
-  //         setNumber(res.data.data)
-  //         if (res.data.status) {
-  //           let earning
-  //           setNugAmount(parseFloat(res.data.content.nugAmount).toFixed(3));
-  //           setBonusNugAmount(parseFloat(res.data.content.bonusNugAmount).toFixed(3));
-  //           if (currencyMode === "mainNug") {
-  //             earning = res.data.content.nugAmount - nugAmount + amount;
-  //           } else {
-  //             earning = res.data.content.nugAmount - nugAmount;
-  //           }
-  //           if (earning > 0) {
-  //             if(currencyMode === "mainNug") {
-  //               setAlerts({
-  //                 type: "success",
-  //                 content: `Congrats!, you won ${parseFloat(earning).toFixed(0)} Nuggets`
-  //               })
-  //             } else {
-  //               setAlerts({
-  //                 type: "success",
-  //                 content: `Congrats!, you won ${parseFloat(earning*4).toFixed(0)} Bonus Nuggets (${parseFloat(earning).toFixed(3)} Nuggets)`
-  //               })
-  //             }
-  //           } else {
-  //             setAlerts({
-  //               type: "success",
-  //               content: `ARRGH, YER BOOTIE WAS STOLEN, YOU WON 0 NUGGETS`
-  //             })
-  //           }
-
-  //         } else {
-  //           setAlerts({
-  //             type: "error",
-  //             content: "ARRGH, YER BOOTIE WAS STOLEN, YOU WON 0 NUGGETS"
-  //           })
-  //         }
-  //       })
-  //   getHistory();
-  // }, 5000)
-  // }
-
   const playOcto = () => {
     const random = Math.floor(Math.random() * 10) + 5;
     setTimeout(() => {
@@ -120,31 +24,7 @@ const Loot = () => {
   }
 
   return (
-    // <Grid className="loot-container" container>
-    //   {/* {alerts.content &&
-    //     <div className="alerts">
-    //       <div className={alerts.type}>{alerts.content.toString()}</div>
-    //     </div>
-    //   } */}
-    //   <Grid
-    //     container
-    //     spacing={2}
-    //     style={{ flexBasis: isDesktop ? "60%" : "100%", margin: "auto" }}
-    //   >
-    //     <Box className="octo" style={{ width: isDesktop ? "60vw" : "100vw" }}>
-    //       <img src={themeBlack ? minesticker : minesticker_white} alt="LOGO" style={{ width: "480px" }} />
-    //     </Box>
     <Grid className="loot-container" container>
-      {/* {alerts.content &&
-        <Box className="alerts">
-          <Box className="alertGroup">
-            <Box>
-              <Box>{alert2.content.toString()}</Box>
-              <Box style={{ marginTop: "10px" }}>{alerts.content.toString()}</Box>
-            </Box>
-          </Box>
-        </Box>
-      } */}
       {isDesktop &&
         <Grid xs={1} item sm={2} md={3} lg={4} />
       }
@@ -163,7 +43,7 @@ const Loot = () => {
           </Box>
           <Box className="oddGroup">
             <Box className={themeBlack ? "odds fontWhite backgroundBlack" : "odds fontBlack backgroundWhite"} onClick={() => setShow1(!show1)}>
-              <Box>What are the PirateLoot odds?</Box>
+              <Box>What are the ArbiCasino odds?</Box>
               <KeyboardArrowDown />
             </Box>
             <Box className={show1 ? "tables show1" : "tables hidden1"}>

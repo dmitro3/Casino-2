@@ -9,9 +9,7 @@ const Password = () => {
 
   const { password } = useGameStore();
   const { setDoubleCheck } = useGameStore();
-
   const [pwd, setPwd] = useState("");
-
   const setPassword = (e) => {
     setPwd(e.target.value);
   }

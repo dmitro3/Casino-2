@@ -170,7 +170,7 @@ const RecentPlays = ({ /*socket*/ }) => {
           {isDesktop && <TableCell align="center" className="rest" style={{ color: themeBlack ? "white" : "black" }}>x{multiplier}</TableCell>}
           {isDesktop && item.game === "Minesrush" && <TableCell className="rest img" align="center" style={{ paddingTop: "8px" }}><img src={minesrush} style={{ width: "3vw" }} alt="Minesrush" /></TableCell>}
           {isDesktop && item.game === "double" && <TableCell align="center" className="rest img" style={{ paddingTop: "8px" }}><img src={double} alt="50/50" style={{ width: "3vw" }} /></TableCell>}
-          {isDesktop && item.game === "PirateLoot" && <TableCell align="center" className="rest img" style={{ paddingTop: "8px" }}><img src={lootImg} alt="PirateLoot" style={{ width: "50px", height: "50px", background: "#101014", border: "3px solid #3a3a3a", borderRadius: "50%" }} /></TableCell>}
+          {isDesktop && item.game === "ArbiCasino" && <TableCell align="center" className="rest img" style={{ paddingTop: "8px" }}><img src={lootImg} alt="ArbiCasino" style={{ width: "50px", height: "50px", background: "#101014", border: "3px solid #3a3a3a", borderRadius: "50%" }} /></TableCell>}
         </TableRow>
       );
     }

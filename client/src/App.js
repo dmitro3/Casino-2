@@ -32,12 +32,14 @@ import NotFoundPage from "./pages/NotFound";
 import DoubleGame from "./pages/DoubleGame";
 import Bonuses from "./pages/Bonuses";
 import ComingSoon from "./pages/ComingSoon";
-import PirateLoot from "./pages/PirateLoot";
+import ArbiCasino from "./pages/ArbiCasino";
 import FAQs from "./pages/FAQs.js";
 import Turtle from "./pages/Turtle.js";
 import Landing from "./pages/Landing";
 import PirateDeposit from "./pages/PirateDeposit";
 import MintNFTs from "./pages/MintNFTs";
+import { StoreContext } from './store';
+
 
 require("@solana/wallet-adapter-react-ui/styles.css");
 
@@ -55,6 +57,9 @@ function App() {
 
   const solNetwork = "mainnet-beta";
   const endpoint = process.env.REACT_APP_QUICK_NODE;
+
+  const [walletConnected, setWalletConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState('');
 
   useEffect(() => {
     if (window.location.href.includes("game/coins")) {
@@ -91,30 +96,38 @@ function App() {
     [solNetwork]
   );
 
+
+  const value = {
+    walletConnected, setWalletConnected,
+    walletAddress, setWalletAddress,
+  }
+
   return (
     <ConnectionProvider endpoint={endpoint}>
       <WalletProvider wallets={wallets}>
-        <WalletModalProvider>
-          <Container className="App" disableGutters={true} maxWidth={false}>
-            <Router basename="/game">
-              <Routes>
-                <Route path={`/`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Landing />} />
-                <Route path={`/admindashboard`} element={<AdminDashboard /*socket={socket}*/ />} />
-                { enableMines && <Route path={`/mines`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <GamePlay /*socket={socket}*/ />} />}
-                { enableDouble && <Route path={`/coins`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <DoubleGame />} />}
-                <Route path={`/leaderboard`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Leaderboard />} />
-                <Route path={`/bonuses`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Bonuses /*socket={socket}*/ />} />
-                { enableLoot && <Route path={`/loot`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <PirateLoot />} />}
-                <Route path={`/FAQs`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <FAQs />} />
-                { enableTurtle && <Route path={`/beta-turtles`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Turtle />} />}
-                <Route path={`/pirateDeposit`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <PirateDeposit />} />
-                <Route path={`/mintNFTs`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <MintNFTs />} />
-                {/* <Route path={`/comingSoon`} element={<ComingSoon />} /> */}
-                <Route path={`/*`} element={<NotFoundPage />} />
-              </Routes>
-            </Router>
-          </Container>
-        </WalletModalProvider>
+        <StoreContext.Provider value= {value}>
+          <WalletModalProvider>
+            <Container className="App" disableGutters={true} maxWidth={false}>
+              <Router basename="/game">
+                <Routes>
+                  <Route path={`/`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Landing />} />
+                  <Route path={`/admindashboard`} element={<AdminDashboard /*socket={socket}*/ />} />
+                  { enableMines && <Route path={`/mines`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <GamePlay /*socket={socket}*/ />} />}
+                  { enableDouble && <Route path={`/coins`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <DoubleGame />} />}
+                  <Route path={`/leaderboard`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Leaderboard />} />
+                  <Route path={`/bonuses`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Bonuses /*socket={socket}*/ />} />
+                  { enableLoot && <Route path={`/loot`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <ArbiCasino />} />}
+                  <Route path={`/FAQs`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <FAQs />} />
+                  { enableTurtle && <Route path={`/beta-turtles`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Turtle />} />}
+                  <Route path={`/pirateDeposit`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <PirateDeposit />} />
+                  <Route path={`/mintNFTs`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <MintNFTs />} />
+                  {/* <Route path={`/comingSoon`} element={<ComingSoon />} /> */}
+                  <Route path={`/*`} element={<NotFoundPage />} />
+                </Routes>
+              </Router>
+            </Container>
+          </WalletModalProvider>
+        </StoreContext.Provider>
       </WalletProvider>
     </ConnectionProvider>
   );

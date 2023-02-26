@@ -8,7 +8,6 @@ const Content = ({
   setLoading,
   depositText,
   setDepositText,
-  // socket,
 }) => {
   return (
     <>

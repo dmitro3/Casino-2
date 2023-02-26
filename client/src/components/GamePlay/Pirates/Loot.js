@@ -26,7 +26,7 @@ import lootyBox6 from "../../../assets/images/Chest/lootBox6.png";
 import minesticker from "../../../assets/images/octopus.webm";
 import minestickerPoster from "../../../assets/images/pirateOctor.png";
 import nugImg from "../../../assets/images/nugget.png";
-import sol from "../../../assets/images/sol.png";
+import eth from "../../../assets/images/eth.png";
 import gemImg from "../../../assets/images/gem.png";
 import lootBox from "../../../assets/audios/lootBox1.mp3";
 import "./Loot.scss";
@@ -146,27 +146,6 @@ const Loot = () => {
               setEarning(res.data.content.earning);
               if (res.data.content.raffle > 0)
                 setRaffles(res.data.content.raffle);
-              // if (currencyMode === "mainNug") {
-              //   setAlerts({
-              //     type: "success",
-              //     content: `YE WON ${parseFloat(res.data.content.earning).toFixed(3)} SOL`
-              //   })
-              //   setAlert2({
-              //     type: "success",
-              //     content: winPhrase[phrase]
-              //   })
-              //   countDownInterval();
-              // } else {
-              //   setAlerts({
-              //     type: "success",
-              //     content: `YE WON ${parseFloat(res.data.content.earning * 4 * bNugRatio).toFixed(3)} NUGGETS (${parseFloat(res.data.content.earning).toFixed(3)} SOL)`
-              //   })
-              //   setAlert2({
-              //     type: "success",
-              //     content: winPhrase[phrase]
-              //   })
-              //   countDownInterval();
-              // }
               if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 50)) {
                 anim11.current?.play();
                 setAnimation11(true);
@@ -216,7 +195,6 @@ const Loot = () => {
               content: "INSUFFICIENT FUNDS."
             })
           }
-          // getHistory();
         })
     } else {
       setAlerts({
@@ -224,139 +202,15 @@ const Loot = () => {
         content: "Please try again."
       })
     }
-
-
-    // if (isSafari || isMobileSafari) {
-    //   // if (isMuted) lootsoundplay();
-    //   setTimeout(async () => {
-    //     const num = GetNum(number, factor1, factor2, factor3, factor4)
-
-    //     const body = {
-    //       amount: amount,
-    //       walletAddress: publicKey.toBase58(),
-    //       num: num,
-    //       currencyMode: currencyMode,
-    //       oddOption: oddOption
-    //     }
-
-    //     await axios
-    //       .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/lootBox`, body)
-    //       .then(async (res) => {
-    //         setNumber(res.data.data)
-    //         if (res.data.status) {
-    //           let earning
-    //           setNugAmount(parseFloat(res.data.content.nugAmount).toFixed(3));
-    //           setBonusNugAmount(parseFloat(res.data.content.bonusNugAmount).toFixed(3));
-    //           if (res.data.content.earning > 1) {
-    //             if (res.data.content.raffle > 0)
-    //               setRaffles(res.data.content.raffle);
-    //             if (currencyMode === "mainNug") {
-    //               setAlerts({
-    //                 type: "success",
-    //                 content: `Congrats! you won ${parseFloat(res.data.content.earning).toFixed(0)} SOL`
-    //               })
-    //               countDownInterval();
-    //             } else {
-    //               setAlerts({
-    //                 type: "success",
-    //                 content: `Congrats! you won ${parseFloat(res.data.content.earning * 4 * bNugRatio).toFixed(0)} Nuggets (${parseFloat(res.data.content.earning).toFixed(3)} SOL)`
-    //               })
-    //               countDownInterval();
-    //             }
-    //           } else {
-    //             setAlerts({
-    //               type: "success",
-    //               content: `ARRGH, YER BOOTIE WAS STOLEN, WON 0 SOL`
-    //             })
-    //             countDownInterval();
-    //           }
-
-    //         } else {
-    //           setAlerts({
-    //             type: "error",
-    //             content: "Insufficient Funds."
-    //           })
-    //           countDownInterval();
-    //         }
-    //         getHistory();
-    //       })
-    //     setAnimation1(false);
-    //     setAnimation2(false);
-    //     setAnimation3(false);
-    //   }, 4800)
-    // }
   }
 
-  // const openNFTBox = async (amount) => {
-  //   if (!connected) return
-  //   if ((currencyMode === "mainNug" && amount > nugAmount) || (currencyMode === "bonusNug" && amount > bonusNugAmount)) {
-  //     setAlerts({
-  //       type: "error",
-  //       content: "Insufficient Funds."
-  //     })
-  //     countDownInterval();
-  //     return;
-  //   }
-
-  //   const num = GetNum(number, factor1, factor2, factor3, factor4)
-  //   const body = {
-  //     amount: amount,
-  //     walletAddress: publicKey.toBase58(),
-  //     num: num,
-  //     currencyMode: currencyMode,
-  //     oddOption: oddOption
-  //   }
-  //   axios
-  //     .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/lootNFTBox`, body)
-  //     .then(async (res) => {
-  //       // const phrase = Math.floor(Math.random() * 20);
-  //       setNumber(res.data.data)
-  //       if (res.data.status) {
-  //         setNewNugAmount(parseFloat(res.data.content.nugAmount).toFixed(3));
-  //         setNewBNugAmount(parseFloat(res.data.content.bonusNugAmount).toFixed(3));
-  //         if (res.data.content.earning !== 0) {
-  //           setEarning(res.data.content.earning);
-  //           anim61.current?.play();
-  //           setAnimation61(true);
-  //         } else {
-  //           setEarning(0)
-  //           anim60.current?.play();
-  //           setAnimation60(true);
-  //         }
-  //       } else {
-  //         setAlerts({
-  //           type: "error",
-  //           content: "INSUFFICIENT FUNDS."
-  //         })
-  //       }
-  //     })
-  // }
-
+ 
   const onEndedEvent = async (amount) => {
-    // const num = GetNum(number, factor1, factor2, factor3, factor4)
-
-    // const body = {
-    //   amount: amount,
-    //   walletAddress: publicKey.toBase58(),
-    //   num: num,
-    //   currencyMode: currencyMode,
-    //   oddOption: oddOption
-    // }
-    // axios
-    //   .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/lootBox`, body)
-    //   .then(async (res) => {
     const phrase = Math.floor(Math.random() * 20);
-    //     setNumber(res.data.data)
-    //     if (res.data.status) {
-    //       let earning
     setNugAmount(newNugAmount);
     setBonusNugAmount(newBNugAmount);
     setGemAmount(newGemAmount);
     if (earning !== 0) {
-      //         if (res.data.content.raffle > 0)
-      //           setRaffles(res.data.content.raffle);
-      // if (currencyMode === "mainNug") {
-
       setAlerts({
         type: "success",
         content: `YE WON ${parseFloat(earning).toFixed(3)} ${currencyMode === "mainNug" ? "SOL" : (currencyMode === "bonusNug" ? "NUG" : "GEM")}`
@@ -366,21 +220,6 @@ const Loot = () => {
         content: winPhrase[phrase]
       })
       countDownInterval();
-      // } else {
-      //   // setAlerts({
-      //   //   type: "success",
-      //   //   content: `YE WON ${parseFloat(earning * 4 * bNugRatio).toFixed(3)} NUGGETS (${parseFloat(earning).toFixed(3)} SOL)`
-      //   // })
-      //   setAlerts({
-      //     type: "success",
-      //     content: `YE WON ${earning} NUGGET)`
-      //   })
-      //   setAlert2({
-      //     type: "success",
-      //     content: winPhrase[phrase]
-      //   })
-      //   countDownInterval();
-      // }
     } else {
       setAlerts({
         type: "success",
@@ -392,16 +231,7 @@ const Loot = () => {
       })
       countDownInterval();
     }
-
-    //     } else {
-    //       setAlerts({
-    //         type: "error",
-    //         content: "INSUFFICIENT FUNDS."
-    //       })
-    //       countDownInterval();
-    //     }
     getHistory();
-    //   })
     setAnimation10(false);
     setAnimation11(false);
     setAnimation20(false);
@@ -414,15 +244,6 @@ const Loot = () => {
     setAnimation51(false);
     setAnimation60(false);
     setAnimation61(false);
-
-    // anim10.current.currentTime = 0
-    // anim11.current.currentTime = 0
-    // anim20.current.currentTime = 0
-    // anim21.current.currentTime = 0
-    // anim30.current.currentTime = 0
-    // anim31.current.currentTime = 0
-    // anim40.current.currentTime = 0
-    // anim41.current.currentTime = 0
   }
 
   const playOcto = () => {
@@ -459,11 +280,11 @@ const Loot = () => {
         </Box>
         <Box className={themeBlack ? "gameboard-black" : "gameboard"} style={{ width: isDesktop ? "190%" : "90%" }}>
           <Box className="title">
-            <Typography className={themeBlack ? "mainTitle" : "mainTitle-white"} style={{ textTransform: "uppercase", lineHeight: isDesktop ? "30px" : "25px" }}>Open PirateLoot to Win Up</Typography>
+            <Typography className={themeBlack ? "mainTitle" : "mainTitle-white"} style={{ textTransform: "uppercase", lineHeight: isDesktop ? "30px" : "25px" }}>Open ArbiCasino to Win Up</Typography>
             <Typography className={themeBlack ? "mainTitle" : "mainTitle-white"} style={{ textTransform: "uppercase", lineHeight: isDesktop ? "30px" : "25px" }}>
               to &nbsp;
               <span style={{ fontWeight: "900" }}>100X</span>
-              &nbsp; in SOL
+              &nbsp; in ETH
               <sup>
                 <NavLink to="/FAQs" className="question" style={{ color: "yellow", fontSize: "13px", border: "1px solid yellow", borderRadius: "50%" }}>?</NavLink>
               </sup>
@@ -854,10 +675,10 @@ const Loot = () => {
               </Box>
               <Box className="bottom">
                 <Box className="nug">
-                  <img src={currencyMode === "mainNug" ? sol : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
-                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio}</Typography>
+                  <img src={currencyMode === "mainNug" ? eth : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
+                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.005 : 0.005 * bNugRatio}</Typography>
                 </Box>
-                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}> Open</button>
+                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.005 : 0.005 * bNugRatio)}> Open</button>
               </Box>
             </Box>
             <Box className={!themeBlack ? "boxGroup backgroundWhite" : "boxGroup"} style={{ maxWidth: isDesktop ? "27%" : "90%" }}>
@@ -866,10 +687,10 @@ const Loot = () => {
               </Box>
               <Box className="bottom">
                 <Box className="nug">
-                  <img src={currencyMode === "mainNug" ? sol : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
-                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.1 : 0.1 * bNugRatio}</Typography>
+                  <img src={currencyMode === "mainNug" ? eth : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
+                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.01 : 0.01 * bNugRatio}</Typography>
                 </Box>
-                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.1 : 0.1 * bNugRatio)} >Open</button>
+                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.01 : 0.01 * bNugRatio)} >Open</button>
               </Box>
             </Box>
             <Box className={!themeBlack ? "boxGroup backgroundWhite" : "boxGroup"} style={{ maxWidth: isDesktop ? "27%" : "90%" }}>
@@ -878,10 +699,10 @@ const Loot = () => {
               </Box>
               <Box className="bottom">
                 <Box className="nug">
-                  <img src={currencyMode === "mainNug" ? sol : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
-                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.25 : 0.25 * bNugRatio}</Typography>
+                  <img src={currencyMode === "mainNug" ? eth : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
+                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.025 : 0.025 * bNugRatio}</Typography>
                 </Box>
-                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.25 : 0.25 * bNugRatio)} >Open</button>
+                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.025 : 0.025 * bNugRatio)} >Open</button>
               </Box>
             </Box>
             <Box className={!themeBlack ? "boxGroup backgroundWhite" : "boxGroup"} style={{ maxWidth: isDesktop ? "27%" : "90%" }}>
@@ -890,10 +711,10 @@ const Loot = () => {
               </Box>
               <Box className="bottom">
                 <Box className="nug">
-                  <img src={currencyMode === "mainNug" ? sol : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
-                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio}</Typography>
+                  <img src={currencyMode === "mainNug" ? eth : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
+                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio}</Typography>
                 </Box>
-                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio)} >Open</button>
+                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)} >Open</button>
               </Box>
             </Box>
             <Box className={!themeBlack ? "boxGroup backgroundWhite" : "boxGroup"} style={{ maxWidth: isDesktop ? "27%" : "90%" }}>
@@ -902,10 +723,10 @@ const Loot = () => {
               </Box>
               <Box className="bottom">
                 <Box className="nug">
-                  <img src={currencyMode === "mainNug" ? sol : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
-                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 1 : 1 * bNugRatio}</Typography>
+                  <img src={currencyMode === "mainNug" ? eth : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
+                  <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 0.1 : 0.1 * bNugRatio}</Typography>
                 </Box>
-                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 1 : 1 * bNugRatio)} >Open</button>
+                <button className="openBox" style={{ zIndex: 1 }} onClick={() => openBox(currencyMode === "mainNug" ? 0.1 : 0.1 * bNugRatio)} >Open</button>
               </Box>
             </Box>
             <Box className={!themeBlack ? "boxGroup backgroundWhite" : "boxGroup"} style={{ maxWidth: isDesktop ? "27%" : "90%", opacity: 0 }}>
@@ -914,7 +735,7 @@ const Loot = () => {
               </Box>
               <Box className="bottom">
                 <Box className="nug">
-                  <img src={currencyMode === "mainNug" ? sol : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
+                  <img src={currencyMode === "mainNug" ? eth : (currencyMode === "bonusNug" ? nugImg : gemImg)} alt="GOLD" />
                   <Typography className={!themeBlack ? "fontBlack" : "fontWhite"}>{currencyMode === "mainNug" ? 1 : 1 * bNugRatio}</Typography>
                 </Box>
                 <button className="openBox" style={{ zIndex: 1 }} >Open</button>
@@ -924,134 +745,98 @@ const Loot = () => {
 
           <Box className={animation10 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation1 ? lootyBox1gif : ""} width="100%" alt="Loot1" /> : */}
-              <video ref={anim10} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
+              <video ref={anim10} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.005 : 0.005 * bNugRatio)}>
                 <source src={treasureImg10} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation11 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation1 ? lootyBox1gif : ""} width="100%" alt="Loot1" /> : */}
-              <video ref={anim11} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
+              <video ref={anim11} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.005 : 0.005 * bNugRatio)}>
                 <source src={`${treasureImg11}#t=0.1`} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation20 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation2 ? lootyBox2gif : ""} width="100%" alt="Loot2" /> : */}
-              <video ref={anim20} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.25 : 0.25 * bNugRatio)}>
+              <video ref={anim20} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.025 : 0.025 * bNugRatio)}>
                 <source src={treasureImg20} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation21 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation2 ? lootyBox2gif : ""} width="100%" alt="Loot2" /> : */}
-              <video ref={anim21} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.25 : 0.25 * bNugRatio)}>
+              <video ref={anim21} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.025 : 0.025 * bNugRatio)}>
                 <source src={treasureImg21} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation30 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim30} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio)}>
+              <video ref={anim30} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
                 <source src={treasureImg30} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation31 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim31} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio)}>
+              <video ref={anim31} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
                 <source src={treasureImg31} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation40 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim40} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio)}>
+              <video ref={anim40} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
                 <source src={treasureImg40} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation41 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim41} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio)}>
+              <video ref={anim41} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
                 <source src={treasureImg41} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation50 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim50} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio)}>
+              <video ref={anim50} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
                 <source src={treasureImg50} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation51 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim51} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.5 : 0.5 * bNugRatio)}>
+              <video ref={anim51} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.05 : 0.05 * bNugRatio)}>
                 <source src={treasureImg51} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation60 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim60} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 1 : 1 * bNugRatio)}>
+              <video ref={anim60} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.1 : 0.1 * bNugRatio)}>
                 <source src={treasureImg60} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
           <Box className={animation61 ? "treasure show" : "treasure hidden"} style={{ background: (isSafari || isMobileSafari) ? "black" : "#000000bd" }}>
             <Box className="boxContainer">
-              {/* {isSafari || isMobileSafari ? */}
-              {/* <img src={animation3 ? lootyBox3gif : ""} width="100%" alt="Loot3" /> : */}
-              <video ref={anim61} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 1 : 1 * bNugRatio)}>
+              <video ref={anim61} width={isDesktop ? "50%" : "100%"} height={isDesktop ? "50%" : "100%"} playsInline onEnded={() => onEndedEvent(currencyMode === "mainNug" ? 0.1 : 0.1 * bNugRatio)}>
                 <source src={treasureImg61} type="video/mp4" />
                 No supported
               </video>
-              {/* } */}
             </Box>
           </Box>
         </Box>
