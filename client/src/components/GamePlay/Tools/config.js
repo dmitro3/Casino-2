@@ -33,6 +33,9 @@ export const NATIVE_CURRENCY = {
         decimals: 18,
     },
 }
+
+
+
 export const connectorLocalStorageKey = "connectorIdv2"
 export const walletLocalStorageKey = "wallet";
 export const id = "salary"

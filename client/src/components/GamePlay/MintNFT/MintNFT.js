@@ -158,7 +158,7 @@ const MintNFTsComponent = () => {
       const t1 = solanaWeb3.Transaction.from(signedTx.serialize());
       let stringfyTx = JSON.stringify(t1.serialize());
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         depositAmount: NFTCost,
         signedTx: stringfyTx,
       };

@@ -180,11 +180,11 @@ const Home = () => {
   }
 
   const addOne = async ({ walletAddress, id }) => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
         walletAddress: walletAddress,
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         addingTicket: addingTicket[id],
         num: num
       }
@@ -425,10 +425,10 @@ const Home = () => {
     };
     const addTicketWallet = async () => {
       if (ticketWalletText) {
-        const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+        const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
         if (num) {
           const body = {
-            host: publicKey.toBase58(),
+            host: localStorage.walletLocalStorageKey,
             walletAddress: ticketWalletText,
             num: num
           }

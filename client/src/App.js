@@ -48,7 +48,6 @@ function App() {
   const { setGameMode } = useGameStore();
   const { setMineAmount } = useGameStore();
   const { isMuted } = useGameStore();
-  const { enableMines, enableDouble, enableLoot, enableTurtle} = useGameStore();
   const [is_backgroundmusic, setIs_backgroundMusic] = useState(false);
   const [bgmusic] = useSound(backgroundmusicc, {
     volume: isMuted ? 1 : 0,
@@ -110,18 +109,17 @@ function App() {
             <Container className="App" disableGutters={true} maxWidth={false}>
               <Router basename="/game">
                 <Routes>
-                  <Route path={`/`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Landing />} />
+                  <Route path={`/`} element={<Landing />} />
                   <Route path={`/admindashboard`} element={<AdminDashboard /*socket={socket}*/ />} />
-                  { enableMines && <Route path={`/mines`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <GamePlay /*socket={socket}*/ />} />}
-                  { enableDouble && <Route path={`/coins`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <DoubleGame />} />}
-                  <Route path={`/leaderboard`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Leaderboard />} />
-                  <Route path={`/bonuses`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Bonuses /*socket={socket}*/ />} />
-                  { enableLoot && <Route path={`/loot`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <ArbiCasino />} />}
-                  <Route path={`/FAQs`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <FAQs />} />
-                  { enableTurtle && <Route path={`/beta-turtles`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <Turtle />} />}
-                  <Route path={`/pirateDeposit`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <PirateDeposit />} />
-                  <Route path={`/mintNFTs`} element={ process.env.REACT_APP_COMING_SOON === "true" ? <ComingSoon /> : <MintNFTs />} />
-                  {/* <Route path={`/comingSoon`} element={<ComingSoon />} /> */}
+                  <Route path={`/mines`} element={ <GamePlay /*socket={socket}*/ />} />
+                  <Route path={`/coins`} element={ <DoubleGame />} />
+                  <Route path={`/leaderboard`} element={ <Leaderboard />} />
+                  <Route path={`/bonuses`} element={ <Bonuses /*socket={socket}*/ />} />
+                  <Route path={`/loot`} element={ <ArbiCasino />} />
+                  <Route path={`/FAQs`} element={ <FAQs />} />
+                  <Route path={`/beta-turtles`} element={ <Turtle />} />
+                  <Route path={`/pirateDeposit`} element={ <PirateDeposit />} />
+                  <Route path={`/mintNFTs`} element={ <MintNFTs />} />
                   <Route path={`/*`} element={<NotFoundPage />} />
                 </Routes>
               </Router>

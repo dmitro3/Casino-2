@@ -28,10 +28,10 @@ const Popup = () => {
   }
 
   const submitDescription = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         content: description,
         num: num
       }

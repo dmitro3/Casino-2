@@ -98,10 +98,10 @@ const BettingPanel = ({
   }, [mineGameWin, mineGameLose, doubleGameLose, doubleGameWin]);
 
   const getRaffle = async (type) => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         num: num,
         type: type
       }
@@ -154,11 +154,11 @@ const BettingPanel = ({
   };
 
   const checkAlreadyDeposit = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       if ((currencyMode === "mainNug" && bettingAmount * 1.135 < nugAmount) || (currencyMode === "bonusNug" && bettingAmount * 1.135 < bonusNugAmount) || (currencyMode === "gem" && bettingAmount * 1.135 < gemAmount)) {
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           mineAmount: mineAmount,
           bettingAmount: bettingAmount,
           num: num,
@@ -201,7 +201,7 @@ const BettingPanel = ({
     }
     if (gameMode === "minesrush") {
       let depositResult;
-      setWalletAddress(publicKey.toBase58());
+      setWalletAddress(localStorage.walletLocalStorageKey);
       if (gameState === 1) {
         if (gameStep > 0) {
           setStopModalOpen(true);
@@ -258,7 +258,7 @@ const BettingPanel = ({
     }
     else {
       let depositResult;
-      setWalletAddress(publicKey.toBase58());
+      setWalletAddress(localStorage.walletLocalStorageKey);
       if (gameState === 1) {
         if (gameStep > 0) {
           setStopModalOpen(true);
@@ -317,10 +317,10 @@ const BettingPanel = ({
     try {
       setDepositText(true);
       setLoading(true);
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           bettingAmount,
           mineAmount,
           gameMode,
@@ -591,13 +591,13 @@ const BettingPanel = ({
     setCashLoading(true);
     setClicked(true);
     const phrase = Math.floor(Math.random() * 20);
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       let payout = 0;
       if (gameMode === "minesrush") {
         payout = (gameStep + mineAmount > 24 ? nextMultiplier : previousMultiplier) * bettingAmount
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           game: "Minesrush",
           player: userName === "MinesRush" ? publicKey : userName,
           wager: bettingAmount,
@@ -674,7 +674,7 @@ const BettingPanel = ({
       else {
         payout = nextMultiplier * bettingAmount;
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           game: "double",
           player: userName === "MinesRush" ? publicKey : userName,
           wager: bettingAmount,
@@ -795,7 +795,7 @@ const BettingPanel = ({
   };
 
   const postPlay = async (number) => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if(num) {
     let houseEdge
     let mineAmounts
@@ -810,7 +810,7 @@ const BettingPanel = ({
 
 
     const body = {
-      walletAddress: publicKey.toBase58(),
+      walletAddress: localStorage.walletLocalStorageKey,
       mineAmount: mineAmounts,
       bettingAmount,
       houseEdge,

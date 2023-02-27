@@ -120,7 +120,7 @@ const Sidebar = () => {
     }
     setLoading(false);
     setPrize(prize);
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4);
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4);
     if (num) {
       const body = {
         walletAddress: publicKey?.toBase58(),
@@ -222,7 +222,7 @@ const Sidebar = () => {
     setLoading(true);
     if (publicKey?.toBase58()) {
       const body = {
-        walletAddress: publicKey.toBase58()
+        walletAddress: localStorage.walletLocalStorageKey
       }
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/play/getHolders`, body);
@@ -246,7 +246,7 @@ const Sidebar = () => {
     setLoading(true)
     if (publicKey?.toBase58()) {
       const body = {
-        walletAddress: publicKey.toBase58()
+        walletAddress: localStorage.walletLocalStorageKey
       }
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/play/getSpinDate`, body);

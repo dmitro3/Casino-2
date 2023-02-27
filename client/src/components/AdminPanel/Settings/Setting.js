@@ -126,7 +126,7 @@ const Setting = () => {
   }
   const deleteImages = async (data) => {
     const body = {
-      walletAddress: publicKey.toBase58(),
+      walletAddress: localStorage.walletLocalStorageKey,
       img: data
     }
     const result = await axios.post(
@@ -148,10 +148,10 @@ const Setting = () => {
   const setHouseEdges = async () => {
     try {
       if (loading) return
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           mineHouseEdge: _mineHouseEdge,
           doubleHouseEdge: _doubleHouseEdge,
           minMine: _minMine,
@@ -184,10 +184,10 @@ const Setting = () => {
 
   const resetDB = async () => {
     try {
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -221,10 +221,10 @@ const Setting = () => {
 
   const resetRaffle = async () => {
     if (loading) return
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         num: num
       }
       const res = await axios.post(
@@ -249,10 +249,10 @@ const Setting = () => {
   }
 
   const downloadTickets = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         num: num
       }
       const res = await axios.post(
@@ -276,11 +276,11 @@ const Setting = () => {
 
   const payoutHandler = async (e) => {
     if (!loading) {
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
           value: e.target.value,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -303,11 +303,11 @@ const Setting = () => {
   }
   const raffleAction = async (e) => {
     if (!loading) {
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
           value: e.target.checked,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -331,11 +331,11 @@ const Setting = () => {
   const turtleAction = async (e) => {
     if (!loading) {
       let value = e.target.checked;
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
           value: value,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -359,13 +359,13 @@ const Setting = () => {
   const minesAction = async (e) => {
     if (!loading) {
       let value = e.target.checked;
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       setEnableMine(value)
       if (num) {
         const body = {
           type: "mines",
           value: value,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -389,13 +389,13 @@ const Setting = () => {
   const doubleAction = async (e) => {
     if (!loading) {
       let value = e.target.checked;
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       setEnableDoubles(value)
       if (num) {
         const body = {
           type: "double",
           value: value,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -419,13 +419,13 @@ const Setting = () => {
   const lootAction = async (e) => {
     if (!loading) {
       let value = e.target.checked;
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       setEnableLoots(value)
       if (num) {
         const body = {
           type: "loot",
           value: value,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -449,13 +449,13 @@ const Setting = () => {
   const turtlesAction = async (e) => {
     if (!loading) {
       let value = e.target.checked;
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       setEnableTurtles(value)
       if (num) {
         const body = {
           type: "turtle",
           value: value,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -483,12 +483,12 @@ const Setting = () => {
   }
   const updateInterval = async (e) => {
     if (!loading) {
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
           interval: mintInterval,
           remainedNFT: remainedNFT,
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num
         }
         const res = await axios.post(
@@ -510,10 +510,10 @@ const Setting = () => {
   }
 
   const setGemValue = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         value: gemTargetBalances,
         num: num
       }
@@ -534,10 +534,10 @@ const Setting = () => {
   }
 
   // const setNugValue = async () => {
-  //   const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+  //   const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
   //   if (num) {
   //     const body = {
-  //       walletAddress: publicKey.toBase58(),
+  //       walletAddress: localStorage.walletLocalStorageKey,
   //       value: nugTargetBalances,
   //       num: num
   //     }
@@ -560,10 +560,10 @@ const Setting = () => {
 
   const payoutAction = async () => {
     setLoading(true);
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         amount: distributeAmount,
         num: num
       }
@@ -642,10 +642,10 @@ const Setting = () => {
         })
         upImgs.push(ddd.data.data.thumb.url)
       }
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           num: num,
           imgs: upImgs
         }
@@ -692,7 +692,7 @@ const Setting = () => {
         upImgs = ddd.data.data.thumb.url
       }
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         new: upImgs,
         prev: imgs
       }
@@ -719,10 +719,10 @@ const Setting = () => {
   const uploadRaffleDate = async (date) => {
     if (loading) return;
     setLoading(true);
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         num: num,
         date: date,
       }

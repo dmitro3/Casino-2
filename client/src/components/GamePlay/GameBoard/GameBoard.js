@@ -388,7 +388,7 @@ const GameBoard = () => {
       const houseEdge = mineHouseEdge;
       const newBoardState = boardState;
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         game: "Minesrush",
         player: userName === "MinesRush" ? publicKey : userName,
         wager: bettingAmount,
@@ -493,7 +493,7 @@ const GameBoard = () => {
         const newBoardState = boardState;
         const houseEdge = doubleHouseEdge;
         const body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           game: "double",
           player: userName === "MinesRush" ? publicKey : userName,
           wager: bettingAmount,
@@ -619,11 +619,11 @@ const GameBoard = () => {
     let body;
     let houseEdge;
     // const num = number^3+number*2023+10/number;
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       if (gameMode === "minesrush") {
         body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           game: "Minesrush",
           player: userName === "MinesRush" ? publicKey : userName,
           wager: bettingAmount,
@@ -635,7 +635,7 @@ const GameBoard = () => {
         houseEdge = mineHouseEdge;
       } else {
         body = {
-          walletAddress: publicKey.toBase58(),
+          walletAddress: localStorage.walletLocalStorageKey,
           game: "double",
           player: userName === "MinesRush" ? publicKey : userName,
           wager: bettingAmount,

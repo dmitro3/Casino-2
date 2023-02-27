@@ -821,6 +821,7 @@ router.get(
   "/getDescription",
   async (req, res) => {
     try {
+      console.log("in")
       const data = await getDescription();
       res.json(data);
     } catch (err) {
@@ -923,10 +924,10 @@ router.post(
 
 router.post(
   "/admin",
-  async (req, res) => {
+  async (req, res) => { 
     try {
       logger.info("===Is Admin?===")
-      generateTurtleMulti(true);
+      // generateTurtleMulti(true);
       if (process.env.ADMIN_WALLETS1 === req.body.walletAddress) {
         logger.info("===Is Admin?: Yes!!!===")
         res.json({

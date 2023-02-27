@@ -216,14 +216,14 @@ const PirateDepositComponent = () => {
       })
     const t1 = solanaWeb3.Transaction.from(signedTx.serialize());
     stringfyTx = JSON.stringify(t1.serialize());
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       let selectedNFT = [];
       for (let i = 0; i < nftSelected.length; i++) {
         selectedNFT.push(nftData[nftSelected[i]]);
       }
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         signedTx: stringfyTx,
         nugValue: selectedNFT,
         num: num

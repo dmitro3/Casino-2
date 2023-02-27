@@ -184,10 +184,10 @@ const User = () => {
 
   const handleRewards = async (walletAddress, id) => {
     try {
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
-          host: publicKey.toBase58(),
+          host: localStorage.walletLocalStorageKey,
           walletAddress: walletAddress,
           amount: rewards[id],
           num: num
@@ -218,10 +218,10 @@ const User = () => {
   }
   const handleBRewards = async (walletAddress, id) => {
     try {
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
-          host: publicKey.toBase58(),
+          host: localStorage.walletLocalStorageKey,
           walletAddress: walletAddress,
           amount: bonusNug[id],
           num: num
@@ -252,10 +252,10 @@ const User = () => {
   }
   const handleGemRewards = async (walletAddress, id) => {
     try {
-      const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+      const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
       if (num) {
         const body = {
-          host: publicKey.toBase58(),
+          host: localStorage.walletLocalStorageKey,
           walletAddress: walletAddress,
           amount: gemReward[id],
           num: num
@@ -285,11 +285,11 @@ const User = () => {
     }
   }
   const deleteUser = async (wallet) => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
 
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: wallet,
         num: num
       }
@@ -311,11 +311,11 @@ const User = () => {
     }
   }
   const addUser = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
 
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: userWallet,
         num: num
       }
@@ -338,11 +338,11 @@ const User = () => {
     }
   }
   const addHacker = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
 
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: hackWallet,
         num: num
       }
@@ -365,11 +365,11 @@ const User = () => {
     }
   }
   const deleteHacker = async (wallet) => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
 
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: wallet,
         num: num
       }
@@ -391,11 +391,11 @@ const User = () => {
     }
   }
   const addHolder = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
 
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: holderWallet,
         nftAmount: nftAmount,
         num: num
@@ -420,11 +420,11 @@ const User = () => {
     }
   }
   const addWhite = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
 
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: whiteWallet,
         num: num
       }
@@ -447,10 +447,10 @@ const User = () => {
     }
   }
   const deleteWhite = async (wallet) => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: wallet,
         num: num
       }
@@ -472,10 +472,10 @@ const User = () => {
     }
   }
   const addWithdraw = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: withdrawBanWallet,
         num: num
       }
@@ -498,10 +498,10 @@ const User = () => {
     }
   }
   const deleteWithdraw = async (wallet) => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
-        host: publicKey.toBase58(),
+        host: localStorage.walletLocalStorageKey,
         walletAddress: wallet,
         num: num
       }

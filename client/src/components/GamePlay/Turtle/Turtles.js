@@ -198,7 +198,7 @@ const TurtleComponent = () => {
 
   const getPreviousBet = async () => {
     const body = {
-      walletAddress: publicKey.toBase58()
+      walletAddress: localStorage.walletLocalStorageKey
     }
     await axios
       .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/getPreviousBet`, body)
@@ -373,13 +373,13 @@ const TurtleComponent = () => {
     if (connected && (selectedTurtle.length || selectedQuinella.length)) {
       // if (totalBetAmount <= nugAmount) {
       if ((currencyMode === "bonusNug" || currencyMode === "mainNug" && totalBetAmount <= bonusNugAmount) || (currencyMode === "gem" && totalBetAmount <= gemAmount)) {
-        const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+        const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
         if (num) {
 
           const body = {
             singleGame: selectedTurtle,
             quinellaGame: selectedQuinella,
-            walletAddress: publicKey.toBase58(),
+            walletAddress: localStorage.walletLocalStorageKey,
             currencyMode: currencyMode === "gem" ? "gem" : "bonusNug",
             num: num
           }

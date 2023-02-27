@@ -101,9 +101,6 @@ const RecentPlays = ({ /*socket*/ }) => {
         payout = "-" + item.wager;
         earn = false;
       }
-      // let multiplier = item.currencyMode !== "bonusNug" ?
-      //   parseFloat(payout / item.wager).toFixed(3) :
-      //   parseFloat(payout * 4 * 1000 / (item.wager)).toFixed(3);
       let multiplier = parseFloat(payout / item.wager).toFixed(3);
 
       let lootImg;
@@ -123,8 +120,6 @@ const RecentPlays = ({ /*socket*/ }) => {
       if (String(item.player).length > 20) player = getShortName(item.player);
       return (
         <TableRow key={key} className="table-row">
-          {/* <TableCell align="center" className="rest img" style={{margin: "auto"}} > */}
-          {/* </TableCell> */}
           <TableCell align="center" className="player" style={{ width: "100%" }}>
             <Box style={{ display: "flex", width: "100%", height: "2.5vw", alignItems: "center", width: "100%", marginTop: isDesktop && (themeBlack ? '8px' : '5px') }}>
               {avatar ? <img src={avatar} alt="Avatar" className="recentplays-point" style={{ width: '2.5vw', height: '2.5vw', border: "1px solid grey", borderRadius: "50%", padding: "3px" }} /> : <img src={coin} alt="Avatar" className="recentplays-point" style={{ width: '2.5vw', height: '2.5vw', border: "1px solid grey", borderRadius: "50%", padding: "3px" }} />}
@@ -203,7 +198,6 @@ const RecentPlays = ({ /*socket*/ }) => {
             <Table className="table-grid" aria-label="customized table">
               <TableHead className="table-header">
                 <TableRow className="table-row">
-                  {/* <TableCell align="center" className="rest">USER</TableCell> */}
                   <TableCell align="center" className="player" style={{ width: "100%", marginLeft: "0" }}>PLAYER</TableCell>
                   {isDesktop && <TableCell align="center" className="rest" style={{ margintRight: "0" }}>WAGER</TableCell>}
                   <TableCell align="center" className="rest" style={{ margintRight: "0" }}>PAYOUT</TableCell>
@@ -217,7 +211,6 @@ const RecentPlays = ({ /*socket*/ }) => {
         </Box>
 
       </Grid>
-      {/* <Grid item xs={0.5} sm={1} md={2} lg={2.5} /> */}
       <Sound
         url={playgame_sound}
         playStatus={

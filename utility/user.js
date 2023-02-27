@@ -1,68 +1,3 @@
-// 2JsQ32Tgjjcc7pmg26v9SfvoZG3YK7Vf4WCuM79Qg6Y6
-// Fxgr1RQfJ8Z7dZGPdepTXi4fFsAdeTWM5b3pMPk3bPJF
-// D1PGyY9r2maoAqajwpAbRDKQBCWimuGEfdtrnfWPxwWw
-// 93iS2c3NLnM5aUbeuKu5XEjZKPickN3vU8v8qYmFTS54
-// Eawgh3vKL3LHwKwttZmYDpwNQ45kxDFqF4ymUYGGu2in
-// 2r7VnAuo9coxPq8x5PiDhcka5QPDukzEWhQDoAR2DnUC
-// CGhKPbNhv3Yg4kQkfvHLiAUeMJzopY7mEatktWaHmems
-// C2abWHh7RnSqLaHyWsA3wXVjZHL5xzsPQC4XgYXCbk5d
-// 3sjQgWQPdceMoWM34HSEJKj4Who5GXPkZxCevWMZm8aa
-// 4pvqmpLYYk5cEmqJkHoJKNaZbdnkPp1Gz42qkVEFcDun
-// 2xt6XZT26QYg47EgGxjciRYchBEGU4jvWmJBnN9re3cY
-// Bmh4jWKioNYEGKZkqCcP36S3qD1SAsNuwPsMcRdWVdzg
-// CtYoN36TL1ThDkjPpUZUW2hDgGv3TosaRPb8xc4F8RtJ
-// 9vHPqH5PDMmNWCtc6wwfxfXNb7VRjcDu3xLE9biwU7zd
-// 9H7DBiji7NZV4jc9nbZKYAaYp3x1KTHTa95nWCMgUJ3c
-// BQGH6A2bAXzXsHNgKyp6vvGDaguNTShqG3QBmnzB2atj
-// c9zjb24knCaCQdsbDyTTc7QZGQY34c3AjXT8sVTTFS8
-// 9XaK65rkvUqy8B26F92CkW7gkBbPrkCkPCoEcgoLqcUi
-// 7woqoyhrysYZCRsHKSWmYEVtHxP3qWBjvpmUfNS71Ste
-// 4hKUcYtCkHKzSQuDgJJZkn9o5Xt9jd28sAifdfJcntv8
-// BWHcRgwqsZAAKv8K64wQALNjmpiqEws7CiYmB9CmsqaN
-// DoCaZe6G1JktQiprdSPsdxbFoGwsqh2bx5KMUditmV37
-// 7CnfVic8vTNFfN4Nk3wCkP9LNXwbXYiwy6TdcvHSL8FQ
-// 86e4MPTv4rA9L7atSfo2w78zGFKAMEkRCeiHTCDzRRVi
-// AhHRUnfhR7FbPn3dcFrQXY7W5E2CMHBCfnhi6ENB7zUZ
-// AMqzMqDV5XibHD6ewRik5MGmwzCwpoAMRCq8vyetxRby
-// 6M6E1F23T89xXVTzoiaZUBdh5jUeCgApQqm5w3u8XnJF
-// 2QDrKnS5rbKSA6dEZrqiyNP216WSBVDA85Q78yFr7t33
-// DY3EhmxEuqRM1vfdJrKyUrceEMBFdhDKFp2AH7P99iq6
-// rbEs5HyQj18RPHqLdFaiRaFfeS75zZ3jgAKzVFjUE1U
-// CqRX5oC1CBKZorM5ZvHSwGY6shczcHKnENHpBqBfShDj
-// EBtpiQSwKnQdtF85gV8EWDhJvn1SLtgqTee4aqa9NyFE
-// 55Ta44WrR7k3z82aK3DCYCsqbGvNDWEFTNVRaNxGPpu
-// HfnvU9d6AmRij1oT3Z6NZaWWsDdxLbgQvTFa9mqdqm4p
-// 8xdciBmomDHhDf3uDCqHCbdcbseqCNcgaHcU5Xr3oUHt
-// GTcTfD4LfbhSV1cwJu3udnzPDSW64LBc5dbfh6uiPegc
-// VJeczF2oPQTmAS7rUTcQPoucNRE5gp55NXbkLtDzyNJ
-// 9rPwpfktcEbd2C13eBuvLqgTupsFqgnviZvgVJHeAGdC
-// AP2Z3WPVyEJxowB9Tvh8bFohDajVirdG93LGLUak8oLQ
-// 7nY2moNii95tgYDXSpJcWcMpoHLZbmJP62KnFr2Qc1Uq
-// GDjrZyvFiZo8KZG8eSDKbYkCaWFo7pqGnTV7P1Ggq7no
-// D4QBYYQYKM2kRm5H2n35VnKRuLLBmmwo34QYZbjfK9AA
-// fPUdFBFkjKYcuSRKKGCE5SzuSXYDQj8XZXmiN8yW7H7
-// FuE3LaBQaa2RXU2LQRoiEgJpeDP3nqxZ4oXEy3kVkLqP
-// 5UKNRUsmq6EBbMrXGgPEhavG9q14swYQe7Wk1ExpU9aE
-// Bi8Dh9TLyr8ABStnnZEqiPcgWsju2j8v69fNUoApG1UJ
-// 9joRZZGMgFGBWQWy73YbsBHkDcH2828j983JcSHHizxz
-// 5imqMpRypjmRs8d86PJ6rmq47w2ZEP7S8TpRNKfiEkeU
-// HUDEE1T6EDagyUyxtxPnFoUUe4sQf57ME2SaU2EEbbSV
-// DUPiupXtuox38dcGoXUKer5mAydCzmaHjrbQ66qeEm8s
-// BEapZXm25P6rp9cPeDBa4AthrYFLtm9gfR4GiqE3jYJn
-// isYUVxrVJ1r5fsPaaqXeiJKvwGd2WwwBXU7XmoTVNQD
-// 7cbsoFYgzwJ9Lat4w4BpoArSMjEyjwUsirv6RpJnAGnv
-// 73ndQNMVRFkgceVBEubQgw9BxWXqw5iTYBfD1wmf99zE
-// GLz4p7DCdqtnYYJ4699mxWswTUF8WFedDU4qxJbD4vfj
-// BwhDJQ2Afkdy2qwVAkLbnHPCBSTigRegYEBPDffeA85R
-// 8d8tNL5Mnk8B4CUwSFmjafy9XdHsX12Z1qSTZJ9zG6CM
-// J87oxBUUS4eHKTRAKpw2CsUQ2KfKdtEguke9g48t211h
-// G4VZdSmPpkppwr1ZQkxHFJLzqzR2ynCaqGnTVLFVtLf9
-// 7SvWBA2dsWobXLyp26eHAuY41q5NUL7FVWps89PrKuoE
-// 5xMBTjRMxak7BKAY7GgzHcwHiosyuUuhnuiznJJyHB8g
-// BpH3qz9bnvSQmWUtgSpRCh5Ph2B2uCJC8jo2R6qsvpap
-// #users
-// CR1Hj36JnjZf563JDkEgjhMyMcWbtH2YSKU9GgUvoVsh
-
 
 const web3 = require("@solana/web3.js");
 const HashList = require("../HashList.json");
@@ -161,6 +96,7 @@ const getNFTHolders = async () => {
 }
 
 const saveUserData = async (data) => {
+  console.log('backend-wallet', data.walletAddress);
   const query = { walletAddress: data.walletAddress };
   let result = await User.findOne(query);
   let holder = await Holder.findOne(query);
@@ -192,6 +128,7 @@ const saveUserData = async (data) => {
       gemAmount: 2500,
     })
     await result.save();
+    console.log('saved')
   }
   else {
     // if (result.logIn) {

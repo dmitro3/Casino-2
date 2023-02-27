@@ -10,7 +10,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { Tooltip, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Box, Button, Modal, Typography, Grid } from "@mui/material";
-
+import * as Web3 from 'web3'
 import * as solanaWeb3 from "@solana/web3.js";
 import { LAMPORTS_PER_SOL } from "@solana/web3.js";
 import { useConnection, useWallet } from "@solana/wallet-adapter-react";
@@ -41,7 +41,7 @@ import { ExpandMore } from "@mui/icons-material";
 library.add(fas);
 
 const Header = () => {
-
+  const web3 = new Web3(window.ethereum);
   const theme = useTheme();
   const { connection } = useConnection();
   const [playgamesoundplay] = useSound(playgame_sound);
@@ -114,6 +114,7 @@ const Header = () => {
   const [showOption, setShowOption] = useState(false);
   const [height, setHeight] = useState(60);
   const [address, setAddress] = useState("");
+  const [balance, setBalance] = useState(0);
 
   let count = false;
   let raffleHeight = 0;
@@ -188,6 +189,7 @@ const Header = () => {
     setLoading(true);
     const res = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/api/play/getDescription`);
+    console.log("getDesciprtion", res.data)
     setDescription(res.data[0].content);
     setLoading(false);
   }
@@ -195,7 +197,7 @@ const Header = () => {
     setLoading(true);
     if (publicKey?.toBase58()) {
       const body = {
-        walletAddress: publicKey.toBase58()
+        walletAddress: localStorage.walletLocalStorageKey
       }
       const res = await axios.post(
         `${process.env.REACT_APP_BACKEND_URL}/api/play/getHolders`, body);
@@ -214,6 +216,7 @@ const Header = () => {
     }
     setLoading(false);
   }
+
   const getHouseEdges = async () => {
     setLoading(true);
     const res = await axios.get(
@@ -279,16 +282,17 @@ const Header = () => {
     getTransactionHistory();
     ttt();
     getHolders();
+    getBalance()
     const unloadCallback = async () => {
       if (publicKey?.toBase58()) {
-        const body = { walletAddress: publicKey.toBase58() }
+        const body = { walletAddress: localStorage.walletLocalStorageKey }
         await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/user/logOut`, body)
         return "";
       }
     };
     window.addEventListener("beforeunload", unloadCallback);
     return () => window.removeEventListener("beforeunload", unloadCallback);
-  }, [global.walletConnected]);
+  }, [global.walletConnected, global.walletAddress]);
 
   const getTransactionHistory = async () => {
     const body = { type: "Get THistory", walletAddress: publicKey?.toBase58() }
@@ -301,13 +305,29 @@ const Header = () => {
       }
     }
   }
+
+  const getBalance = async () => {
+    console.log('connected')
+    if (global.walletAddress === "" || global.walletAddress === null) {
+      setBalance(0);
+    } else {   
+        // ETH
+        // const ETH_contract = new web3.eth.Contract(ContractUtils.ETHABI, ContractUtils.ETH_ADDRESS);
+        // const ETH_userBalance = await ETH_contract.methods.balanceOf(global.walletAddress).call();
+        const userBalance = await web3.eth.getBalance(global.walletAddress);
+        setBalance(userBalance);
+        console.log('balance', balance);
+    }
+  }
+ 
   const ttt = async () => {
     if (global.walletConnected) {
-      const connection = new solanaWeb3.Connection(
-        process.env.REACT_APP_QUICK_NODE
-      );
-      let balance = await connection.getBalance(publicKey);
-      balance = balance / LAMPORTS_PER_SOL;
+      // const connection = new solanaWeb3.Connection(
+      //   process.env.REACT_APP_QUICK_NODE
+      // );
+      // let balance = await connection.getBalance(publicKey);
+      // getBalance();
+      // balance = balance / LAMPORTS_PER_SOL;
       
       setSolAmount(balance);
       let deviceId = localStorage.getItem("id");
@@ -316,7 +336,8 @@ const Header = () => {
         localStorage.setItem("id", deviceId);
       }
       const body = {
-        walletAddress: publicKey?.toBase58(),
+        // walletAddress: publicKey?.toBase58(),
+        walletAddress: global.walletAddress,
         deviceId: deviceId//do not need
       };
       if (body.walletAddress) {
@@ -404,7 +425,7 @@ const Header = () => {
   }
 
   const walletAction = async () => {
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       if (walletMode === "deposit") {
         let res;
@@ -451,7 +472,7 @@ const Header = () => {
           setLoading(true);
           const body = {
             type: "Deposit",
-            walletAddress: publicKey.toBase58(),
+            walletAddress: localStorage.walletLocalStorageKey,
             depositAmount,
             signedTx: stringfyTx,
             num: num
@@ -487,7 +508,7 @@ const Header = () => {
           setLoading(true);
           let body = {
             type: "Withdraw",
-            walletAddress: publicKey.toBase58(),
+            walletAddress: localStorage.walletLocalStorageKey,
             amount: depositAmount,
           };
           let data = false;
@@ -496,7 +517,7 @@ const Header = () => {
           if (data) {
             body = {
               type: "Withdraw",
-              walletAddress: publicKey.toBase58(),
+              walletAddress: localStorage.walletLocalStorageKey,
               amount: depositAmount,
               num: num
             };
@@ -590,7 +611,7 @@ const Header = () => {
 
   const saveUserName = async () => {
     const body = {
-      walletAddress: publicKey.toBase58(),
+      walletAddress: localStorage.walletLocalStorageKey,
       userName: suserName,
     };
     await axios
@@ -809,13 +830,13 @@ const Header = () => {
     const t1 = solanaWeb3.Transaction.from(signedTx.serialize());
     let stringfyTx = JSON.stringify(t1.serialize());
 
-    const num = await getNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       setDepositModal(false)
       setAvatarSelected(-1)
       setLoading(true);
       const body = {
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         signedTx: stringfyTx,
         nugValue: nftData[avatarSelected],
         num: num

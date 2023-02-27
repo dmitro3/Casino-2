@@ -125,11 +125,11 @@ const Loot = () => {
       return;
     }
 
-    const num = await GetNum(publicKey.toBase58(), factor1, factor2, factor3, factor4)
+    const num = await GetNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
         amount: amount,
-        walletAddress: publicKey.toBase58(),
+        walletAddress: localStorage.walletLocalStorageKey,
         num: num,
         currencyMode: currencyMode,
         oddOption: oddOption
