@@ -172,22 +172,22 @@ const Sidebar = () => {
                 <Box className="gameModes">
                   <NavLink className={gameMode === "minesrush" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("minesrush")} to={!gameState && "/mines"}>
                     <img className="icon" src={minesrushImg} alt="Minesrush" />
-                    <Typography className="description">MINES</Typography>
+                    <Typography className="description">MiNESWEEPER</Typography>
                   </NavLink>
                   <NavLink className={gameMode === "double" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("double")} to={!gameState && "/coins"}>
                     <img className="icon" src={doubleImg} alt="50/50" />
-                    <Typography className="description">PIRATE COIN</Typography>
+                    <Typography className="description">FLIP COIN</Typography>
                   </NavLink>
                   <NavLink className={gameMode === "double" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("loot")} to={!gameState && "/loot"}>
                     <Box className="icon" style={{ width: 44, height: 44, background: "#101014", maginLeft: 5, border: "3px solid #3a3a3a", borderRadius: "50%" }}>
                       <img src={lootyBoxImg} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
                     </Box>
-                    <Typography className="description">PIRATE LOOT</Typography>
+                    <Typography className="description">HIGH STAKES</Typography>
                   </NavLink>
                   <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/beta-turtles"}>
                     <img className="icon" src={turtle} alt="Turtle" />
                     <Box className="description" style={{ display: "block" }}>
-                      <Typography style={{ marginBottom: 0, fontWeight: "bold", fontFamily: "Mada" }}>TURTLES OF</Typography>
+                      <Typography style={{ marginBottom: 0, fontWeight: "bold", fontFamily: "Mada" }}>RACES OF</Typography>
                       <Typography style={{ fontWeight: "bold", fontFamily: "Mada" }}>TORTUGA</Typography>
                     </Box>
                   </NavLink>

@@ -311,9 +311,6 @@ const Header = () => {
     if (global.walletAddress === "" || global.walletAddress === null) {
       setBalance(0);
     } else {   
-        // ETH
-        // const ETH_contract = new web3.eth.Contract(ContractUtils.ETHABI, ContractUtils.ETH_ADDRESS);
-        // const ETH_userBalance = await ETH_contract.methods.balanceOf(global.walletAddress).call();
         const userBalance = await web3.eth.getBalance(global.walletAddress);
         setBalance(userBalance);
         console.log('balance', balance);
@@ -1021,25 +1018,18 @@ const Header = () => {
                     </Box>
                   </Box>
                 </Box>
-                <Box style={{}}>
-                   {!matchUpSm && address? 
-                    <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ width: "100%", marginLeft: 0, padding: 0 }}>
-                      <span>{address.substr(0, 4)}...{address.slice(38)}</span>
-                    </Button>: 
-                      <Button onClick={onClickConnect} id="walletIcon" className={navbarItemClass()} style={{ width: "100%", marginLeft: 0, padding: 0 }}>
-                        <span>WALLET</span>
-                    </Button>
-                  }
-                </Box>
               </Box>
             </Box>}
           </Box>
           {matchUpSm && address? 
             <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
               <span>{address.substr(0, 4)}...{address.slice(38)}</span>
-            </Button>: 
+            </Button>: !matchUpSm && address? 
+              <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
+              <span>{address.substr(0, 4)}...{address.slice(38)}</span>
+              </Button> : 
               <Button onClick={onClickConnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
-                <span>WALLET</span>
+                <span>WALLETs</span>
             </Button>
           }
         </Box>

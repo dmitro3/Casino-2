@@ -970,7 +970,6 @@ router.post(
       }
       logger.info(`===${req.body.walletAddress} bet ${req.body.amount} in ${req.body.currencyMode} Mode`)
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       if (certData && req.body.amount > 0) {
         const result = await giveLootPrize({ amount: req.body.amount, walletAddress: req.body.walletAddress, currencyMode: req.body.currencyMode, oddOption: req.body.oddOption });
         if (result) {
@@ -983,15 +982,6 @@ router.post(
             multiplier: result.multiplier
           }
           await saveHistory(body);
-          // if (req.body.currencyMode === "mainNug") {
-          //   body = {
-          //     walletAddress: req.body.walletAddress,
-          //     type: "Play with ",
-          //     amount: payAmount,
-          //     transaction: "Mine"
-          //   }
-          //   await saveTransactionHistory(body);
-          // }
           res.json({ status: true, content: result });
         } else {
           res.json({ status: false });
@@ -1006,7 +996,6 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      // const random = await generateCert(req.body.walletAddress);
       logger.debug(`===Error in lootBox===`, err)
       console.log(`===Error in lootBox===`, err)
       res.json({ status: "error" });
@@ -1048,7 +1037,6 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      // const random = await generateCert(req.body.walletAddress);
       logger.debug(`===Error in lootBox===`, err)
       console.log(`===Error in lootBox===`, err)
       res.json({ status: "error" });
@@ -1059,8 +1047,6 @@ router.post(
 router.get(
   "/getTurtleMultiplier",
   async (req, res) => {
-    // await generateTurtleMulti();
-    // console.log("fetch multiplier")
     const multiData = await getMultiplier();
     res.json(multiData)
   }
@@ -1101,7 +1087,6 @@ router.post(
       }
       logger.info(`===${req.body.walletAddress} bet in turtleGame`)
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       if (certData) {
         console.log("req", req.body)
         const result = await playTurtle(req.body);
@@ -1120,7 +1105,6 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      // const random = await generateCert(req.body.walletAddress);
       logger.debug(`===Error in Play Turtle===`, err)
       console.log(`===Error in Play Turtle===`, err)
       res.json({ status: "error" });

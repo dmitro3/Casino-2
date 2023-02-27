@@ -11,7 +11,7 @@ import useGameStore from "../../../GameStore";
 
 import nug from "../../../assets/images/nugget.png"
 import gemImg from "../../../assets/images/gem.png"
-import sol from "../../../assets/images/sol.png"
+import eth from "../../../assets/images/eth.png"
 import coin from "../../../assets/images/coin.png"
 import double from "../../../assets/images/double.svg";
 import speaker from "../../../assets/images/speaker.png";
@@ -130,7 +130,7 @@ const RecentPlays = ({ /*socket*/ }) => {
             <Box style={{ display: "flex", alignItems: "center", justifyContent: "flex-end" }}>
               {item.wager}&nbsp;
               {!item.currencyMode || item.currencyMode === "mainNug" &&
-                <img src={sol} style={{ width: "20px", height: "20px" }} alt="SOL" />
+                <img src={eth} style={{ width: "20px", height: "20px" }} alt="eth" />
               }
               {!item.currencyMode || item.currencyMode === "bonusNug" &&
                 <img src={nug} style={{ width: "20px", height: "20px" }} alt="NUG" />
@@ -155,7 +155,7 @@ const RecentPlays = ({ /*socket*/ }) => {
                 <img src={nug} alt="NUG" className="recentplays-point" />
               }
               {item.currencyMode && item.currencyMode === "mainNug" &&
-                <img src={sol} alt="SOL" className="recentplays-point" />
+                <img src={eth} alt="eth" className="recentplays-point" />
               }
               {item.currencyMode && item.currencyMode === "gem" &&
                 <img src={gemImg} alt="GEM" className="recentplays-point" />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import axios from "axios";
 import useSound from "use-sound";
 import { useWallet } from "@solana/wallet-adapter-react";
@@ -35,9 +35,10 @@ import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";
 import { isSafari, isMobileSafari } from "react-device-detect";
+import { StoreContext } from "../../../store";
 
 const Loot = () => {
-  const { publicKey, connected } = useWallet();
+  const global = useContext(StoreContext);
   const [lootsoundplay] = useSound(lootBox);
   const anim10 = useRef(null);
   const anim11 = useRef(null);
@@ -115,7 +116,8 @@ const Loot = () => {
   }
 
   const openBox = async (amount) => {
-    if (!connected) return
+    if (!global.walletConnected) return
+    alert(nugAmount, 'nugAmount')
     if ((currencyMode === "mainNug" && amount > nugAmount) || (currencyMode === "bonusNug" && amount > bonusNugAmount) || (currencyMode === "gem" && amount > gemAmount)) {
       setAlerts({
         type: "error",
@@ -125,6 +127,7 @@ const Loot = () => {
       return;
     }
 
+    alert('!count')
     const num = await GetNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {
@@ -134,6 +137,8 @@ const Loot = () => {
         currencyMode: currencyMode,
         oddOption: oddOption
       }
+    console.log('body', body);
+
       axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/lootBox`, body)
         .then(async (res) => {
