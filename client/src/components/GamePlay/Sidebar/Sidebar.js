@@ -1,15 +1,15 @@
 import useSound from "use-sound";
 import { NavLink } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-
 import { Tooltip, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { Box, Modal, Typography, Grid } from "@mui/material";
+import { Box, Modal, Typography, Grid, Button } from "@mui/material";
+import * as Web3 from 'web3'
+import BigNumber from "bignumber.js";
 
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import game from "../../../assets/images/game.png";
 import bonuses from "../../../assets/images/bonus.png";
 import leaderboard from "../../../assets/images/leaderboard.png";
@@ -29,6 +29,12 @@ import bonusGroup from "../../../assets/images/bonusGroup.webp";
 import playgame_sound from "../../../assets/audios/MinesClickSound.mp3";
 import speaker_blacktheme from "../../../assets/images/speaker_blacktheme.png";
 import speaker_mute_blacktheme from "../../../assets/images/speaker_mute_blacktheme.png";
+import { StoreContext } from "../../../store";
+import cashLoader from "../../../assets/images/frog.gif";
+import eth from "../../../assets/images/eth.png";
+import nug from "../../../assets/images/nugget.png";
+import depositImage from "../../../assets/images/deposit.png";
+
 
 import "./Sidebar.scss";
 import useGameStore from "../../../GameStore";
@@ -37,9 +43,9 @@ import { Dehaze, Launch, People } from "@mui/icons-material";
 library.add(fas);
 
 const Sidebar = () => {
-
+  const web3 = new Web3(window.ethereum);
+  const global = useContext(StoreContext);
   const theme = useTheme();
-  const { connection } = useConnection();
   const [playgamesoundplay] = useSound(playgame_sound);
   const matchUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const isDesktop = useMediaQuery("(min-width:1300px)");
@@ -47,7 +53,6 @@ const Sidebar = () => {
   const { isReward } = useGameStore();
   const { isMuted, setIsMuted } = useGameStore();
   const { remain, setRemain } = useGameStore();
-  const { userName, setUserName } = useGameStore();
   const { gameMode, setGameMode } = useGameStore();
   const { mineAmount, setMineAmount } = useGameStore();
   const { gameState, setGameState } = useGameStore();
@@ -55,11 +60,23 @@ const Sidebar = () => {
   const { showSidebar, setShowSidebar } = useGameStore();
   const { boardState, setBoardState } = useGameStore();
   const { boardClickedState, setBoardClickedState } = useGameStore();
+  const [depositModal, setDepositModal] = useState(false);
+  const [avatarLoading, setAvatarLoading] = useState(false);
+  const [avatars, setAvatars] = useState('');
+  const [walletModal, setWalletModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [depositAmount, setDepositAmount] = useState(0);
+  const [depositNugAmount, setDepositNugAmount] = useState(0);
+  const [focused, setFocused] = useState(false);
+  const [walletMode, setWalletMode] = useState("deposit");
+  const { gameTHistory, setGameTHistory } = useGameStore();
 
   const [extend, setExtend] = useState(false);
   const [ruleModal, setRuleModal] = useState(false);
   const [connectWalletModalOpen, setConnectWalletModalOpen] = useState(false);
   const [gameClick, setGameClick] = useState(false);
+  const { nugAmount, setNugAmount } = useGameStore();
+  const { bonusNugAmount, setBonusNugAmount } = useGameStore();
 
   useEffect(() => {
     if (window.location.href.includes("game/mines") || window.location.href.includes("game/coins") || window.location.href.includes("game/loot")) {
@@ -92,6 +109,39 @@ const Sidebar = () => {
       borderRadius: "10px",
       boxShadow: 24,
       p: 4,
+    };
+
+    const tHistory = gameTHistory.map((th, key) => {
+      return (
+        <Grid className="gameTHistory" key={key}>
+          <Box className="key">{key + 1}</Box>
+          <Box className={th.type}>{th.type}</Box>
+          <Box className="amount">{parseFloat(th.amount).toFixed(3)}</Box>
+          <Box className="date">{String(th.date).slice(0, 10)}</Box>
+  
+        </Grid>
+      )
+    });
+
+    const changeWalletMode = (mode) => {
+      if (loading) return
+      setFocused(!focused);
+      setWalletMode(mode);
+      setDepositAmount(0);
+    }
+
+    const avatarModal = {
+      textAlign: "center",
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -50%)",
+      width: "270px",
+      height: "350px",
+      bgcolor: "background.paper",
+      borderRadius: "10px",
+      p: 4,
+      padding: "10px",
     };
 
   const changeGameMode = (gm) => {
@@ -135,6 +185,7 @@ const Sidebar = () => {
     clickDetails();
   };
 
+  
   const clickDetails = () => {
     if (isMuted) playgamesoundplay();
     if (!matchUpSm) {
@@ -144,6 +195,111 @@ const Sidebar = () => {
     } else {
       setExtend(!extend);
     }
+  }
+
+  const depositHandler = (e) => {
+    setDepositAmount(e.target.value);
+  }
+
+  const withdrawHandler = (e) => {
+    setDepositAmount(e.target.value);
+  }
+
+  const withdrawHandlerForNug =(e) => {
+    setDepositNugAmount(e.target.value);
+  }
+
+  const depositHandlerForNugget = (e) => {
+    setDepositNugAmount(e.target.value);
+  }
+
+  const handleWalletModalClose = () => {
+    if (loading) return;
+    setWalletModal(false);
+    setDepositAmount(0);
+  }
+
+  const onClickDeposit = () => {
+    if (!global.walletConnected) {
+      return
+    }
+    clickDetails();
+    setWalletModal(true);
+  }
+
+  const deposit = async () => {
+    if (depositAmount===0 || depositAmount > global.balance) { alert('Please enter the correct amount!'); return; }
+    try {
+        const res = await new web3.eth.sendTransaction({
+          to: process.env.REACT_APP_HOUSE_ADDR,
+          from: global.walletAddress, 
+          value: BigNumber(depositAmount * 10 ** 18).toFixed().toString()
+        });
+        if (res) {
+          bonusNugAmount += depositAmount;
+          setBonusNugAmount(bonusNugAmount);
+        } else console.log(res)
+    } catch (err) {
+        console.log(err);
+    }
+  }
+  
+  // should be fixed
+  const depositForNug = async () => {
+    if (depositNugAmount===0 || depositNugAmount > global.balance) { alert('Please enter the correct amount!'); return; }
+    try {
+        const res = await new web3.eth.sendTransaction({
+          to: process.env.REACT_APP_HOUSE_ADDR,
+          from: global.walletAddress, 
+          value: BigNumber(depositNugAmount * 10 ** 18).toFixed().toString()
+        });
+        if (res) {
+          nugAmount += depositNugAmount;
+          setNugAmount(nugAmount);
+        } else console.log(res)
+    } catch (err) {
+        console.log(err);
+    }
+  }
+  const onClickWithdraw = () => {
+    if (!global.walletConnected) return
+    setWalletModal(true);
+  }
+
+  const withdraw = async () => {
+    if (depositAmount===0 || depositAmount > parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)) { alert('Please enter the correct amount!', depositAmount)}
+    const res = await web3.eth.accounts.signTransaction({
+      to: global.walletAddress,
+      value: depositAmount,
+      gas: 2000000,
+      nonce: 0,
+      chainId: 1
+    }, process.env.HOUSE_PRIV_KEY)
+    if (res) {
+      nugAmount -= depositAmount;
+      setBonusNugAmount(bonusNugAmount);
+    } else console.log(res)
+
+  }
+
+
+  const withdrawForNug = async () => {
+    if (depositNugAmount===0 || depositNugAmount > parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)) { alert('Please enter the correct amount!', depositNugAmount)}
+    const res = await web3.eth.accounts.signTransaction({
+      to: global.walletAddress,
+      value: depositNugAmount,
+      gas: 2000000,
+      nonce: 0,
+      chainId: 1
+    }, process.env.HOUSE_PRIV_KEY)
+    if (res) {
+      nugAmount -= depositNugAmount;
+      setNugAmount(nugAmount);
+    } else console.log(res)
+
+  }
+  const depositNow = async () => {
+    
   }
 
   return (
@@ -162,6 +318,10 @@ const Sidebar = () => {
             <NavLink onClick={clickDetails} className="buttons" to={!gameState && "/"} style={{ color: "white", textDecoration: "none" }}>
               <img className="icon" src={home} alt="HOME" />
               <Typography className="description">HOME</Typography>
+            </NavLink>
+            <NavLink className="buttons leaderboards" onClick={onClickDeposit}>
+              <img src={depositImage} alt="Leaderboard" />
+              <Typography className="description">Deposit/Withdraw</Typography>
             </NavLink>
             <Box className={gameClick ? "buttons game_clicked" : "buttons game"} style={{ flexDirection: "column" }}>
               <Box style={{ display: "flex", alignItems: "center", width: "100%" }} onClick={gameClickEvent}>
@@ -221,9 +381,10 @@ const Sidebar = () => {
                   placement="bottom-start"
                   className = "tooltip"
                 >
-                  <NavLink onClick={clickDetails} className="container" to="/bonuses" >
+                  <NavLink onClick={clickDetails} className="container" to="/bonuses" style={{ textDecoration: 'none' }} >
                     {!isReward && <Typography className="badge"></Typography>}
                     <img src={spinImg} alt="SPIN" />
+                    <span style={{ color: "white" }} >FREE SPIN</span>
                   </NavLink>
                 </Tooltip>
               </Box>
@@ -287,7 +448,76 @@ const Sidebar = () => {
         </Box>
       }
 
+      <Modal
+        open={depositModal}
+        onClose={() => setDepositModal(false)}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box
+          className="header-profile-box"
+          sx={avatarModal}
+          style={
+            themeBlack
+              ? { backgroundColor: "#101112", height: "450px", width:'300px' }
+              : { backgroundColor: "#fff", height: "450px", width:'300px' }
+          }
+        >
 
+          <Box>
+            <Typography
+              variant="h3"
+              component="h2"
+              color="#F7BE44"
+              fontSize="40px"
+              fontFamily="Mada"
+              marginTop="20px"
+            >
+              Select NFTs
+            </Typography>
+            <Typography
+              color="white"
+              fontSize="15px"
+              fontFamily="Mada"
+            >
+              Nugget NFTs can take up to 20 seconds to load please wait.
+            </Typography>
+            {avatarLoading ?
+              <Box className="avatar-view">
+                <img src={cashLoader} style={{ width: "60px", position: "relative", top: "40px" }} alt="Loading..." />
+              </Box> :
+              <div className="avatar-view">{avatars}</div>
+            }
+            <Typography
+              color="white"
+              fontSize="15px"
+              fontFamily="Mada"
+            >
+              Your ArbiCasino Nugget NFTs will load here.
+            </Typography>
+            <Typography
+              color="white"
+              fontSize="15px"
+              fontFamily="Mada"
+            >
+              Please note this is only for Nuggets not for MinesRush NFTs.
+            </Typography>
+            <Grid style={{ marginBottom: "10px" }}>
+              <Button className="btn-change-avatar" onClick={depositNow}>
+                Deposit
+              </Button>
+            </Grid>
+            <Grid style={{ margin: "0px" }}>
+              <Button
+                className="btn-change-avatar"
+                onClick={() => setDepositModal(false)}
+              >
+                Cancel
+              </Button>
+            </Grid>
+          </Box>
+        </Box>
+      </Modal>
       <Modal
         open={connectWalletModalOpen}
         onClose={handleConnectWalletModalClose}
@@ -327,7 +557,7 @@ const Sidebar = () => {
               <Box style={{ marginTop: "35px", color: "#fff", fontSize: "16px", fontFamily: "Mada" }}>
                 <div>1. Connect your Ethereum Wallet (Get Phantom @ phantom.app)</div>
                 <div>2. Deposit ETH to play the games.</div>
-                <div>3. Choose between our Pirate themed games.</div>
+                <div>3. Choose between our FLIP themed games.</div>
                 <div>4. Click "Play" and cashout your winnings</div>
                 <div>5. You can instantly withdraw your ETH .</div>
                 <br />
@@ -348,6 +578,83 @@ const Sidebar = () => {
           </Grid>
         </Box>
       </Modal>
+
+      <Modal
+        open={walletModal}
+        onClose={handleWalletModalClose}
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box sx={style} className="walletModal">
+          <Box className="walletNavGroup">
+            <Button onClick={() => changeWalletMode("deposit")} className={walletMode === "deposit" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>DEPOSIT</Button>
+            <Button onClick={() => changeWalletMode("withdraw")} className={walletMode === "withdraw" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>WITHDRAW</Button>
+            <Button onClick={() => changeWalletMode("history")} className={walletMode === "history" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>HISTORY</Button>
+          </Box>
+          {walletMode === "deposit" && (!loading ?
+            <Box className="walletAction">
+              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" >ETH Balance:&nbsp;
+                <img src={eth} alt="ETH" style={{ width: "20px", height: "20px" }} />
+               {global.balance}
+              </Typography>
+              <Box className="walletForm">
+                <input className="input-form" onChange={depositHandler} value={depositAmount} />
+                <Button className="walletActionButton" onClick={deposit}>Deposit</Button>
+              </Box>
+              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ marginTop:'20px'}}>NUGGET Balance:&nbsp;
+                <img src={nug} alt="nug" style={{ width: "20px", height: "20px" }} />
+               {global.balance}
+              </Typography>
+              <Box className="walletForm">
+                <input className="input-form" onChange={depositHandlerForNugget} value={depositNugAmount} />
+                <Button className="walletActionButton" onClick={depositForNug}>Deposit</Button>
+              </Box>
+            </Box> :
+            <Box>
+              <img src={cashLoader} style={{ width: "50px", marginTop: "10px" }} alt="Loading..." />
+              <Typography color="white" fontSize="15px" fontFamily="Mada">
+                Waiting for deposit...
+              </Typography>
+            </Box>)}
+          {walletMode === "withdraw" && (!loading ?
+            <Box className="walletAction">
+              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ textTransform: "uppercase" }} >(ETH Balance:&nbsp;
+                <img src={eth} alt="ETH" style={{ width: "20px", height: "20px" }} />
+                {parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)})
+              </Typography>
+              <Box className="walletForm">
+                <input className="input-form" onChange={withdrawHandler} value={depositAmount} />
+                <Button className="walletActionButton" onClick={withdraw}>Withdraw</Button>
+              </Box>
+              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ textTransform: "uppercase", marginTop:'20px' }} >(ETH Balance:&nbsp;
+                <img src={nug} alt="nug" style={{ width: "20px", height: "20px" }} />
+                {parseFloat(bonusNugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)})
+              </Typography>
+              <Box className="walletForm">
+                <input className="input-form" onChange={withdrawHandlerForNug} value={depositNugAmount} />
+                <Button className="walletActionButton" onClick={withdrawForNug}>Withdraw</Button>
+              </Box>
+              <Typography fontSize="15px" textAlign="center" fontFamily="Mada" style={{ marginTop: "10px", textTransform: "uppercase" }}>
+                You may need to leave 1-2% of your ETHs in your wallet to cover ETH transaction fees.
+              </Typography>
+            </Box> :
+            <Box>
+              <img src={cashLoader} style={{ width: "50px", marginTop: "10px" }} alt="Loading..." />
+              <Typography color="white" fontSize="15px" fontFamily="Mada">
+                Waiting for withdraw...
+              </Typography>
+            </Box>)
+          }
+          {walletMode === "history" &&
+            (gameTHistory.length !== 0 ?
+              tHistory :
+              <Box className="noResult" 
+              >
+              <Box className="text">NO RESULTS FOUND</Box>
+              </Box>)
+          }
+        </Box>
+      </Modal>
     </Grid >
   )
 };
@@ -365,6 +672,7 @@ const profileModal = {
   p: 4,
   padding: "0px",
 };
+
 
 
 export default Sidebar;

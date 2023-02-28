@@ -761,7 +761,7 @@ const Setting = () => {
           </Box>
         </Box>
         <Box className="setGroup">
-          <label htmlFor="double">Pirate Coin House Edge: </label>
+          <label htmlFor="double">FLIP Coin House Edge: </label>
           <Box className="inputGroup">
             <input id="double" value={_doubleHouseEdge} onChange={e => set_DoubleHouseEdge(e.target.value)} />
             <button onClick={setHouseEdges}>SET</button>

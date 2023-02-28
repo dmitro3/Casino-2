@@ -40,6 +40,7 @@
         }
     }
 
+
     .buttons {
         cursor: pointer;
         background-color: #1010148F;
@@ -525,4 +526,10 @@
         font-weight: 600;
         top: 50%;
     }
+}
+
+.input-form {
+    font-size: 16px !important;
+    font-weight: 600;
+    padding-left: 10px !important;
 }

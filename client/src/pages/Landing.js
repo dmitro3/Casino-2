@@ -32,7 +32,7 @@ const Landing = () => {
 
   const [totalETHGames, setTotalETHGames] = useState(50200);
   const [totalNugGames, setTotalNugGames] = useState(50200);
-  const [totalETHWager, setTotalETHWager] = useState(200005.008);
+  const [totalETHWager, setTotalETHWager] = useState(200005);
   const [totalETHEarning, setTotalETHEarning] = useState(304876.05);
   const [totalNugWager, setTotalNugWager] = useState(200005.008);
   const [totalNugEarning, setTotalNugEarning] = useState(304876.05);
@@ -142,7 +142,7 @@ const Landing = () => {
                   <img src={slider2} style={{ width: isDesktop && "100%", height: "100%", objectPosition: !isDesktop && "-1360px 0" }} alt="img2" />
                   <Box className="topOver">
                     <Box className="container" style={{ width: !isDesktop && "100%" }}>
-                      <Typography style={{ marginBottom: isDesktop ? "10px" : "50px", fontSize: !isDesktop && "30px" }}>GET READY FOR <span style={{ textDecorationColor: "8cbd59" }}>TURTLES OF TORTUGA!</span></Typography>
+                      <Typography style={{ marginBottom: isDesktop ? "10px" : "50px", fontSize: !isDesktop && "30px" }}>GET READY FOR <span style={{ textDecorationColor: "8cbd59" }}>RACES OF TORTUGA!</span></Typography>
                       <a href="https://piraterush.com/turtles-of-tortuga" style={{ padding: !isDesktop && "10px 20px" }}>RELEASING SOON</a>
                     </Box>
                   </Box>
@@ -153,16 +153,16 @@ const Landing = () => {
               <Typography className="title">ArbiCasino ORIGINALS</Typography>
               <Box className="bottomCarousel" style={{ flexWrap: isSmall && "wrap" }}>
                 <NavLink to="/mines" onClick={() => clickNavLink("minesrush")}>
-                  {pirateOriginal(bomb, bomb, "#2a4f7f", "#141924", "ArbiCasino ORIGINAL", "MINES")}
+                  {pirateOriginal(bomb, bomb, "#2a4f7f", "#141924", "ArbiCasino ORIGINAL", "MINESWEEPER")}
                 </NavLink>
                 <NavLink to="/loot">
-                  {pirateOriginal(lootyBox2, lootyBox1, "#5c4087", "#5c4087", "ArbiCasino ORIGINAL", "ArbiCasino")}
+                  {pirateOriginal(lootyBox2, lootyBox1, "#5c4087", "#5c4087", "ArbiCasino ORIGINAL", "HIGH STAKES")}
                 </NavLink>
                 <NavLink to="/coins" onClick={() => clickNavLink("double")}>
-                  {pirateOriginal(coin, coin, "#F8CE3F", "#F7AA01", "ArbiCasino ORIGINAL", "PIRATECOIN")}
+                  {pirateOriginal(coin, coin, "#F8CE3F", "#F7AA01", "ArbiCasino ORIGINAL", "FLIPCOIN")}
                 </NavLink>
                 <NavLink to="/beta-turtles">
-                  {pirateOriginal(turtle1, turtle2, "#187973", "#108059", "LAUNCHING SOON", "TURTLES OF TORTUGA")}
+                  {pirateOriginal(turtle1, turtle2, "#187973", "#108059", "LAUNCHING SOON", "RACES OF TORTUGA")}
                 </NavLink>
               </Box>
             </Box>

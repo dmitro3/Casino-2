@@ -46,7 +46,7 @@ const {
 } = require('../../utility/play');
 const { saveHistory } = require('../../utility/history');
 const { getHouseEdge, saveUser, generateCert, getRewardData, getHolders, getNFTHolders } = require("../../utility/user");
-const { mint } = require('../../utility/mintNFT');
+// const { mint } = require('../../utility/mintNFT');
 const HouseEdge = require('../../models/houseEdgeModel');
 const WL1 = require("../../WL1.json")
 const WL2 = require("../../WL2.json")
@@ -58,19 +58,10 @@ router.post(
       logger.info(`===Deposit ${req.body.depositAmount} Sol from ${req.body.walletAddress} and num is ${req.body.num}`)
       let { type, walletAddress, depositAmount, signedTx, num } = req.body;
       const certData = await checkCert(req.body);
-      // const random = await generateCert(walletAddress);
       if (certData && depositAmount > 0) {
         const connection = new web3.Connection(process.env.QUICK_NODE, 'confirmed');
         let hash
-        // while (1) {
-        // try {
         hash = await connection.sendRawTransaction(JSON.parse(signedTx));
-        // break;
-        // } catch (err) {
-        // console.log("Error on deposit", err)
-        // logger.info("Error on deposit", err)
-        // }
-        // }
         let sig = null;
         while (sig == null) {
           sig = await connection.getParsedTransaction(hash, {
@@ -111,40 +102,6 @@ router.post(
           } else {
             res.json({ status: "error", content: "Error while deposit nugget" })
           }
-          //=======Send Fee to Holder==========//
-          // if (result) {
-          //   let PRIVATE_KEY_HOUSE = process.env.HOUSE_PRIV_KEY;
-          //   let house_address = web3.Keypair.fromSecretKey(
-          //     bs58.decode(PRIVATE_KEY_HOUSE)
-          //   );
-          //   let ADDRESS_HOLDER = process.env.HOLDER_ADDR;
-          //   let to = new web3.PublicKey(ADDRESS_HOLDER);
-
-          //   let amount = web3.LAMPORTS_PER_SOL * 0.035 * depositAmount;
-          //   let tx_send_holder = new web3.Transaction().add(
-          //     web3.SystemProgram.transfer({
-          //       fromPubkey: house_address.publicKey,
-          //       toPubkey: to,
-          //       lamports: amount,
-          //     })
-          //   );
-          //   tx_send_holder.recentBlockhash = (
-          //     await connection.getRecentBlockhash("max")
-          //   ).blockhash;
-          //   tx_send_holder.feePayer = house_address.publicKey;
-          //   web3.sendAndConfirmTransaction(connection, tx_send_holder, [house_address]);
-          //   // const body = {
-          //   //   walletAddress: walletAddress,
-          //   //   userName: walletAddress,
-          //   //   avatar: ""
-          //   // }
-          //   // await saveUser(body);
-          //   res.json({ status: "success", content: result });
-          // }
-          // else {
-          //   res.json({ status: "error", content: "Error while deposit nugget" })
-          // }
-          //======Send Fee to Holder ========//
         }
       } else {
         logger.info("===Checking failed or negative depositAmount triggered===", req.body.walletAddress);
@@ -158,173 +115,11 @@ router.post(
     } catch (err) {
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
-      // const random = await generateCert(req.body.walletAddress);
       res.json({ status: "catchError", content: "Sorry, Seems like Solana is busy at the moment. Please try again." });
       res.status(500).end();
     }
   }
 )
-
-// router.post(
-//   "/mintNFTs",
-//   async (req, res) => {
-//     try {
-//       logger.info(`===NFTMint ${req.body.depositAmount} Sol from ${req.body.walletAddress}`)
-//       console.log(`===NFTMint ${req.body.depositAmount} Sol from ${req.body.walletAddress}`)
-//       let { walletAddress, depositAmount, signedTx} = req.body;
-//       const houseEdgeData = await HouseEdge.find({});
-//       let remain = houseEdgeData[0].remainedNFT;
-//       let remainTime1 = houseEdgeData[0].remainedTime1;
-//       let remainTime2 = houseEdgeData[0].remainedTime2;
-//       let phase = 1;
-//       if (remainTime1 > 1) phase = 1;
-//       else if (remainTime2 > 1) phase = 2;
-//       else phase = 3;
-//       let isWhiteListed1 = false;
-//       let isWhiteListed2 = false;
-//       for (let i = 0; i < WL1.length; i++) {
-//         if (WL1[i] === walletAddress) {
-//           isWhiteListed1 = true;
-//           break
-//         }
-//       }
-//       for (let i = 0; i < WL2.length; i++) {
-//         if (WL2[i] === walletAddress) {
-//           isWhiteListed2 = true;
-//           break
-//         }
-//       }
-//       logger.info(`===Phase => ${phase}, isWhileListed1 => ${isWhiteListed1}, isWhiteListed2 => ${isWhiteListed2}, remain => ${remain} ===`);
-//       console.log(`===Phase => ${phase}, isWhileListed1 => ${isWhiteListed1}, isWhiteListed2 => ${isWhiteListed2}, remain => ${remain} ===`);
-//       if (remain > 0) {
-//         if ((phase === 1 && isWhiteListed1) || (phase === 2 && isWhiteListed2) || phase === 3) {
-//           const connection = new web3.Connection(process.env.QUICK_NODE, 'confirmed');
-//           let hash = await connection.sendRawTransaction(JSON.parse(signedTx));
-//           let sig = null;
-//           // while (sig == null) {
-//           //   sig = await connection.getParsedTransaction(hash, {
-//           //     commitment: "finalized",
-//           //   });
-//           // }
-//           // if (sig.transaction.message.instructions[0].parsed.info.source !== walletAddress) {
-//           //   return;
-//           // }
-//           // if (
-//           //   sig.transaction.message.instructions[0].parsed.info.destination !==
-//           //   process.env.CREATOR_ADDR
-//           // ) {
-//           //   return;
-//           // }
-//           // if (
-//           //   sig.transaction.message.instructions[0].parsed.info.lamports /
-//           //   web3.LAMPORTS_PER_SOL < depositAmount
-//           // ) {
-//           //   return;
-//           // }
-//           const resu = await connection.getSignatureStatus(hash.toString(), { searchTransactionHistory: true, });
-//           if (resu.value?.status?.Err) {
-//             await addHackList(walletAddress);
-//             logger.info(`===Deposit Failed(${walletAddress}) in mintNFT===`)
-//             console.log(`===Deposit Failed(${walletAddress}) in mintNFT===`)
-//             res.json({ status: "error", content: "Error in Solana network." });
-//           } else {
-//             let result;
-//             logger.info(`===${depositAmount}SOL is sent now(${hash.toString()}) and NFTMint is ready for ${walletAddress}`)
-//             console.log(`===${depositAmount}SOL is sent now(${hash.toString()}) and NFTMint is ready for ${walletAddress}`)
-//             result = mint(walletAddress);
-
-//             if (result) {
-//               res.json({ status: "success", content: result });
-//             } else {
-//               res.json({ status: "error", content: "Error while NFT minting" })
-//             }
-//           }
-//         } else {
-//           res.json({ status: "error", content: 'Use Your Matey Whitelisted Wallet' })
-//         }
-//       } else {
-//         res.json({ status: "error", content: "Sorry, There is no remaining." })
-//       }
-//       // }
-//     } catch (err) {
-//       logger.debug("===Error while minting NFT===", err);
-//       console.log("===Error while minting NFT===", err);
-//       res.json({ status: "catchError", content: "Sorry, Seems like Solana is busy at the moment. Please try again." });
-//       res.status(500).end();
-//     }
-//   }
-// )
-
-// router.post(
-//   "/NFTDeposit",
-//   async (req, res) => {
-//     try {
-//       const { walletAddress, signedTx, nugValue, num } = req.body;
-//       logger.info(`===NFT Deposit from ${req.body.walletAddress} started===`)
-//       const body = {
-//         type: "NFTDeposit",
-//         walletAddress: walletAddress,
-//         num: num
-//       }
-//       const certData = await checkCert(body);
-//      // const random = await generateCert(req.body.walletAddress);
-//       if (certData) {
-//         const connection = new web3.Connection(process.env.QUICK_NODE, 'confirmed');
-//         let hash = await connection.sendRawTransaction(JSON.parse(signedTx));
-//         let sig = null;
-//         while (sig == null) {
-//           sig = await connection.getParsedTransaction(hash, {
-//             commitment: "finalized",
-//           });
-//         }
-//         logger.info("hash in NFTDeposit", hash);
-//         const resu = await connection.getSignatureStatus(hash.toString(), { searchTransactionHistory: true, });
-//         if (resu.value?.status?.Err) {
-//           await addHackList(walletAddress);
-//           logger.info(`===Deposit NFT Failed(${walletAddress})===`)
-//           console.log(`===Deposit NFT Failed(${walletAddress})===`)
-//           res.json({ status: "error", content: "Error in Solana network."});
-//         } else {
-//           logger.info(`===Deposit NFT succeed(${walletAddress} value) ===`);
-//           const nftNugData = await axios.get(
-//             `${nugValue.data.uri}`,
-//             {
-//               headers: { "Accept-Encoding": "gzip,deflate,compress" }
-//             }
-//           )
-//           let nftNugValue = 0;
-//           nftNugData.data.attributes.map((attr, key) => {
-//             if (attr.trait_type === "Nuggets") {
-//               nftNugValue = parseInt(attr.value)
-//             }
-//           })
-
-//           const item = {
-//             walletAddress: walletAddress,
-//             depositAmount: nftNugValue,
-//             transaction: hash.toString()
-//           };
-//           const result = await depositBonusNugget(item);
-//           res.json({ status: "success", content: result})
-//         }
-//       } else {
-//         logger.info("===Checking failed in Deposit NFT===", walletAddress);
-// const body = {
-//   walletAddress: req.body.walletAddress,
-//   reason: "Cert doesn't match in /NFTDeposit"
-// }
-// await addHackList(body);
-//         res.json({ status: "error", content: "Error while deposit nugget"})
-//       }
-//     } catch (err) {
-//       logger.debug("===Error while verifying deposit===", err);
-//       console.log("===Error while verifying deposit===", err);
-//       const random = await generateCert(req.body.walletAddress);
-//       res.json({ status: "error", content: "Please try again. Solana is busy at the moment."});
-//       res.status(500).end();
-//     }
-//   }
-// )
 
 router.post(
   "/pirateNFTDeposit",
@@ -338,8 +133,6 @@ router.post(
         num: num
       }
       const certData = await checkCert(body);
-      // const random = await generateCert(req.body.walletAddress);
-      // const random = num
       if (certData) {
         const connection = new web3.Connection(process.env.QUICK_NODE, 'confirmed');
         let hash = await connection.sendRawTransaction(JSON.parse(signedTx));
@@ -392,7 +185,6 @@ router.post(
     } catch (err) {
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
-      // const random = await generateCert(req.body.walletAddress);
       const random = req.body.num
       res.json({ status: "error", content: "Please try again. Solana is busy at the moment." });
       res.status(500).end();
@@ -410,7 +202,6 @@ router.post(
         isWithdraw = true
         logger.info(`===Withdraw ${req.body.amount} Sol from ${req.body.walletAddress} and num is ${req.body.num} started===`)
         const certData = await checkCert(req.body);
-        // const random = await generateCert(req.body.walletAddress);
         const banned = await isBanned(req.body.walletAddress);
         console.log("banned", banned)
         console.log("amount", req.body.amount)
@@ -431,7 +222,6 @@ router.post(
         isWithdraw = false
       }
     } catch (err) {
-      // const random = await generateCert(req.body.walletAddress);
       logger.debug("Error while withdraw funds.", err)
       console.log("Error while withdraw funds.", err)
       isWithdraw = false
@@ -466,12 +256,7 @@ router.post(
         num: req.body.num
       }
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       if (certData) {
-        //====stop holder to play====
-        // if (req.body.walletAddress === process.env.HOLDER_ADDR) {
-        //   res.json({ status: "success", content: "holder" });
-        // } else {
         getNFTHolders()
         const result = await checkAlreadyDeposit(req.body);
         if (result.status === "success") {
@@ -500,7 +285,6 @@ router.post(
     } catch (err) {
       logger.debug("Error while checking deposit", err)
       console.log("Error while checking deposit", err)
-      // const random = await generateCert(req.body.walletAddress);
       res.json({ status: "error", content: err })
       res.status(500).end();
     }
@@ -517,7 +301,6 @@ router.post(
         num: num
       }
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       let ratio = 1.1;
       if (currencyMode !== "mainNug") ratio *= 1000
       if (certData) {
@@ -531,12 +314,6 @@ router.post(
             gameMode: gameMode,
             currencyMode: currencyMode
           };
-          // const toHolder = {
-          //   walletAddress: process.env.HOLDER_ADDR,
-          //   bettingAmount: bettingAmount * 0.035,
-          //   mineAmount: mineAmount
-          // }
-          // await deposit(toHolder);
           const result = await deposit(item);
           if (result) res.json({ status: "success" });
           else {
@@ -562,7 +339,6 @@ router.post(
         res.json({ status: "error" });
       }
     } catch (err) {
-      // const random = await generateCert(req.body.walletAddress);
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
       res.json({ status: "error" });
@@ -580,12 +356,10 @@ router.post(
         num: req.body.num
       }
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       if (certData) {
         let fee = 0;
         const result = await checkAlreadyDeposit(req.body);
         if (result) {
-          // await depositNugget(req.body);
           const board = [];
           const board_clicked = [];
           for (let k = 0; k < 25; k++) {
@@ -639,7 +413,6 @@ router.post(
         res.json({ status: false, content: "Request Rejected." });
       }
     } catch (err) {
-      // const random = await generateCert(body.walletAddress);
       logger.debug("Error while inserting board")
       res.json({ status: false, content: err });
       res.status(500).end();
@@ -713,7 +486,6 @@ router.post(
         num: req.body.num
       }
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       if (certData) {
         const stopGameResult = await stopGame(req.body);
         if (stopGameResult.status) {
@@ -740,7 +512,6 @@ router.post(
     } catch (err) {
       logger.debug("Error while cashout.", err)
       console.log("Error while cashout.", err)
-      // const random = await generateCert(body.walletAddress);
       res.json({ status: "error", content: err })
       res.status(500).end();
     }
@@ -791,7 +562,6 @@ router.post(
         num: req.body.num
       }
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       if (certData) {
         let result = await getRaffles(req.body.walletAddress, req.body.type)
         if (req.body.walletAddress === process.env.HOLDER_ADDR)
@@ -857,8 +627,6 @@ router.post(
       }
       console.log("rea.", req.body)
       const certData = await checkCert(body);
-      // const random = req.body.num;
-      // const random = await generateCert(body.walletAddress);
       if (certData) {
         if (req.body.reward < 51) {
           const result = await spinPrize({ walletAddress: req.body.walletAddress, amount: req.body.reward })
@@ -874,8 +642,6 @@ router.post(
         res.json({ status: false, content: "Failed" });
       }
     } catch (err) {
-      // const random = await generateCert(body.walletAddress);
-      // const random = req.body.num
       logger.debug(`===Error while set Spindata===`, err)
       console.log(`===Error while set Spin Data===`, err)
       res.json({ status: false });
@@ -927,7 +693,6 @@ router.post(
   async (req, res) => { 
     try {
       logger.info("===Is Admin?===")
-      // generateTurtleMulti(true);
       if (process.env.ADMIN_WALLETS1 === req.body.walletAddress) {
         logger.info("===Is Admin?: Yes!!!===")
         res.json({
@@ -1014,7 +779,6 @@ router.post(
       }
       logger.info(`===${req.body.walletAddress} bet ${req.body.amount} in ${req.body.currencyMode} Mode`)
       const certData = await checkCert(body);
-      // const random = await generateCert(body.walletAddress);
       if (certData && req.body.amount > 0) {
         const result = await giveNFTPrize({ amount: req.body.amount, walletAddress: req.body.walletAddress, currencyMode: req.body.currencyMode, oddOption: req.body.oddOption });
         if (result) {

@@ -111,7 +111,7 @@ const GameInfo = () => {
                                     <Box style={{ overflowY: "scroll", height: 200 }}>
                                         <Typography fontSize="14px" style={{ marginBottom: 10 }}>Mines at ArbiCasino is our original flagship game. The first game we brought to our platform. Mines is a thrilling game that allows player to set their wager amount and set the number of bombs they want to play with. Players can choose from 3 bombs to 24 bombs. Maximise your odds of winning by playing 13 bombs and trying to uncover all 12 remaining coins! </Typography>
                                         <Typography fontSize="14px" style={{ marginBottom: 10 }}>Mines is a thrilling take on the classic Minesweeper game. Cautiously explore the grid for your chance to grow your earnings and take home the treasure!</Typography>
-                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>Among several games built on the blockchain, Mines at Pirate Rush is unrivaled. Players in Mines, a thrilling update on the classic Minesweeper game, must cautiously explore a grid for multiplier coins while dodging explosives</Typography>
+                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>Among several games built on the blockchain, Mines at FLIP Rush is unrivaled. Players in Mines, a thrilling update on the classic Minesweeper game, must cautiously explore a grid for multiplier coins while dodging explosives</Typography>
                                         <Typography fontSize="14px" style={{ marginBottom: 10 }}>Ready to embark on a game tip? Try Mines now!</Typography>
                                     </Box>
                                 </Box>

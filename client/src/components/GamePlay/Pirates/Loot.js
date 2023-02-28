@@ -144,6 +144,10 @@ const Loot = () => {
         .then(async (res) => {
           // const phrase = Math.floor(Math.random() * 20);
           if (res.data.status) {
+            console.log("res", res.data)
+            console.log("amount", amount)
+            console.log("currncymode", currencyMode)
+            console.log("bNugRatio", 50/bNugRatio)
             setNewNugAmount(parseFloat(res.data.content.nugAmount).toFixed(3));
             setNewBNugAmount(parseFloat(res.data.content.bonusNugAmount).toFixed(3));
             setNewGemAmount(parseFloat(res.data.content.gemAmount).toFixed(3));
@@ -151,45 +155,47 @@ const Loot = () => {
               setEarning(res.data.content.earning);
               if (res.data.content.raffle > 0)
                 setRaffles(res.data.content.raffle);
-              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 50)) {
+              if (amount === (currencyMode === "mainNug" ? 5 / bNugRatio : 50)) {
+                console.log("1")
                 anim11.current?.play();
                 setAnimation11(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 100)) {
+              if (amount === (currencyMode === "mainNug" ? 10 / bNugRatio : 100)) {
                 anim21.current?.play();
                 setAnimation21(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 250 / bNugRatio : 250)) {
+              if (amount === (currencyMode === "mainNug" ? 25 / bNugRatio : 250)) {
                 anim31.current?.play();
                 setAnimation31(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 500 / bNugRatio : 500)) {
+              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 500)) {
                 anim41.current?.play();
                 setAnimation41(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 1000 / bNugRatio : 1000)) {
+              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 1000)) {
                 anim51.current?.play();
                 setAnimation51(true);
               }
             } else {
               setEarning(0)
-              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 50)) {
+              if (amount === (currencyMode === "mainNug" ? 5 / bNugRatio : 50)) {
+                console.log("2")
                 anim10.current?.play();
                 setAnimation10(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 100)) {
+              if (amount === (currencyMode === "mainNug" ? 10 / bNugRatio : 100)) {
                 anim20.current?.play();
                 setAnimation20(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 250 / bNugRatio : 250)) {
+              if (amount === (currencyMode === "mainNug" ? 25 / bNugRatio : 250)) {
                 anim30.current?.play();
                 setAnimation30(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 500 / bNugRatio : 500)) {
+              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 500)) {
                 anim40.current?.play();
                 setAnimation40(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 1000 / bNugRatio : 1000)) {
+              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 1000)) {
                 anim50.current?.play();
                 setAnimation50(true);
               }
@@ -312,7 +318,7 @@ const Loot = () => {
                 High Stakes odds has a 20% chance to 4x yer money with a 40% chance to only return half of yer wager. The remaining 40% ye lose all your lot to the house. This variation has the highest percentage to 4x your money.
               </Box>}
               {oddOption === 1 && <Box className="desc">
-                Win up to 5x on this loot box with no chance to lose all yer wager. This is the yellow belly bet with a 16% chance to double or 5x yer wager. Low Risk = Lower Payout. Not for the pirate looking for high stakes gambling.
+                Win up to 5x on this loot box with no chance to lose all yer wager. This is the yellow belly bet with a 16% chance to double or 5x yer wager. Low Risk = Lower Payout. Not for the FLIP looking for high stakes gambling.
               </Box>}
               {oddOption === 2 && <Box className="desc">
                 The perfect blend of risk that allow ye a 2% chance to win up to 25x your original wager. Similar to low risk this one will also never completely drain ye, meaning it always return a portion of your bet.

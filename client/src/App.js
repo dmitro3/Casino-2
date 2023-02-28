@@ -59,6 +59,7 @@ function App() {
 
   const [walletConnected, setWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState('');
+  const [balance, setBalance] = useState(0);
 
   useEffect(() => {
     if (window.location.href.includes("game/coins")) {
@@ -99,6 +100,7 @@ function App() {
   const value = {
     walletConnected, setWalletConnected,
     walletAddress, setWalletAddress,
+    balance, setBalance,
   }
 
   return (

@@ -262,7 +262,7 @@ const PirateDepositComponent = () => {
           OG ArbiCasino NFTs
         </Typography>
         <Typography className="subtitile" color="white">
-          Deposit your OG Pirates here and recieve the new OG Pirate Airdrop on Mint Day!(Max <span style={{ fontSize: "bold" }}>6</span> NFTs at a time)
+          Deposit your OG Pirates here and recieve the new OG FLIP Airdrop on Mint Day!(Max <span style={{ fontSize: "bold" }}>6</span> NFTs at a time)
         </Typography>
         <Box className="content">
           {
@@ -272,7 +272,7 @@ const PirateDepositComponent = () => {
                   <img src={cashLoader} style={{ width: 50 }} alt="Loading..." />
                   <Typography color="white" fontSize="20px" style={{ marginTop: 20 }}>Loading...</Typography>
                 </Box> :
-                <Box style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly" }}>{nftImgs?.length ? pirateImgs : <Typography color="white">No Pirate NFTs In Your Wallet</Typography>}</Box>) :
+                <Box style={{ display: "flex", flexWrap: "wrap", justifyContent: "space-evenly" }}>{nftImgs?.length ? pirateImgs : <Typography color="white">No FLIP NFTs In Your Wallet</Typography>}</Box>) :
               <img src={OGPirate} alt="OGPirate" style={{ display: "flex", flexWrap: "wrap", alignContent: "center" }} />
           }
         </Box>

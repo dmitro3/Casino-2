@@ -103,7 +103,7 @@ const useGameStore = create((set) => ({
   showToast: false,
   spinCount: 2,
   solanaTps: 2835,
-  solAmount: 0,
+  ethAmount: 0,
   spinnerItems: [
     0.001, 10, 0.002, 50, 0.003, 25
   ],
@@ -126,7 +126,7 @@ const useGameStore = create((set) => ({
     "Raise Jolly Roger up again, yer plundering the hold!",
     "Pillage that booty!",
     "Argh! yer really filling up yer coffer!",
-    "Batten down the hatches, there’s a pirate among us!",
+    "Batten down the hatches, there’s a Flip among us!",
     "Keep winnin’ there’s a kraken in these waters!",
     "Hoist the anchor, we are off to tortuga boys!",
     "Blimey another win!",
@@ -314,8 +314,8 @@ const useGameStore = create((set) => ({
   setShowToast: (val) => {
     set({showToast: val});
   },
-  setSolAmount: (val) => {
-    set({ solAmount: val });
+  setNugAmount: (val) => {
+    set({ nugAmount: val });
   },
   setSolanaTps: (val) => {
     set({ solanaTps: val });

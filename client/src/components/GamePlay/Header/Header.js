@@ -7,25 +7,18 @@ import { useState, useEffect, useContext } from "react";
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 
-import { Tooltip, useMediaQuery } from "@mui/material";
+import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import { Box, Button, Modal, Typography, Grid } from "@mui/material";
 import * as Web3 from 'web3'
 import * as solanaWeb3 from "@solana/web3.js";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { useConnection, useWallet } from "@solana/wallet-adapter-react";
+import { useWallet } from "@solana/wallet-adapter-react";
 import { getParsedNftAccountsByOwner } from "@nfteyez/sol-rayz";
-import {
-  Token,
-  TOKEN_PROGRAM_ID,
-} from "@solana/spl-token";
-
 import ContractUtils from '../Tools/contractUtils';
 import coin from "../../../assets/images/coin.png";
 import nug from "../../../assets/images/nugget.png";
 import gemImg from "../../../assets/images/gem.png";
 import eth from "../../../assets/images/eth.png";
-import historyBackground from "../../../assets/images/historyBackground.png"
 import cashLoader from "../../../assets/images/frog.gif";
 import raffleImg from "../../../assets/images/raffle.png";
 import rectangleImage from "../../../assets/images/rectangle.png";
@@ -35,7 +28,6 @@ import { StoreContext } from '../../../store';
 
 import "./Header.scss";
 import useGameStore from "../../../GameStore";
-import getNum from "../Tools/Calculate";
 import { ExpandMore } from "@mui/icons-material";
 
 library.add(fas);
@@ -43,7 +35,6 @@ library.add(fas);
 const Header = () => {
   const web3 = new Web3(window.ethereum);
   const theme = useTheme();
-  const { connection } = useConnection();
   const [playgamesoundplay] = useSound(playgame_sound);
   const matchUpSm = useMediaQuery(theme.breakpoints.up("sm"));
   const { publicKey, signTransaction } = useWallet();
@@ -70,7 +61,6 @@ const Header = () => {
   const { setMinMine } = useGameStore();
   const { setMaxMine } = useGameStore();
   const { setMineAmount } = useGameStore();
-  const { solAmount, setSolAmount } = useGameStore();
   const { nftAvatars, setNftAvatars } = useGameStore();
   const { nfts, setNfts } = useGameStore();
   const { currencyMode, setCurrencyMode } = useGameStore();
@@ -79,7 +69,6 @@ const Header = () => {
   const { gameTHistory, setGameTHistory } = useGameStore();
   const { setMineHouseEdge } = useGameStore();
   const { setDoubleHouseEdge } = useGameStore();
-  const { factor1, factor2, factor3, factor4 } = useGameStore();
   const { setRaffleDate } = useGameStore();
   const { setLoggedIn } = useGameStore();
   const { enableMines, setEnableMines } = useGameStore();
@@ -90,16 +79,14 @@ const Header = () => {
   const { mineGameLose, setMineGameLose } = useGameStore();
   const { doubleGameWin, setDoubleGameWin } = useGameStore();
   const { doubleGameLose, setDoubleGameLose } = useGameStore();
+  const [avatarLoading, setAvatarLoading] = useState(false);
 
-  const [focused, setFocused] = useState(false);
   const [loading, setLoading] = useState(false);
   const [nftAvatar, setNftAvatar] = useState("");
   const [suserName, setSUserName] = useState(userName);
   const [walletModal, setWalletModal] = useState(false);
   const [depositAmount, setDepositAmount] = useState(0);
-  const [walletMode, setWalletMode] = useState("deposit");
   const [avatarSelected, setAvatarSelected] = useState(-1);
-  const [avatarLoading, setAvatarLoading] = useState(false);
   const [avatarModalOpen, setAvatarModalOpen] = useState(false);
   const [raffleModal, setRaffleModal] = useState(false);
   const [profileModalOpen, setProfileModalOpen] = useState(false);
@@ -109,12 +96,10 @@ const Header = () => {
   const [raffleDescription, setRaffleDescription] = useState(1);
   const [description, setDescription] = useState([]);
   const [timer, setTimer] = useState(0);
-  const [depositModal, setDepositModal] = useState(false);
   const [nftData, setNftData] = useState();
   const [showOption, setShowOption] = useState(false);
   const [height, setHeight] = useState(60);
   const [address, setAddress] = useState("");
-  const [balance, setBalance] = useState(0);
 
   let count = false;
   let raffleHeight = 0;
@@ -189,7 +174,6 @@ const Header = () => {
     setLoading(true);
     const res = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/api/play/getDescription`);
-    console.log("getDesciprtion", res.data)
     setDescription(res.data[0].content);
     setLoading(false);
   }
@@ -295,7 +279,7 @@ const Header = () => {
   }, [global.walletConnected, global.walletAddress]);
 
   const getTransactionHistory = async () => {
-    const body = { type: "Get THistory", walletAddress: publicKey?.toBase58() }
+    const body = { type: "Get History", walletAddress: publicKey?.toBase58() }
     if (body.walletAddress) {
       const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/history/getTHistory`, body)
       if (res.data.status !== "error") {
@@ -307,33 +291,23 @@ const Header = () => {
   }
 
   const getBalance = async () => {
-    console.log('connected')
     if (global.walletAddress === "" || global.walletAddress === null) {
-      setBalance(0);
+      global.setBalance(0);
     } else {   
         const userBalance = await web3.eth.getBalance(global.walletAddress);
-        setBalance(userBalance);
-        console.log('balance', balance);
+        global.setBalance(userBalance);
     }
   }
  
   const ttt = async () => {
     if (global.walletConnected) {
-      // const connection = new solanaWeb3.Connection(
-      //   process.env.REACT_APP_QUICK_NODE
-      // );
-      // let balance = await connection.getBalance(publicKey);
-      // getBalance();
-      // balance = balance / LAMPORTS_PER_SOL;
-      
-      setSolAmount(balance);
+      // setSolAmount(balance);
       let deviceId = localStorage.getItem("id");
       if (!deviceId) {
         deviceId = crypto.randomUUID();
         localStorage.setItem("id", deviceId);
       }
       const body = {
-        // walletAddress: publicKey?.toBase58(),
         walletAddress: global.walletAddress,
         deviceId: deviceId//do not need
       };
@@ -407,13 +381,8 @@ const Header = () => {
     }
   };
 
-  const depositHandler = (e) => {
-    setDepositAmount(e.target.value);
-  }
+  
 
-  const withdrawHandler = (e) => {
-    setDepositAmount(e.target.value);
-  }
 
   const handleWalletModalClose = () => {
     if (loading) return;
@@ -421,133 +390,7 @@ const Header = () => {
     setDepositAmount(0);
   }
 
-  const walletAction = async () => {
-    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
-    if (num) {
-      if (walletMode === "deposit") {
-        let res;
-        if (depositAmount >= solAmount) {
-          setAlerts({
-            type: "error",
-            content: "Insufficient Funds"
-          })
-          return;
-        }
-        if (depositAmount <= 0) {
-          setAlerts({
-            type: "error",
-            content: "You can't deposit negative sol."
-          })
-          return;
-        }
-        let amount = solanaWeb3.LAMPORTS_PER_SOL * depositAmount;
-        const transaction = new solanaWeb3.Transaction().add(
-          solanaWeb3.SystemProgram.transfer({
-            fromPubkey: publicKey,
-            toPubkey: new solanaWeb3.PublicKey(process.env.REACT_APP_HOUSE_ADDR),
-            lamports: parseInt(amount),
-          })
-        );
-        try {
-          transaction.recentBlockhash = (
-            await connection.getRecentBlockhash("max")
-          ).blockhash;
-          transaction.feePayer = publicKey;
-          let signedTx
-          await signTransaction(transaction)
-            .then((res) => { signedTx = res })
-            .catch((err) => {
-              console.log(err)
-              setAlerts({
-                type: "error",
-                content: "Transaction not approved - Are ye scared?"
-              })
-              return false;
-            });
-          const t1 = solanaWeb3.Transaction.from(signedTx.serialize());
-          let stringfyTx = JSON.stringify(t1.serialize());
-          setLoading(true);
-          const body = {
-            type: "Deposit",
-            walletAddress: localStorage.walletLocalStorageKey,
-            depositAmount,
-            signedTx: stringfyTx,
-            num: num
-          };
-          res = await axios.post(
-            `${process.env.REACT_APP_BACKEND_URL}/api/play/depositNugget`,
-            body
-          );
-          const bal = await connection.getBalance(publicKey);
-          setSolAmount(bal / solanaWeb3.LAMPORTS_PER_SOL);
-          setLoading(false);
-          if (res.data.status === "success") {
-            setAlerts({
-              type: "success",
-              content: "Deposit Success - Goodluck Matey!"
-            });
-            setNugAmount(res.data.content.toFixed(3));
-            // return true;
-          } else {
-            setAlerts({
-              type: "error",
-              content: res.data.content
-            })
-            // return false;
-          }
-        } catch (err) {
-          console.log("Error while getting balance", err);
-          setAlerts({ type: "error", content: "Transaction not approved - Are ye scared?" })
-          setLoading(false);
-        }
-      } else {
-        if (parseFloat(process.env.REACT_APP_NUGGET_RATIO) * parseFloat(depositAmount) < parseFloat(nugAmount) && parseFloat(depositAmount) > 0) {
-          setLoading(true);
-          let body = {
-            type: "Withdraw",
-            walletAddress: localStorage.walletLocalStorageKey,
-            amount: depositAmount,
-          };
-          let data = false;
-          data = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawFundstart`, body)
-          // num = await getNum(data, factor1, factor2, factor3, factor4)
-          if (data) {
-            body = {
-              type: "Withdraw",
-              walletAddress: localStorage.walletLocalStorageKey,
-              amount: depositAmount,
-              num: num
-            };
-            const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawFunds`, body)
-            if (res.data.status === "error") {
-              setAlerts({
-                type: "error",
-                content: res.data.content
-              })
-              setLoading(false);
-            } else {
-              setLoading(false);
-              setNugAmount(parseFloat(res.data.content).toFixed(3))
-              const bal = await connection.getBalance(publicKey);
-              setSolAmount(bal / solanaWeb3.LAMPORTS_PER_SOL);
-            }
-          }
-        } else {
-          setAlerts({
-            type: "error",
-            content: "Insufficient SOL"
-          });
-        }
-      }
-      getTransactionHistory();
-      handleWalletModalClose();
-    } else {
-      setAlerts({
-        type: "error",
-        content: "Please try again."
-      })
-    }
-  }
+ 
 
 // connect Metamask wallet
   const onClickConnect = async () => {
@@ -574,12 +417,7 @@ const Header = () => {
     global.setWalletAddress('');
 }
 
-  const changeWalletMode = (mode) => {
-    if (loading) return
-    setFocused(!focused);
-    setWalletMode(mode);
-    setDepositAmount(0);
-  }
+
   const handleProfileModalClose = () => {
     setProfileModalOpen(false);
   };
@@ -620,32 +458,9 @@ const Header = () => {
       });
   };
 
-  const displayNFTs = async () => {
-
-    setDepositModal(true);
-    setAvatarLoading(true);
-    let nftDatas
-    nftDatas = await getAllNftData();
-    let tempData = [];
-    nftDatas.forEach((data) => {
-      if (data.data.symbol && data.data.symbol === "Nuggets") {
-        tempData.push(data);
-      }
-    })
-    setNftData(tempData);
-    const arr = [];
-    let n = tempData.length;
-    for (let i = 0; i < n; i++) {
-      let val = await axios.get(tempData[i].data.uri);
-      arr.push(val);
-    }
-    setNftAvatars(arr);
-    setAvatarLoading(false);
-  }
-
   const onClickChangeAvatar = async () => {
     setAvatarModalOpen(true);
-    setAvatarLoading(true);
+    // setAvatarLoading(true);
     let nftDatas
     nftDatas = await getAllNftData();
     const arr = [];
@@ -663,7 +478,7 @@ const Header = () => {
     }
     setNftData(nftDatas);
     setNftAvatars(arr);
-    setAvatarLoading(false);
+    // setAvatarLoading(false);
   };
 
   const getAllNftData = async () => {
@@ -710,17 +525,7 @@ const Header = () => {
       </>
     );
   });
-  const tHistory = gameTHistory.map((th, key) => {
-    return (
-      <Grid className="gameTHistory" key={key}>
-        <Box className="key">{key + 1}</Box>
-        <Box className={th.type}>{th.type}</Box>
-        <Box className="amount">{parseFloat(th.amount).toFixed(3)}</Box>
-        <Box className="date">{String(th.date).slice(0, 10)}</Box>
 
-      </Grid>
-    )
-  });
 
   const onClickCloseAvatarSelectModal = () => {
     setAvatarModalOpen(false);
@@ -738,128 +543,7 @@ const Header = () => {
     setAvatarSelected(-1)
   };
 
-  const depositNow = async () => {
-    if (avatarSelected === -1) {
-      setAlerts({
-        type: "error",
-        content: "Please select NFT"
-      })
-      return;
-    }
-
-    const mintPublicKey = new solanaWeb3.PublicKey(nftData[avatarSelected].mint);// mint is the Mint address found in the NFT metadata
-    const ownerPublicKey = publicKey;
-    const destPublicKey = new solanaWeb3.PublicKey(process.env.REACT_APP_HOUSE_ADDR);
-
-    const mintToken = new Token(
-      connection,
-      mintPublicKey,
-      TOKEN_PROGRAM_ID,
-      ownerPublicKey
-    );
-
-    // GET SOURCE ASSOCIATED ACCOUNT
-    const associatedSourceTokenAddr = await Token.getAssociatedTokenAddress(
-      mintToken.associatedProgramId,
-      mintToken.programId,
-      mintPublicKey,
-      ownerPublicKey
-    );
-
-    // GET DESTINATION ASSOCIATED ACCOUNT
-    const associatedDestinationTokenAddr = await Token.getAssociatedTokenAddress(
-      mintToken.associatedProgramId,
-      mintToken.programId,
-      mintPublicKey,
-      destPublicKey
-    );
-
-    const receiverAccount = await connection.getAccountInfo(
-      associatedDestinationTokenAddr
-    );
-
-    const instructions = [];
-
-    if (receiverAccount === null) {
-      instructions.push(
-        Token.createAssociatedTokenAccountInstruction(
-          mintToken.associatedProgramId,
-          mintToken.programId,
-          mintPublicKey,
-          associatedDestinationTokenAddr,
-          destPublicKey,
-          ownerPublicKey
-        )
-      );
-    }
-
-    instructions.push(
-      Token.createTransferInstruction(
-        TOKEN_PROGRAM_ID,
-        associatedSourceTokenAddr,
-        associatedDestinationTokenAddr,
-        ownerPublicKey,
-        [],
-        1
-      )
-    );
-
-    // This transaction is sending the tokens
-    let transaction = new solanaWeb3.Transaction();
-    for (let i = 0; i < instructions.length; i++) {
-      transaction.add(instructions[i]);
-    }
-    let signedTx;
-    transaction.recentBlockhash = (
-      await connection.getLatestBlockhash("max")
-    ).blockhash;
-    transaction.feePayer = publicKey;
-    await signTransaction(transaction)
-      .then((res) => { signedTx = res })
-      .catch((err) => {
-        console.log("error", err)
-        setAlerts({
-          type: "error",
-          content: "Transaction not approved - Are ye scared?"
-        })
-        return false;
-      })
-    const t1 = solanaWeb3.Transaction.from(signedTx.serialize());
-    let stringfyTx = JSON.stringify(t1.serialize());
-
-    const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
-    if (num) {
-      setDepositModal(false)
-      setAvatarSelected(-1)
-      setLoading(true);
-      const body = {
-        walletAddress: localStorage.walletLocalStorageKey,
-        signedTx: stringfyTx,
-        nugValue: nftData[avatarSelected],
-        num: num
-      };
-      const res = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/play/NFTDeposit`, body);
-      setLoading(false);
-      if (res.data.status !== "error") {
-        setAlerts({
-          type: "success",
-          content: "Deposit NFT Succeed - Goodluck Mate!"
-        });
-        setBonusNugAmount(parseFloat(res.data.content).toFixed(3));
-      } else {
-        setAlerts({
-          type: "error",
-          content: res.data.content
-        })
-      }
-    } else {
-      setAlerts({
-        type: "error",
-        content: "Please try again."
-      })
-    }
-    setWalletModal(false);
-  }
+  
 
   const showOptions = () => {
     if (gameState) return
@@ -1022,14 +706,14 @@ const Header = () => {
             </Box>}
           </Box>
           {matchUpSm && address? 
-            <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
+            <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "3rem" }}>
               <span>{address.substr(0, 4)}...{address.slice(38)}</span>
             </Button>: !matchUpSm && address? 
-              <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
+              <Button onClick={onClickDisconnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "3rem" }}>
               <span>{address.substr(0, 4)}...{address.slice(38)}</span>
               </Button> : 
-              <Button onClick={onClickConnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "5rem" }}>
-                <span>WALLETs</span>
+              <Button onClick={onClickConnect} id="walletIcon" className={navbarItemClass()} style={{ mineWidth: "3rem" }}>
+                <span>WALLET</span>
             </Button>
           }
         </Box>
@@ -1248,76 +932,7 @@ const Header = () => {
         </Box>
       </Modal>
 
-      <Modal
-        open={depositModal}
-        onClose={() => setDepositModal(false)}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box
-          className="header-profile-box"
-          sx={avatarModal}
-          style={
-            themeBlack
-              ? { backgroundColor: "#101112", height: "450px" }
-              : { backgroundColor: "#fff", height: "450px" }
-          }
-        >
-
-          <Box>
-            <Typography
-              variant="h3"
-              component="h2"
-              color="#F7BE44"
-              fontSize="40px"
-              fontFamily="Mada"
-              marginTop="20px"
-            >
-              Select NFTs
-            </Typography>
-            <Typography
-              color="white"
-              fontSize="15px"
-              fontFamily="Mada"
-            >
-              Nugget NFTs can take up to 20 seconds to load please wait.
-            </Typography>
-            {avatarLoading ?
-              <Box className="avatar-view">
-                <img src={cashLoader} style={{ width: "60px", position: "relative", top: "40px" }} alt="Loading..." />
-              </Box> :
-              <div className="avatar-view">{avatars}</div>
-            }
-            <Typography
-              color="white"
-              fontSize="15px"
-              fontFamily="Mada"
-            >
-              Your ArbiCasino Nugget NFTs will load here.
-            </Typography>
-            <Typography
-              color="white"
-              fontSize="15px"
-              fontFamily="Mada"
-            >
-              Please note this is only for Nuggets not for MinesRush NFTs.
-            </Typography>
-            <Grid style={{ marginBottom: "10px" }}>
-              <Button className="btn-change-avatar" onClick={depositNow}>
-                Deposit
-              </Button>
-            </Grid>
-            <Grid style={{ margin: "0px" }}>
-              <Button
-                className="btn-change-avatar"
-                onClick={() => setDepositModal(false)}
-              >
-                Cancel
-              </Button>
-            </Grid>
-          </Box>
-        </Box>
-      </Modal>
+      
 
       <Modal
         open={connectWalletModalOpen}
@@ -1331,69 +946,11 @@ const Header = () => {
           </h2>
         </Box>
       </Modal>
-      <Modal
-        open={walletModal}
-        onClose={handleWalletModalClose}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-      >
-        <Box sx={style} className="walletModal">
-          <Box className="walletNavGroup">
-            <Button onClick={() => changeWalletMode("deposit")} className={walletMode === "deposit" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>DEPOSIT</Button>
-            <Button onClick={() => changeWalletMode("withdraw")} className={walletMode === "withdraw" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>WITHDRAW</Button>
-            <Button onClick={() => changeWalletMode("history")} className={walletMode === "history" ? "walletNavFocused" : "walletNav"} style={{ color: themeBlack ? "white" : "black" }}>HISTORY</Button>
-          </Box>
-          {walletMode === "deposit" && (!loading ?
-            <Box className="walletAction">
-              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" >(SOL Balance:&nbsp;
-                <img src={eth} alt="SOL" style={{ width: "20px", height: "20px" }} />
-                {solAmount.toFixed(3)})
-              </Typography>
-              <Box className="walletForm">
-                <input onChange={depositHandler} value={depositAmount} />
-                <Button className="walletActionButton" onClick={walletAction}>Deposit</Button>
-              </Box>
-            </Box> :
-            <Box>
-              <img src={cashLoader} style={{ width: "50px", marginTop: "10px" }} alt="Loading..." />
-              <Typography color="white" fontSize="15px" fontFamily="Mada">
-                Waiting for deposit...
-              </Typography>
-            </Box>)}
-          {walletMode === "withdraw" && (!loading ?
-            <Box className="walletAction">
-              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ textTransform: "uppercase" }} >(SOL Balance:&nbsp;
-                <img src={eth} alt="SOL" style={{ width: "20px", height: "20px" }} />
-                {parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)})
-              </Typography>
-              <Box className="walletForm">
-                <input onChange={withdrawHandler} value={depositAmount} />
-                <Button className="walletActionButton" onClick={walletAction}>Withdraw</Button>
-              </Box>
-              <Typography fontSize="15px" textAlign="center" fontFamily="Mada" style={{ marginTop: "10px", textTransform: "uppercase" }}>
-                You may need to leave 1-2% of your SOLs in your wallet to cover SOL transaction fees.
-              </Typography>
-            </Box> :
-            <Box>
-              <img src={cashLoader} style={{ width: "50px", marginTop: "10px" }} alt="Loading..." />
-              <Typography color="white" fontSize="15px" fontFamily="Mada">
-                Waiting for withdraw...
-              </Typography>
-            </Box>)
-          }
-          {walletMode === "history" &&
-            (gameTHistory.length !== 0 ?
-              tHistory :
-              <Box className="noResult" style={{ backgroundImage: `url(${historyBackground})` }}>
-                <Box className="text">NO RESULTS FOUND</Box>
-              </Box>)
-          }
-        </Box>
-      </Modal>
     </Grid>
   );
   
-        }
+}
+
 
 const styleFair = {
   textAlign: "center",
@@ -1439,3 +996,4 @@ const avatarModal = {
 };
 
 export default Header;
+

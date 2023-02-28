@@ -1,12 +1,7 @@
-import { useMemo, useEffect, useState } from "react";
 import {
   Box,
   Grid,
   Typography,
-  Button,
-  useMediaQuery,
-  Modal,
-  SvgIcon,
 } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home"
@@ -22,7 +17,6 @@ const Sidebar = () => {
 
   const {adminView, setAdminView} = useGameStore();
   const {loading, setLoading} = useGameStore();
-  const [playList, setPlayList] = useState();
 
   const changeViewMode = async (mode) => {
     if(loading) return;

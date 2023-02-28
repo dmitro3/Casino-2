@@ -577,7 +577,7 @@ const TurtleComponent = () => {
       <Box className="turtle" onClick={() => selectTurtle(id)}>
         <Box className="img">
           <img src={img} alt={`turtle${id}`} />
-          <Typography>{`Turtle Pirate ${id}`}</Typography>
+          <Typography>{`Turtle FLIP ${id}`}</Typography>
         </Box>
         <Box className="desc">
           {Card(id)}

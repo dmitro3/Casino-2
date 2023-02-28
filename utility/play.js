@@ -16,13 +16,13 @@ const Holder = require("../models/holderModel");
 const Checking = require("../models/checkingModel");
 const TurtleMulti = require("../models/turtleMultiModel");
 
-const { saveTransactionHistory, getDate } = require("./history");
+const { saveTransactionHistory } = require("./history");
 const HashList = require("../HashList.json");
 const HouseEdge = require("../models/houseEdgeModel");
 const Popup = require("../models/popupModel");
 const whiteListModel = require("../models/whiteListModel");
 const withdrawBanModel = require("../models/withdrawBanModel");
-const { transferNFT } = require("./mintNFT");
+// const { transferNFT } = require("./mintNFT");
 const turtleMultiModel = require("../models/turtleMultiModel");
 const TurtleHistory = require("../models/turtleHistoryModel");
 
