@@ -22,19 +22,15 @@ const {
   deposit,
   addHackList,
   depositNugget,
-  withdrawNugget,
+  withdrawETH,
+  withdrawDAI,
   checkCert,
   getRaffles,
-  raffleWinners,
   getDescription,
-  giveRewards,
   spinPrize,
   getSpinDate,
-  depositBonusNugget,
   giveLootPrize,
-  generateTurtleMulti,
   getMultiplier,
-  isBanned,
   pirateNFTDeposit,
   getNFTDeposit,
   getRemaining,
@@ -43,11 +39,10 @@ const {
   playTurtle,
   getPreviousBet,
   getTurtleHistory,
+  depositDai,
 } = require('../../utility/play');
 const { saveHistory } = require('../../utility/history');
-const { getHouseEdge, saveUser, generateCert, getRewardData, getHolders, getNFTHolders } = require("../../utility/user");
-// const { mint } = require('../../utility/mintNFT');
-const HouseEdge = require('../../models/houseEdgeModel');
+const { getHouseEdge, generateCert, getRewardData, getHolders, getNFTHolders } = require("../../utility/user");
 const WL1 = require("../../WL1.json")
 const WL2 = require("../../WL2.json")
 
@@ -55,67 +50,46 @@ router.post(
   "/depositNugget",
   async (req, res) => {
     try {
-      logger.info(`===Deposit ${req.body.depositAmount} Sol from ${req.body.walletAddress} and num is ${req.body.num}`)
-      let { type, walletAddress, depositAmount, signedTx, num } = req.body;
-      const certData = await checkCert(req.body);
-      if (certData && depositAmount > 0) {
-        const connection = new web3.Connection(process.env.QUICK_NODE, 'confirmed');
-        let hash
-        hash = await connection.sendRawTransaction(JSON.parse(signedTx));
-        let sig = null;
-        while (sig == null) {
-          sig = await connection.getParsedTransaction(hash, {
-            commitment: "finalized",
-          });
-        }
-        if (sig.transaction.message.instructions[0].parsed.info.source !== walletAddress) {
-          return;
-        }
-        if (
-          sig.transaction.message.instructions[0].parsed.info.destination !==
-          process.env.HOUSE_ADDR
-        ) {
-          return;
-        }
-        if (
-          sig.transaction.message.instructions[0].parsed.info.lamports /
-          web3.LAMPORTS_PER_SOL < depositAmount
-        ) {
-          return;
-        }
-        const resu = await connection.getSignatureStatus(hash.toString(), { searchTransactionHistory: true, });
-        if (resu.value?.status?.Err) {
-          await addHackList(walletAddress);
-          logger.info(`===Deposit Failed(${walletAddress})===`)
-          res.json({ status: "error", content: "Error in Solana network." });
+      logger.info(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
+        const item = {
+          walletAddress: walletAddress,
+          depositAmount: req.body.depositAmount
+        };
+        const result = await depositNugget(item);
+        if (result) {
+          res.json({ status: "success", content: result });
         } else {
-          logger.info(`===Deposit succeed(${walletAddress})===`)
-          const item = {
-            type: type,
-            walletAddress: walletAddress,
-            depositAmount: depositAmount * process.env.RATIO,
-            transaction: hash.toString()
-          };
-          const result = await depositNugget(item);
-          if (result) {
-            res.json({ status: "success", content: result });
-          } else {
-            res.json({ status: "error", content: "Error while deposit nugget" })
-          }
+          res.json({ status: "error", content: "Error while deposit nugget" })
         }
-      } else {
-        logger.info("===Checking failed or negative depositAmount triggered===", req.body.walletAddress);
-        const body = {
-          walletAddress: req.body.walletAddress,
-          reason: "Cert doesn't match in /depositNugget"
-        }
-        await addHackList(body);
-        res.json({ status: "error", content: "Error while deposit nugget" })
       }
+    catch (err) {
+      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
+      res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
+      res.status(500).end();
+    }
+  }
+)
+
+router.post(
+  "/depositDai",
+  async (req, res) => {
+    try {
+      logger.info(`===Deposit ${req.body.depositAmount} Dai from ${req.body.walletAddress}`)
+        const item = {
+          walletAddress: req.body.walletAddress,
+          depositAmount: req.body.depositAmount,
+        };
+        const result = await depositDai(item);
+        if (result) {
+          res.json({ status: "success", content: result });
+        } else {
+          res.json({ status: "error", content: "Error while deposit nugget" })
+        }
     } catch (err) {
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
-      res.json({ status: "catchError", content: "Sorry, Seems like Solana is busy at the moment. Please try again." });
+      res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
       res.status(500).end();
     }
   }
@@ -192,38 +166,34 @@ router.post(
   }
 )
 
-let isWithdraw = false;
+// withdraw ETH
 router.post(
-  "/withdrawFunds",
+  "/withdrawETH",
   async (req, res) => {
     try {
-      logger.info("withdrawFund", isWithdraw)
-      if (!isWithdraw) {
-        isWithdraw = true
-        logger.info(`===Withdraw ${req.body.amount} Sol from ${req.body.walletAddress} and num is ${req.body.num} started===`)
-        const certData = await checkCert(req.body);
-        const banned = await isBanned(req.body.walletAddress);
-        console.log("banned", banned)
-        console.log("amount", req.body.amount)
-        if (certData && req.body.amount > 0 && !banned) {
-          console.log("in")
-          const result = await withdrawNugget(req.body.walletAddress, req.body.amount);
-          res.json({ status: result.status, content: result.content });
-          res.status(200).end();
-        } else {
-          logger.info(`===Withdraw ${req.body.amount} Sol from ${req.body.walletAddress} and num is ${req.body.num} Failed===`)
-          const body = {
-            walletAddress: req.body.walletAddress,
-            reason: "Cert doesn't match in /withdrawFunds"
-          }
-          await addHackList(body);
-          res.json({ status: "error", content: "Request Rejected." });
-        }
-        isWithdraw = false
-      }
+      logger.info(`===Withdraw ${req.body.depositAmount} ETH from ${req.body.walletAddress} and num is ${req.body.num} started===`)
+        const result = await withdrawETH(req.body.walletAddress, req.body.depositAmount);
+        res.json({ status: result.status, content: result.content });
+        res.status(200).end();
     } catch (err) {
       logger.debug("Error while withdraw funds.", err)
-      console.log("Error while withdraw funds.", err)
+      isWithdraw = false
+      res.json({ status: "error", content: err });
+    }
+  }
+)
+
+// withdraw DAI
+router.post(
+  "/withdrawDAI",
+  async (req, res) => {
+    try {
+      logger.info(`===Withdraw ${req.body.depositAmount} DAI from ${req.body.walletAddress} and num is ${req.body.num} started===`)
+        const result = await withdrawDAI(req.body.walletAddress, req.body.depositAmount);
+        res.json({ status: result.status, content: result.content });
+        res.status(200).end();
+    } catch (err) {
+      logger.debug("Error while withdraw funds.", err)
       isWithdraw = false
       res.json({ status: "error", content: err });
     }

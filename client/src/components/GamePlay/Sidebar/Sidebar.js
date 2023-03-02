@@ -1,6 +1,7 @@
 import useSound from "use-sound";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
+import axios from "axios";
 
 import { fas } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -9,6 +10,7 @@ import { useTheme } from "@mui/material/styles";
 import { Box, Modal, Typography, Grid, Button } from "@mui/material";
 import * as Web3 from 'web3'
 import BigNumber from "bignumber.js";
+import constants from '../Tools/config'
 
 import game from "../../../assets/images/game.png";
 import bonuses from "../../../assets/images/bonus.png";
@@ -35,10 +37,12 @@ import eth from "../../../assets/images/eth.png";
 import nug from "../../../assets/images/nugget.png";
 import depositImage from "../../../assets/images/deposit.png";
 
-
 import "./Sidebar.scss";
 import useGameStore from "../../../GameStore";
 import { Dehaze, Launch, People } from "@mui/icons-material";
+
+import { Chain, Common, Hardfork } from '@ethereumjs/common'
+import { Transaction } from '@ethereumjs/tx'
 
 library.add(fas);
 
@@ -83,6 +87,7 @@ const Sidebar = () => {
       setGameClick(true);
     } else setGameClick(false);
   }, [])
+
   const style = themeBlack
     ? {
       textAlign: "center",
@@ -198,19 +203,19 @@ const Sidebar = () => {
   }
 
   const depositHandler = (e) => {
-    setDepositAmount(e.target.value);
+    setDepositAmount(parseFloat(e.target.value));
   }
 
   const withdrawHandler = (e) => {
-    setDepositAmount(e.target.value);
+    setDepositAmount(parseFloat(e.target.value));
   }
 
   const withdrawHandlerForNug =(e) => {
-    setDepositNugAmount(e.target.value);
+    setDepositNugAmount(parseFloat(e.target.value));
   }
 
   const depositHandlerForNugget = (e) => {
-    setDepositNugAmount(e.target.value);
+    setDepositNugAmount(parseFloat(e.target.value));
   }
 
   const handleWalletModalClose = () => {
@@ -221,12 +226,14 @@ const Sidebar = () => {
 
   const onClickDeposit = () => {
     if (!global.walletConnected) {
+      setConnectWalletModalOpen(true)
       return
     }
     clickDetails();
     setWalletModal(true);
   }
 
+  // deposit ETH token
   const deposit = async () => {
     if (depositAmount===0 || depositAmount > global.balance) { alert('Please enter the correct amount!'); return; }
     try {
@@ -236,68 +243,185 @@ const Sidebar = () => {
           value: BigNumber(depositAmount * 10 ** 18).toFixed().toString()
         });
         if (res) {
-          bonusNugAmount += depositAmount;
-          setBonusNugAmount(bonusNugAmount);
+          const body = {
+            walletAddress: global.walletAddress,
+            depositAmount: depositAmount
+          }
+
+          const result = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/api/play/depositNugget`, body
+          );
+
+          if(result.data.status) {
+            setNugAmount(result.data.content)
+          } else {
+            console.log("error", result.data.content)
+          }
         } else console.log(res)
     } catch (err) {
         console.log(err);
     }
   }
   
-  // should be fixed
+  // deposit DAI token
   const depositForNug = async () => {
-    if (depositNugAmount===0 || depositNugAmount > global.balance) { alert('Please enter the correct amount!'); return; }
+    if (depositNugAmount === 0 || depositNugAmount > global.daiBalance) { alert('Please enter the correct amount!'); return; }
     try {
-        const res = await new web3.eth.sendTransaction({
-          to: process.env.REACT_APP_HOUSE_ADDR,
-          from: global.walletAddress, 
-          value: BigNumber(depositNugAmount * 10 ** 18).toFixed().toString()
-        });
-        if (res) {
-          nugAmount += depositNugAmount;
-          setNugAmount(nugAmount);
-        } else console.log(res)
+        const dai = new web3.eth.Contract(constants.BaseDAI_ABI, constants.BaseDAI_ADDRESS);
+        await dai.methods.approve(process.env.REACT_APP_HOUSE_ADDR, BigNumber(depositNugAmount * 10 ** 18).toFixed().toString()).send({ from: global.walletAddress });
+        const accounts = await web3.eth.getAccounts();
+        const amountToSend = web3.utils.toWei(depositNugAmount.toString(), 'ether'); // the amount of Dai tokens to send
+        const tx = await dai.methods.transfer(process.env.REACT_APP_HOUSE_ADDR, amountToSend/10**9).send({ from: accounts[0] });
+        if (tx) {
+          const body = {
+            walletAddress: global.walletAddress,
+            depositAmount: depositNugAmount
+          }
+
+          const result = await axios.post(
+            `${process.env.REACT_APP_BACKEND_URL}/api/play/depositDai`, body
+          );
+
+          if(result.data.status) {
+            setBonusNugAmount(result.data.content)
+          } else {
+            console.log("error", result.data.content)
+          }
+
+        } else console.log(tx)
+
+
     } catch (err) {
         console.log(err);
     }
   }
-  const onClickWithdraw = () => {
-    if (!global.walletConnected) return
-    setWalletModal(true);
-  }
 
+  // withdraw ETH
   const withdraw = async () => {
     if (depositAmount===0 || depositAmount > parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)) { alert('Please enter the correct amount!', depositAmount)}
-    const res = await web3.eth.accounts.signTransaction({
-      to: global.walletAddress,
-      value: depositAmount,
-      gas: 2000000,
-      nonce: 0,
-      chainId: 1
-    }, process.env.HOUSE_PRIV_KEY)
-    if (res) {
-      nugAmount -= depositAmount;
-      setBonusNugAmount(bonusNugAmount);
-    } else console.log(res)
+    try {
+      const recipient = global.walletAddress; // Replace RECIPIENT_ADDRESS with the address of the recipient
+      const amount = web3.utils.toWei(depositAmount.toString(), 'ether'); // Replace 1 with the amount of tokens you want to send
 
+      console.log('recipient', recipient)
+
+      web3.eth.accounts.signTransaction({
+        to: recipient,
+        value: amount,
+        gas: 2000000
+      }, process.env.REACT_APP_HOUSE_PRIV_KEY)
+      .then((signedTx) => {
+        const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
+        sentTx.on("receipt",async receipt => {
+            const body = {
+              walletAddress: global.walletAddress,
+              depositAmount: depositAmount
+            }
+    
+            const result = await axios.post(
+              `${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawETH`, body
+            );
+    
+            if(result.data.status) {
+              setNugAmount(result.data.content)
+            } else {
+              console.log("error", result.data.content)
+            }
+            console.log('sent', receipt)
+
+          });
+          sentTx.on("error", err => {
+            console.log('error', err)
+          });
+      });
+    } 
+    catch (err) {
+        console.log(err);
+    }
+  }
+
+  // withdraw DAI token
+  const withdrawForBonus = async () => {
+    if (depositNugAmount===0 || depositNugAmount > parseFloat(bonusNugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)) { alert('Please enter the correct amount!', depositNugAmount)}
+    try {
+      const amount = web3.utils.toWei('1', 'ether');
+      const myContract = new web3.eth.Contract(constants.BaseDAI_ABI,constants.BaseDAI_ADDRESS);
+      const txData = {
+        from: process.env.REACT_APP_HOUSE_ADDR, 
+        to: constants.BaseDAI_ADDRESS,
+        gas: 10000000, 
+        value: '0x0',
+        data: myContract.methods.transfer(global.walletAddress, amount).encodeABI() 
+      };
+
+      console.log(txData);
+      console.log(global.walletAddress)
+
+      // web3.eth.accounts.signTransaction(tx, process.env.REACT_APP_HOUSE_PRIV_KEY)
+      // .then((signedTx) => {
+      //   const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
+      //    sentTx.on("receipt", async receipt => {
+      //     console.log('sent', receipt)
+      //     // const body = {
+      //     //   walletAddress: global.walletAddress,
+      //     //   depositAmount: depositAmount
+      //     // }
+      //     // const result = await axios.post(
+      //     //   `${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawETH`, body
+      //     // );
+  
+      //     // if(result.data.status) {
+      //     //   setBonusNugAmount(result.data.content)
+      //     // } else console.log(result.data.status)
+      //   });
+      //   sentTx.on("error", err => {
+      //     console.log('error', err)
+      //   });      
+      // }).catch((err) => {
+      //   console.log('error in sending', err)
+      // });
+      const common = new Common({ chain: Chain.Mainnet, hardfork: Hardfork.Istanbul })
+      const tx = Transaction.fromTxData(txData, { common })
+      const signedTx = tx.sign(process.env.REACT_APP_HOUSE_PRIV_KEY)
+
+      const serializedTx = signedTx.serialize()
+      web3.eth.sendSignedTransaction(serializedTx).on('transactionHash', function (txHash) {
+
+      }).on('receipt', function (receipt) {
+          console.log("receipt:" + receipt);
+      }).on('confirmation', function (confirmationNumber, receipt) {
+          //console.log("confirmationNumber:" + confirmationNumber + " receipt:" + receipt);
+      }).on('error', function (error) {
+
+      });
+    } 
+    catch(err) {
+        console.log(err);
+      }
+    //   const amount = web3.utils.toWei('0.001', 'ether');
+    //   const myContract = new web3.eth.Contract(constants.BaseDAI_ABI,constants.BaseDAI_ADDRESS);
+    //   web3.eth.accounts.signTransaction({
+    //     to: constants.BaseDAI_ADDRESS,
+    //     gas: 20000000,
+    //     value: '0x00',
+    //     data: myContract.methods.transfer(global.walletAddress, amount).encodeABI() 
+    //   }, process.env.REACT_APP_HOUSE_PRIV_KEY)
+    //   .then((signedTx) => {
+    //     const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
+    //     sentTx.on("receipt",async receipt => {
+    //       console.l0g('receipt', receipt)
+    //       });
+    //       sentTx.on("error", err => {
+    //         console.log('error', err)
+    //       });
+    //   });
+    // } 
+    // catch (err) {
+    //     console.log(err);
+    // }
   }
 
 
-  const withdrawForNug = async () => {
-    if (depositNugAmount===0 || depositNugAmount > parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)) { alert('Please enter the correct amount!', depositNugAmount)}
-    const res = await web3.eth.accounts.signTransaction({
-      to: global.walletAddress,
-      value: depositNugAmount,
-      gas: 2000000,
-      nonce: 0,
-      chainId: 1
-    }, process.env.HOUSE_PRIV_KEY)
-    if (res) {
-      nugAmount -= depositNugAmount;
-      setNugAmount(nugAmount);
-    } else console.log(res)
-
-  }
   const depositNow = async () => {
     
   }
@@ -524,8 +648,8 @@ const Sidebar = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={style}>
-          <h2 id="parent-modal-title">
+        <Box sx={style} style={{ width:'300px', height:'120px'}}>
+          <h2 id="parent-modal-title" >
             Please connect your Wallet
           </h2>
         </Box>
@@ -595,18 +719,18 @@ const Sidebar = () => {
             <Box className="walletAction">
               <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" >ETH Balance:&nbsp;
                 <img src={eth} alt="ETH" style={{ width: "20px", height: "20px" }} />
-               {global.balance}
+               {global.balance/10**18}
               </Typography>
               <Box className="walletForm">
-                <input className="input-form" onChange={depositHandler} value={depositAmount} />
+                <input type='number' className="input-form" onChange={depositHandler} value={depositAmount} />
                 <Button className="walletActionButton" onClick={deposit}>Deposit</Button>
               </Box>
-              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ marginTop:'20px'}}>NUGGET Balance:&nbsp;
+              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ marginTop:'20px'}}>DAI Balance:&nbsp;
                 <img src={nug} alt="nug" style={{ width: "20px", height: "20px" }} />
-               {global.balance}
+               {global.daiBalance}
               </Typography>
               <Box className="walletForm">
-                <input className="input-form" onChange={depositHandlerForNugget} value={depositNugAmount} />
+                <input type='number' className="input-form" onChange={depositHandlerForNugget} value={depositNugAmount} />
                 <Button className="walletActionButton" onClick={depositForNug}>Deposit</Button>
               </Box>
             </Box> :
@@ -623,16 +747,16 @@ const Sidebar = () => {
                 {parseFloat(nugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)})
               </Typography>
               <Box className="walletForm">
-                <input className="input-form" onChange={withdrawHandler} value={depositAmount} />
+                <input type='number' className="input-form" onChange={withdrawHandler} value={depositAmount} />
                 <Button className="walletActionButton" onClick={withdraw}>Withdraw</Button>
               </Box>
-              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ textTransform: "uppercase", marginTop:'20px' }} >(ETH Balance:&nbsp;
+              <Typography fontSize="15px" textAlign="left" fontFamily="Mada" className="balance" style={{ textTransform: "uppercase", marginTop:'20px' }} >(NUGGET Balance:&nbsp;
                 <img src={nug} alt="nug" style={{ width: "20px", height: "20px" }} />
                 {parseFloat(bonusNugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)})
               </Typography>
               <Box className="walletForm">
-                <input className="input-form" onChange={withdrawHandlerForNug} value={depositNugAmount} />
-                <Button className="walletActionButton" onClick={withdrawForNug}>Withdraw</Button>
+                <input type='number' className="input-form" onChange={withdrawHandlerForNug} value={depositNugAmount} />
+                <Button className="walletActionButton" onClick={withdrawForBonus}>Withdraw</Button>
               </Box>
               <Typography fontSize="15px" textAlign="center" fontFamily="Mada" style={{ marginTop: "10px", textTransform: "uppercase" }}>
                 You may need to leave 1-2% of your ETHs in your wallet to cover ETH transaction fees.

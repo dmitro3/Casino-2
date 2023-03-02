@@ -1,5 +1,4 @@
 import { useState } from "react";
-import useSound from "use-sound";
 import { Box, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme } from "@mui/material";
 
 import useGameStore from "../../../GameStore";

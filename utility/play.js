@@ -43,7 +43,7 @@ const getMulti = (coinAmount, mineAmount, houseEdge) => {
   return tempMulti * houseEdge;
 };
 
-const withdrawNugget = async (walletAddress, payout) => {
+const withdrawETH = async (walletAddress, payout) => {
   logger.info(`===Withdraw Fund Started===${walletAddress, payout}`);
   console.log(`===Withdraw Fund Started===${walletAddress, payout}`);
   const query = { walletAddress: walletAddress };
@@ -51,10 +51,10 @@ const withdrawNugget = async (walletAddress, payout) => {
   const nuggetBalance = nuggetData.nugAmount;
   logger.info(`===nuggetBalance on DB (${nuggetBalance})===`)
   console.log(`===nuggetBalance on DB (${nuggetBalance})===`)
-  if (payout * process.env.RATIO > nuggetBalance || payout <= 0) return { status: "error", content: "Insufficient Nugget." }
+  if (payout > nuggetBalance || payout <= 0) return { status: "error", content: "Insufficient Nugget." }
   else {
 
-    const balance = nuggetBalance - parseFloat(payout * process.env.RATIO);
+    const balance = nuggetBalance - parseFloat(payout);
     const update = {
       $set:
       {
@@ -62,40 +62,30 @@ const withdrawNugget = async (walletAddress, payout) => {
       }
     }
     const option = { $upsert: true };
-    const result = await User.findOneAndUpdate(query, update, option);
-    const connection = new web3.Connection(process.env.QUICK_NODE);
-    let PRIVATE_KEY_HOUSE = process.env.HOUSE_PRIV_KEY;
-    let house_address = web3.Keypair.fromSecretKey(
-      bs58.decode(PRIVATE_KEY_HOUSE)
-    );
-    let PLAYER_ADDRESS = walletAddress;
-    let to = new web3.PublicKey(PLAYER_ADDRESS);
-    let amount = web3.LAMPORTS_PER_SOL * parseFloat(payout);
-    while (1) {
-      try {
-        let tx_send_holder = new web3.Transaction().add(
-          web3.SystemProgram.transfer({
-            fromPubkey: house_address.publicKey,
-            toPubkey: to,
-            lamports: amount,
-          })
-        );
-        let hash = await web3.sendAndConfirmTransaction(connection, tx_send_holder, [house_address]);
-        logger.info(`===Transaction completed.(NuggetBalance is ${nuggetBalance})===`)
-        console.log(`===Transaction completed.(NuggetBalance is ${nuggetBalance})===`)
-        const req = {
-          walletAddress: walletAddress,
-          type: "Withdraw",
-          amount: -payout * process.env.RATIO,
-          transaction: hash
-        }
-        saveTransactionHistory(req);
+    await User.findOneAndUpdate(query, update, option);
         return { status: "success", content: balance };
-      } catch (err) {
-        console.log("err", err)
-        logger.info("err in withdraw fund", err)
+  }
+}
+
+const withdrawDAI = async (walletAddress, payout) => {
+  logger.info(`===Withdraw Fund Started===${walletAddress, payout}`);
+  const query = { walletAddress: walletAddress };
+  const bonusNuggetData = await User.findOne(query);
+  const bonusNuggetBalance = bonusNuggetData.bonusNugAmount;
+  logger.info(`===bonusNuggetBalance on DB (${bonusNuggetBalance})===`)
+  if (payout > bonusNuggetBalance || payout <= 0) return { status: "error", content: "Insufficient Nugget." }
+  else {
+
+    const balance = bonusNuggetBalance - parseFloat(payout);
+    const update = {
+      $set:
+      {
+        nugAmount: balance,
       }
     }
+    const option = { $upsert: true };
+    await User.findOneAndUpdate(query, update, option);
+        return { status: "success", content: balance };
   }
 }
 
@@ -565,10 +555,34 @@ const depositNugget = async (data) => {
   }
   // } else
 }
+
+const depositDai = async (data) => {
+  try {
+    const depositData = await User.findOne({ walletAddress: data.walletAddress });
+    let dbAmount = 0;
+    if (depositData)
+      dbAmount = depositData.bonusNugAmount
+    const depositAmount = parseFloat(dbAmount) + parseFloat(data.depositAmount);
+    await User.findOneAndUpdate(
+      { walletAddress: data.walletAddress },
+      {
+        $set: {
+          walletAddress: data.walletAddress,
+          bonusNugAmount: depositAmount
+        }
+      },
+      { upsert: true }
+    )
+    return depositAmount
+  } catch (err) {
+    console.log("error in deposit utility", err);
+    return false
+  }
+}
+
 const depositBonusNugget = async (data) => {
   try {
     const depositData = await User.findOne({ walletAddress: data.walletAddress });
-    // if(depositData) {
     let dbAmount = 0;
     if (depositData)
       dbAmount = depositData.bonusNugAmount;
@@ -595,8 +609,8 @@ const depositBonusNugget = async (data) => {
     console.log("error in deposit utility", err);
     return false
   }
-  // } else
 }
+
 const giveRewards = async ({ walletAddress, amount }) => {
   const query = { walletAddress: walletAddress };
   const nugData = await User.findOne(query);
@@ -1767,8 +1781,10 @@ module.exports = {
   addWithdrawBanList,
   addUserList,
   depositNugget,
+  depositDai,
   depositBonusNugget,
-  withdrawNugget,
+  withdrawETH,
+  withdrawDAI,
   giveRewards,
   giveBRewards,
   giveGemRewards,

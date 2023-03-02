@@ -52,7 +52,7 @@ const GameInfo = () => {
                                     <img src={minesticker} alt="MineGame" />
                                 </Box>
                                 <Box className="right">
-                                    <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>Mines</Typography>
+                                    <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>Minesweeper</Typography>
                                     <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >ArbiCasino</span></Typography>
                                     <Typography fontSize="14px" style={{ color: "grey" }}>Release: 09/10/2022</Typography>
                                 </Box>
@@ -134,7 +134,7 @@ const GameInfo = () => {
                                     <Typography style={{ color: "white", fontWeight: "bold" }}>PirateCoin</Typography>
                                 </Box>
                                 <Box className="right">
-                                    <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>Pirate Coin</Typography>
+                                    <Typography fontSize="20px" style={{ color: themeBlack ? "white" : "black", textAlign: "left" }}>FLIP Coin</Typography>
                                     <Typography fontSize="14px" style={{ color: "grey", textAlign: "left" }}>By <span style={{ color: themeBlack ? "white" : "black" }} >ArbiCasino</span></Typography>
                                     <Typography fontSize="14px" style={{ color: "grey" }}>Release: 10/15/2022</Typography>
                                 </Box>
@@ -183,7 +183,7 @@ const GameInfo = () => {
                                             </Box>
                                             <Box className="infoItem" style={{ width: !isMedium ? "85%" : size * 0.15 }}>
                                                 <Typography className="left">Type</Typography>
-                                                <Typography className="right">Pirate Coin</Typography>
+                                                <Typography className="right">FLIP Coin</Typography>
                                             </Box>
                                         </Box>
                                     </Box>
@@ -191,7 +191,7 @@ const GameInfo = () => {
                                 <Box className="about" style={{ width: !isMedium && "100%" }}>
                                     <Typography className="title">Game Description</Typography>
                                     <Box style={{ overflowY: "scroll", height: "200px" }}>
-                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>Will it be a coin or a bomb? Only those who wager will know! Pirate Coin is a game of 50% chance! How many wins can you get in a row before you hit the mine? Play this 50-50 game of luck for a shot to double it or lose it all.</Typography>
+                                        <Typography fontSize="14px" style={{ marginBottom: 10 }}>Will it be a coin or a bomb? Only those who wager will know! FLIP Coin is a game of 50% chance! How many wins can you get in a row before you hit the mine? Play this 50-50 game of luck for a shot to double it or lose it all.</Typography>
                                         <Typography fontSize="14px">Pick the left side or the right side and risk yer booty for a chance to double it!</Typography>
                                     </Box>
                                 </Box>

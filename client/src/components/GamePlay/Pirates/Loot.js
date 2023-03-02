@@ -117,7 +117,6 @@ const Loot = () => {
 
   const openBox = async (amount) => {
     if (!global.walletConnected) return
-    alert(nugAmount, 'nugAmount')
     if ((currencyMode === "mainNug" && amount > nugAmount) || (currencyMode === "bonusNug" && amount > bonusNugAmount) || (currencyMode === "gem" && amount > gemAmount)) {
       setAlerts({
         type: "error",
@@ -127,7 +126,6 @@ const Loot = () => {
       return;
     }
 
-    alert('!count')
     const num = await GetNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       const body = {

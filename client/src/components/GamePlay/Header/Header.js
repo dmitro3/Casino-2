@@ -25,6 +25,7 @@ import rectangleImage from "../../../assets/images/rectangle.png";
 import playgame_sound from "../../../assets/audios/MinesClickSound.mp3";
 import yellowrectangle from "../../../assets/images/yellowrectangle.png";
 import { StoreContext } from '../../../store';
+import constants from '../Tools/config'
 
 import "./Header.scss";
 import useGameStore from "../../../GameStore";
@@ -37,7 +38,7 @@ const Header = () => {
   const theme = useTheme();
   const [playgamesoundplay] = useSound(playgame_sound);
   const matchUpSm = useMediaQuery(theme.breakpoints.up("sm"));
-  const { publicKey, signTransaction } = useWallet();
+  const { publicKey } = useWallet();
 
   const isDesktop = useMediaQuery("(min-width:1300px)");
   const isSmall = useMediaQuery("(min-width:900px)");
@@ -136,7 +137,26 @@ const Header = () => {
     getDescription();
     getNfts();
     getHouseEdges();
-  }, [])
+    getBalance();
+  }, [global.walletAddress])
+
+  const getBalance = async () => {
+    if (global.walletAddress === "" || global.walletAddress === null) {
+      global.setBalance(0);
+    } else {   
+        const userBalance = await web3.eth.getBalance(global.walletAddress);
+        global.setBalance(userBalance);
+
+        const BASE_DAI_address = constants.BaseDAI_ADDRESS;
+        const BASE_DAI_ABI = constants.BaseDAI_ABI;
+        const contract = new web3.eth.Contract(BASE_DAI_ABI, BASE_DAI_address);
+        const BASE_DAI_Balance = await contract.methods.balanceOf(global.walletAddress).call()
+        console.log('DAIBAlacen', BASE_DAI_Balance/10**9);
+        // setBonusNugAmount((BASE_DAI_Balance/10**9).toFixed(0));
+        global.setDaiBalance((BASE_DAI_Balance/10**9).toFixed(0));
+
+    }
+  }
 
   const getAdmin = async () => {
     setLoading(true);
@@ -266,7 +286,7 @@ const Header = () => {
     getTransactionHistory();
     ttt();
     getHolders();
-    getBalance()
+    
     const unloadCallback = async () => {
       if (publicKey?.toBase58()) {
         const body = { walletAddress: localStorage.walletLocalStorageKey }
@@ -287,15 +307,6 @@ const Header = () => {
       } else {
         console.log("Error while getting transaction history", res.data.content);
       }
-    }
-  }
-
-  const getBalance = async () => {
-    if (global.walletAddress === "" || global.walletAddress === null) {
-      global.setBalance(0);
-    } else {   
-        const userBalance = await web3.eth.getBalance(global.walletAddress);
-        global.setBalance(userBalance);
     }
   }
  
