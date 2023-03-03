@@ -226,36 +226,27 @@ const RecentPlays = ({ /*socket*/ }) => {
       {!isDesktop && (
         <>
           <Grid item xs={3} style={{ marginTop: "30px" }} />
-          <Grid item xs={3} style={{ marginTop: "30px" }}>
-            <Button
-              className={themeBlack ? "footer-item-black" : "footer-item"}
-              style={{ borderRadius: "10px" }}
-              onClick={handleClick}
-            >
-              LIGHT
-            </Button>
-          </Grid>
-          <Grid item xs={3}>
-            <Button
-              className={themeBlack ? "footer-item-black" : "footer-item"}
-              style={{ marginTop: "30px", borderRadius: "10px" }}
-              onClick={onVolumeClick}
-            >
-              {isMuted ? (
-                <img
-                  alt="speaker"
-                  className="control-option-image"
-                  src={themeBlack ? speaker_blacktheme : speaker}
-                />
-              ) : (
-                <img
-                  alt="speaker-mute"
-                  className="control-option-image"
-                  src={themeBlack ? speaker_mute_blacktheme : speaker_mute}
-                />
-              )}
-            </Button>
-          </Grid>
+            <Grid item xs={3} style={{ margin: 'auto'}}>
+              <Button
+                className={themeBlack ? "footer-item-black" : "footer-item"}
+                style={{ marginTop: "30px", borderRadius: "10px" }}
+                onClick={onVolumeClick}
+              >
+                {isMuted ? (
+                  <img
+                    alt="speaker"
+                    className="control-option-image"
+                    src={themeBlack ? speaker_blacktheme : speaker}
+                  />
+                ) : (
+                  <img
+                    alt="speaker-mute"
+                    className="control-option-image"
+                    src={themeBlack ? speaker_mute_blacktheme : speaker_mute}
+                  />
+                )}
+              </Button>
+            </Grid>
           <Grid item xs={3} />
         </>
       )}

@@ -612,13 +612,10 @@ const GameBoard = () => {
   const onClickStopGame = async () => {
     if (isMuted) cashoutsoundplay();
     if (clicked === true) return;
-    // if (!hack) {
     setCashLoading(true);
     setClicked(true);
-    // if (!hack) {
     let body;
     let houseEdge;
-    // const num = number^3+number*2023+10/number;
     const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
     if (num) {
       if (gameMode === "minesrush") {
@@ -652,7 +649,6 @@ const GameBoard = () => {
           if (res.data.status === "success") {
             getHistory();
             setClicked(false);
-            // socket.emit("history", "historyChanged");
             setGameState(0);
             const allBoardState = JSON.parse(res.data.board.boardString);
             allBoardState.forEach((item, key) => {
@@ -699,71 +695,6 @@ const GameBoard = () => {
     setWinFinalModalOpen(false);
   };
 
-  // const handleSongFinishedPlaying = () => {
-  //   setIs_coinsound(false);
-  //   setIs_minesexplosion(false);
-  //   setIs_cashoutsound(false);
-  // };
-
-  // const treasureChest = (id) => {
-  //   return (
-  //     <Box className={id ? (animation2 ? "treasureChest" : "treasures") : (animation1 ? "treasureChest" : "treasures")} onClick={() => clickEvent(id)}>
-  //       {/* <Box className={ (animation1 ? "treasureChest" : "treasures")} onClick={() => clickEvent(0)}> */}
-
-  //       <img src={top} className="top" alt="top"
-  //         style={{
-  //           width: "150px",
-  //           position: "absolute",
-  //           top: "10px",
-  //           left: !verySmall ? `15%` : "-5%",
-  //           zIndex: "3",
-  //         }}
-  //       />
-  //       {/* <img src={smoke} className="smoke" alt="smoke"
-  //           style={{
-  //             width: "150px",
-  //             position: "absolute",
-  //             top: "10px",
-  //             left: !verySmall ? `15%` : "-5%",
-  //             zIndex: "2"
-  //           }}
-  //       /> */}
-  //       <img src={main} className="main" alt="main"
-  //         style={{
-  //           width: "150px",
-  //           position: "absolute",
-  //           top: "46px",
-  //           left: !verySmall ? `15%` : "-5%",
-  //           zIndex: "1"
-  //         }} />
-  //       <img src={grass} className="grass" alt="grass"
-  //         style={{
-  //           width: "50px",
-  //           position: "absolute",
-  //           top: "115px",
-  //           left: !verySmall ? "120px" : "75px",
-  //           zIndex: "2",
-  //         }} />
-  //       <img src={glacier1} className="glacier1" alt="glacier1"
-  //         style={{
-  //           width: "50px",
-  //           position: "absolute",
-  //           top: "60px",
-  //           left: !verySmall ? "10%" : "-10%",
-  //         }}
-  //       />
-  //       <img src={glacier2} className="glacier2" alt="glacier2"
-  //         style={{
-  //           width: "50px",
-  //           position: "absolute",
-  //           top: "60px",
-  //           left: !verySmall ? "140px" : "95px",
-  //         }}
-  //       />
-  //     </Box>
-  //   )
-  // }
-
   const rectangle = boardState.map((item, key) => {
     return (
       <>
@@ -786,24 +717,6 @@ const GameBoard = () => {
   const minesrush = () => {
     return (
       <>
-        {/* <div style={{ display: "flex", justifyContent: "center", margin: "5px" }} id="start">
-          <Typography
-            className="multiplier"
-            alignItems="center"
-          >
-            Next Multiplier
-            <Typography
-              component="span"
-              className="multiplier-value"
-              sx={{ diplay: "flex", alignItems: "center" }}
-            >
-              &nbsp; X
-              {gameState === 0
-                ? 1
-                : parseFloat((nextMultiplier).toFixed(3))}
-            </Typography>
-          </Typography>
-        </div> */}
         <Grid className="gameboard-container" container>
           {isDesktop &&
             <Grid xs={1} item sm={2} md={3} lg={4} />
@@ -818,12 +731,6 @@ const GameBoard = () => {
                 No supported
               </video>
             </Box>
-            {/* <Box className="octo" style={{ width: isDesktop ? "60vw" : "100vw" }}>
-              <video ref={octoV} autoPlay muted preload="yes" style={{ width: isDesktop ? "450px" : "100%" }} playsInline onEnded={() => playOcto()}>
-                <source src={minesticker} type="video/webm" />
-                No supported
-              </video>
-            </Box> */}
             <Grid
               className={themeBlack ? "gameboard-black" : "gameboard"}
               container
@@ -924,21 +831,6 @@ const GameBoard = () => {
   const double = () => {
     return (
       <>
-        {/* <div style={{ display: "flex", justifyContent: "center", margin: "5px" }} id="5050">
-          <Typography
-            className="multiplier"
-            alignItems="center"
-          >
-            Multiplier
-            <Typography
-              component="span"
-              className="multiplier-value"
-              sx={{ diplay: "flex", alignItems: "center" }}
-            >
-              &nbsp; X2
-            </Typography>
-          </Typography>
-        </div> */}
         <Grid className="gameboard-container" container>
           {isDesktop &&
             <Grid xs={1} item sm={2} md={3} lg={4} />
@@ -952,12 +844,6 @@ const GameBoard = () => {
                 No supported
               </video>
             </Box>
-            {/* <Box className="octo" style={{ width: isDesktop ? "60vw" : "100vw" }}>
-              <video ref={octoV} autoPlay muted preload="yes" style={{ width: isDesktop ? "450px" : "100%" }} playsInline onEnded={() => playOcto()}>
-                <source src={minesticker} type="video/webm" />
-                No supported
-              </video>
-            </Box> */}
             <Box className="doubleBoard">
               <Box style={{ textTransform: "uppercase", color: "white", display: streakNum ? "block" : "none", top: "8%", left: "5%", right: "5%", position: "absolute" }}>
                 <Box>Congrats!</Box>
@@ -984,31 +870,6 @@ const GameBoard = () => {
                 {boardState[1] === 2 && <img className={animation2 ? "disappear" : "doueblBoardImg"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
                 {boardState[1] === 3 && <img className={animation2 ? "disappear revealed" : "doueblBoardImg revealed"} src={coinBoard} onClick={() => clickEvent(1)} alt="Coin" />}
                 {boardState[1] === 4 && <img className={animation2 ? "disappear revealed" : "doueblBoardImg revealed"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
-                {/* {boardState[0] === 0 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={questionBoard} onClick={() => clickEvent(0)} alt="Question" />}
-                {boardState[0] === 1 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={coinBoard} onClick={() => clickEvent(0)} alt="Coin" />}
-                {boardState[0] === 2 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={minesBoard} onClick={() => clickEvent(0)} alt="Mine" />}
-                {boardState[0] === 3 && <img className={animation1 ? "disappear revealed" : "doueblBoardImg revealed"} src={coinBoard} onClick={() => clickEvent(0)} alt="Coin" />}
-                {boardState[0] === 4 && <img className={animation1 ? "disappear revealed" : "doueblBoardImg revealed"} src={minesBoard} onClick={() => clickEvent(0)} alt="Mine" />}
-                {boardState[1] === 0 && <img className={animation2 ? "doubleBoardImg2" : "doueblBoardImg "} src={questionBoard} onClick={() => clickEvent(1)} alt="Question" />}
-                {boardState[1] === 1 && <img className={animation2 ? "doubleBoardImg2" : "doueblBoardImg "} src={coinBoard} onClick={() => clickEvent(1)} alt="Coin" />}
-                {boardState[1] === 2 && <img className={animation2 ? "doubleBoardImg2" : "doueblBoardImg"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
-                {boardState[1] === 3 && <img className={animation2 ? "doubleBoardImg2 revealed" : "doueblBoardImg revealed"} src={coinBoard} onClick={() => clickEvent(1)} alt="Coin" />}
-                {boardState[1] === 4 && <img className={animation2 ? "doubleBoardImg2 revealed" : "doueblBoardImg revealed"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
-                {(animation1 || animation2) &&
-                  <Box className="treasure">
-                    <img src={treasureImg} alt="You Clicked!" style={{ borderRadius: 10, margin: 0 }} />
-                  </Box>
-                } */}
-                {/* {boardState[0] === 0 && treasureChest(0)}
-              {boardState[0] === 1 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg "} src={coinBoard} alt="Coin" />}
-              {boardState[0] === 2 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg "} src={minesBoard} alt="Mine" />}
-              {boardState[0] === 3 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg revealed"} src={coinBoard} alt="Coin" />}
-              {boardState[0] === 4 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg revealed"} src={minesBoard} alt="Mine" />}
-              {boardState[1] === 0 && treasureChest(1)}
-              {boardState[1] === 1 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg"} src={coinBoard} alt="Coin" />}
-              {boardState[1] === 2 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg"} src={minesBoard} alt="Mine" />}
-              {boardState[1] === 3 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg revealed"} src={coinBoard} alt="Coin" />}
-              {boardState[1] === 4 && <img style={{ marginTop: "60px" }} className={"doueblBoardImg revealed"} src={minesBoard} alt="Mine" />} */}
               </div>
               <img src={doubleornothing} className="doubleButton" alt="Double Or Nothing" />
             </Box>

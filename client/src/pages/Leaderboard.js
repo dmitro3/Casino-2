@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import bomb from "../assets/images/bomb.png";
-import sol from "../assets/images/sol.png"
+import eth from "../assets/images/eth.png"
 import nugImg from "../assets/images/nugget.png"
 import gemImg from "../assets/images/gem.png"
 import axios from "axios";
@@ -242,7 +242,7 @@ const Leaderboard = () => {
       return (
         <TableRow className="table-row" key={key}>
           <TableCell align="center">{`${key + 1}.${getShortName(walletAddress)}`}</TableCell>
-          <TableCell align="center"><Box style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center" }}>{solGain}&nbsp; <img src={sol} style={{ width: "30px" }} alt="SOL" /></Box></TableCell>
+          <TableCell align="center"><Box style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center" }}>{solGain}&nbsp; <img src={eth} style={{ width: "30px" }} alt="ETH" /></Box></TableCell>
           <TableCell align="center"><Box style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center" }}>{nuggetGain}&nbsp; <img src={nugImg} style={{ width: "30px" }} alt="NUG" /></Box></TableCell>
           <TableCell align="center"><Box style={{ color: "white", display: "flex", width: "100%", alignItems: "center", justifyContent: "center" }}>{gemGain}&nbsp; <img src={gemImg} style={{ width: "30px" }} alt="GEM" /></Box></TableCell>
           <TableCell align="center" style={{ color: "white" }}>{showMode === 1 ? "This Week" : "Today"}</TableCell>
@@ -321,7 +321,7 @@ const Leaderboard = () => {
             {showMode !== 2 ?
               <Box className="history-list">
                 <Grid className="list-title">
-                  <p className="title-text">Top Degen Pirates</p>
+                  <p className="title-text">Top Degen ArbiCasinos</p>
                 </Grid>
                 <TableContainer className="table-container">
                   <Table className="table-grid" aria-label="customized table">

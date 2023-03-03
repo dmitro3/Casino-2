@@ -153,47 +153,47 @@ const Loot = () => {
               setEarning(res.data.content.earning);
               if (res.data.content.raffle > 0)
                 setRaffles(res.data.content.raffle);
-              if (amount === (currencyMode === "mainNug" ? 5 / bNugRatio : 50)) {
+              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 50)) {
                 console.log("1")
                 anim11.current?.play();
                 setAnimation11(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 10 / bNugRatio : 100)) {
+              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 100)) {
                 anim21.current?.play();
                 setAnimation21(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 25 / bNugRatio : 250)) {
+              if (amount === (currencyMode === "mainNug" ? 250 / bNugRatio : 250)) {
                 anim31.current?.play();
                 setAnimation31(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 500)) {
+              if (amount === (currencyMode === "mainNug" ? 500 / bNugRatio : 500)) {
                 anim41.current?.play();
                 setAnimation41(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 1000)) {
+              if (amount === (currencyMode === "mainNug" ? 1000 / bNugRatio : 1000)) {
                 anim51.current?.play();
                 setAnimation51(true);
               }
             } else {
               setEarning(0)
-              if (amount === (currencyMode === "mainNug" ? 5 / bNugRatio : 50)) {
+              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 50)) {
                 console.log("2")
                 anim10.current?.play();
                 setAnimation10(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 10 / bNugRatio : 100)) {
+              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 100)) {
                 anim20.current?.play();
                 setAnimation20(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 25 / bNugRatio : 250)) {
+              if (amount === (currencyMode === "mainNug" ? 250 / bNugRatio : 250)) {
                 anim30.current?.play();
                 setAnimation30(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 50 / bNugRatio : 500)) {
+              if (amount === (currencyMode === "mainNug" ? 500 / bNugRatio : 500)) {
                 anim40.current?.play();
                 setAnimation40(true);
               }
-              if (amount === (currencyMode === "mainNug" ? 100 / bNugRatio : 1000)) {
+              if (amount === (currencyMode === "mainNug" ? 1000 / bNugRatio : 1000)) {
                 anim50.current?.play();
                 setAnimation50(true);
               }
@@ -222,7 +222,7 @@ const Loot = () => {
     if (earning !== 0) {
       setAlerts({
         type: "success",
-        content: `YE WON ${parseFloat(earning).toFixed(3)} ${currencyMode === "mainNug" ? "SOL" : (currencyMode === "bonusNug" ? "NUG" : "GEM")}`
+        content: `YE WON ${parseFloat(earning).toFixed(3)} ${currencyMode === "mainNug" ? "ETH" : (currencyMode === "bonusNug" ? "NUG" : "GEM")}`
       })
       setAlert2({
         type: "success",

@@ -215,7 +215,7 @@ const Sidebar = () => {
     if (isMuted) playgamesoundplay();
     // if (!loading) {
       console.log(remain)
-      if (!isHolder) return
+      // if (!isHolder) return
       if (!global.walletConnected) {
         setConnectWalletModalOpen(true);
       } else {

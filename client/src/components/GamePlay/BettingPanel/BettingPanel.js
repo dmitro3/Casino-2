@@ -418,7 +418,7 @@ const BettingPanel = ({
     particle.y = Math.random() * height - height;
     particle.diameter = Math.random() * 10 + 5;
     particle.tilt = Math.random() * 10 - 10;
-    particle.tiltAngleIncrement = Math.random() * 0.07 + 0.05;
+    particle.tiltAngleIncrement = Math.random() * 0.07 + 0.005;
     particle.tiltAngle = Math.random() * Math.PI;
     return particle;
   }
@@ -568,8 +568,8 @@ const BettingPanel = ({
         particle.y = height + 100;
       else {
         particle.tiltAngle += particle.tiltAngleIncrement;
-        particle.x += Math.sin(waveAngle) - 0.5;
-        particle.y += (Math.cos(waveAngle) + particle.diameter + confetti.speed) * 0.5;
+        particle.x += Math.sin(waveAngle) - 0.05;
+        particle.y += (Math.cos(waveAngle) + particle.diameter + confetti.speed) * 0.05;
         particle.tilt = Math.sin(particle.tiltAngle) * 15;
       }
       if (particle.x > width + 20 || particle.x < -20 || particle.y > height) {
@@ -768,19 +768,19 @@ const BettingPanel = ({
     if (clicked) return;
     if (val === "plus") {
 
-      if (bettingAmount === 0.02 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.05 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      if (bettingAmount === 0.002 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.005 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      else if (bettingAmount === 0.005 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.01 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      else if (bettingAmount === 0.01 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.025 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      else if (bettingAmount === 0.025 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.05 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
       else if (bettingAmount === 0.05 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
-      else if (bettingAmount === 0.10 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.25 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
-      else if (bettingAmount === 0.25 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.5 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
-      else if (bettingAmount === 0.5 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
-      else if (bettingAmount === 1) return;
+      else if (bettingAmount === 0.1) return;
     } else if (val === "minus") {
-      if (bettingAmount === 0.02 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) return;
-      else if (bettingAmount === 0.05 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.02 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      if (bettingAmount === 0.002 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) return;
+      else if (bettingAmount === 0.005 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.002 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      else if (bettingAmount === 0.01 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.005 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      else if (bettingAmount === 0.025 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.01 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
+      else if (bettingAmount === 0.05 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.025 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
       else if (bettingAmount === 0.1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.05 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
-      else if (bettingAmount === 0.25 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
-      else if (bettingAmount === 0.5 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.25 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
-      else if (bettingAmount === 1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)) setBettingAmount(0.5 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
     } else {
       setBettingAmount(val * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio));
     }
@@ -1090,11 +1090,35 @@ const BettingPanel = ({
         >
           <Button
             className="betting-values"
-            onClick={() => onBettingClick(0.02)}
+            onClick={() => onBettingClick(0.002)}
             disabled={gameState === 0 ? false : true}
             style={isDesktop ? {} : { width: "90px", height: "35px" }}
           >
-            {0.02 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
+            {0.002 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
+          </Button>
+          <Button
+            className="betting-values"
+            onClick={() => onBettingClick(0.005)}
+            disabled={gameState === 0 ? false : true}
+            style={isDesktop ? {} : { width: "90px", height: "35px" }}
+          >
+            {0.005 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
+          </Button>
+          <Button
+            className="betting-values"
+            onClick={() => onBettingClick(0.01)}
+            disabled={gameState === 0 ? false : true}
+            style={isDesktop ? {} : { width: "90px", height: "35px" }}
+          >
+            {0.01 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
+          </Button>
+          <Button
+            className="betting-values"
+            onClick={() => onBettingClick(0.025)}
+            disabled={gameState === 0 ? false : true}
+            style={isDesktop ? {} : { width: "90px", height: "35px" }}
+          >
+            {0.025 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
           </Button>
           <Button
             className="betting-values"
@@ -1112,52 +1136,6 @@ const BettingPanel = ({
           >
             {0.1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
           </Button>
-          <Button
-            className="betting-values"
-            onClick={() => onBettingClick(0.25)}
-            disabled={gameState === 0 ? false : true}
-            style={isDesktop ? {} : { width: "90px", height: "35px" }}
-          >
-            {0.25 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
-          </Button>
-          <Button
-            className="betting-values"
-            onClick={() => onBettingClick(0.5)}
-            disabled={gameState === 0 ? false : true}
-            style={isDesktop ? {} : { width: "90px", height: "35px" }}
-          >
-            {0.5 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
-          </Button>
-          <Button
-            className="betting-values"
-            onClick={() => onBettingClick(1)}
-            disabled={gameState === 0 ? false : true}
-            style={isDesktop ? {} : { width: "90px", height: "35px" }}
-          >
-            {1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
-          </Button>
-          {/* <Button
-            className="betting-values"
-            disabled={gameState === 0 ? false : true}
-            style={
-              isDesktop
-                ? { background: "#413F3C" }
-                : { background: "#413F3C", width: "90px", height: "35px" }
-            }
-          >
-            {1 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
-          </Button>
-          <Button
-            className="betting-values"
-            disabled={gameState === 0 ? false : true}
-            style={
-              isDesktop
-                ? { background: "#413F3C" }
-                : { background: "#413F3C", width: "90px", height: "35px" }
-            }
-          >
-            {2 * process.env.REACT_APP_NUGGET_RATIO * (currencyMode === "mainNug" ? 1 : bNugRatio)}
-          </Button> */}
         </Box>
         {!isDesktop && gameMode === "minesrush" && (
           <>
