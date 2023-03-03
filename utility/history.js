@@ -120,7 +120,7 @@ const saveTransactionHistory = async (req) => {
 
 const saveHistory = async (historyData) => {
   const query = { walletAddress: historyData.walletAddress };
-  if (historyData.game === "PirateLoot") {
+  if (historyData.game === "ArbiCasino") {
     const userData = await User.findOne(query);
     data = {
       walletAddress: historyData.walletAddress,
@@ -135,7 +135,7 @@ const saveHistory = async (historyData) => {
     }
     const history = new History(data);
     await history.save();
-  } else if (historyData.game === "PirateLootNFT") {
+  } else if (historyData.game === "ArbiCasinoNFT") {
     const userData = await User.findOne(query);
     data = {
       walletAddress: historyData.walletAddress,
@@ -155,9 +155,6 @@ const saveHistory = async (historyData) => {
     const userData = await User.findOne(query);
 
     let data;
-    // if (historyData.payout) {
-
-    // } else {
     const clickedData = JSON.parse(boardData.boardClickedString);
     let count = 0;
     for (let i = 0; i < clickedData.length; i++) {
@@ -174,17 +171,6 @@ const saveHistory = async (historyData) => {
       date: Date.now(),
       currencyMode: boardData.currencyMode
     }
-    // }
-    // data = {
-    //   walletAddress: historyData.walletAddress,
-    //   game: historyData.game,
-    //   player: historyData.player,
-    //   wager: historyData.wager,
-    //   payout: historyData.payout,
-    //   coin: historyData.coin,
-    //   mine: historyData.mine,
-    //   date: Date.now()
-    // }
     await Boards.deleteOne(query);
     await Deposit.deleteOne(query);
     const history = new History(data);
@@ -205,14 +191,8 @@ const getTodayHistory = async () => {
   const today = Date.now() - 1000 * 3600 * 25;
   const results = await History.find({});
   let data = [];
-  // console.log("results====", results);
   results.map((result, key) => {
-    // console.log("data", String(result.date))
-    // console.log("today", (Date.parse(Date())))
-    // console.log(Date(Date.now()))
-    // console.log("today", Date.parse(result.date));
     if (String(result.date).slice(0, 10) === String(Date(today)).slice(0, 10)) {
-      // console.log("result", result);
       data.push(result);
     }
   })

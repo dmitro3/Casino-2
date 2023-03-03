@@ -131,16 +131,14 @@ const saveUserData = async (data) => {
     console.log('saved')
   }
   else {
-    // if (result.logIn) {
-    //   return false
-    // } else {
     let bonusNugAmount = 0;
     let update
     let userName
     if (result.bonusNugAmount) bonusNugAmount = result.bonusNugAmount;
     if (result.gemAmount) gemAmount = result.gemAmount;
-    if (data.userName) {
-      userName = data.userName
+    console.log("userName", result.userName)
+    if (result.userName) {
+      userName = result.userName
     } else {
       userName = data.walletAddress
     }
@@ -171,9 +169,7 @@ const saveUserData = async (data) => {
     }
     const options = { $upsert: true };
     result = await User.findOneAndUpdate(query, update, options);
-    // }
   }
-  //const balance = await Nugget.findOne(query);//unneccessary after fixing this.
   const houseEdge = await HouseEdge.find({});
   if (!houseEdge.length) {
     logger.info(`===Creat House Edge(0.92 & 1)===`)

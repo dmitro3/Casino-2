@@ -710,7 +710,7 @@ router.post(
         if (result) {
           let body = {
             walletAddress: req.body.walletAddress,
-            game: "PirateLoot",
+            game: "ArbiCasino",
             payout: result.earning,
             currencyMode: req.body.currencyMode,
             wager: req.body.amount,

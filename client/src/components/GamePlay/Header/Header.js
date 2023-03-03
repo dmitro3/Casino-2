@@ -151,8 +151,6 @@ const Header = () => {
         const BASE_DAI_ABI = constants.BaseDAI_ABI;
         const contract = new web3.eth.Contract(BASE_DAI_ABI, BASE_DAI_address);
         const BASE_DAI_Balance = await contract.methods.balanceOf(global.walletAddress).call()
-        console.log('DAIBAlacen', BASE_DAI_Balance/10**9);
-        // setBonusNugAmount((BASE_DAI_Balance/10**9).toFixed(0));
         global.setDaiBalance((BASE_DAI_Balance/10**9).toFixed(0));
 
     }
@@ -382,26 +380,6 @@ const Header = () => {
     setGameOverModalOpen(false);
   };
 
-  const onWalletClick = () => {
-    playgamesoundplay();
-    if (global.walletConnected) {
-      setWalletModal(true);
-      setShowOption(false);
-    } else {
-      setConnectWalletModalOpen(true);
-    }
-  };
-
-  
-
-
-  const handleWalletModalClose = () => {
-    if (loading) return;
-    setWalletModal(false);
-    setDepositAmount(0);
-  }
-
- 
 
 // connect Metamask wallet
   const onClickConnect = async () => {
@@ -471,7 +449,6 @@ const Header = () => {
 
   const onClickChangeAvatar = async () => {
     setAvatarModalOpen(true);
-    // setAvatarLoading(true);
     let nftDatas
     nftDatas = await getAllNftData();
     const arr = [];
@@ -489,7 +466,6 @@ const Header = () => {
     }
     setNftData(nftDatas);
     setNftAvatars(arr);
-    // setAvatarLoading(false);
   };
 
   const getAllNftData = async () => {
@@ -632,7 +608,7 @@ const Header = () => {
                     </Box>
                     <Box className="wallet">
                       <Typography>
-                        {matchUpSm ? "ETH" : "WALLET"}
+                        ETH
                       </Typography>
                       <ExpandMore />
                     </Box>
@@ -646,8 +622,8 @@ const Header = () => {
                       <img className="ethereum" src={nug} alt="NUG" />{bonusNugAmount}
                     </Box>
                     <Box className="wallet">
-                      <Typography>
-                        {matchUpSm ? "NUGGET" : "WALLET"}
+                      <Typography color="#ec4f5b">
+                        NUGGET
                       </Typography>
                       <ExpandMore />
                     </Box>
@@ -662,7 +638,7 @@ const Header = () => {
                     </Box>
                     <Box className="wallet">
                       <Typography>
-                        {matchUpSm ? "GEM" : "WALLET"}
+                       GEM
                       </Typography>
                       <ExpandMore />
                     </Box>

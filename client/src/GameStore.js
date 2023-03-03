@@ -101,7 +101,7 @@ const useGameStore = create((set) => ({
   remain: 0,
   showSidebar: false,
   showToast: false,
-  spinCount: 2,
+  spinCount: 1,
   solanaTps: 2835,
   ethAmount: 0,
   spinnerItems: [
@@ -203,9 +203,7 @@ const useGameStore = create((set) => ({
   setHack: (val) => {
     set({ hack: val });
   },
-  // setHouseEdge: (val) => {
-  //   set({houseEdge: val});
-  // },
+  
   setGameHistory: (value) => {
     set({ gameHistory: value });
   },
@@ -218,9 +216,7 @@ const useGameStore = create((set) => ({
   setGameStep: (val) => {
     set({ gameStep: val });
   },
-  // setNftData: (val) => {
-  //   set({ nftData: val });
-  // },
+  
   setGameTHistory: (value) => {
     set({ gameTHistory: value });
   },
@@ -290,9 +286,7 @@ const useGameStore = create((set) => ({
   setNugAmount: (val) => {
     set({ nugAmount: val });
   },
-  // setPlay: (val) => {
-  //   set({play: val});
-  // },
+  
   setNumber: (val) => {
     set({ number: val });
   },

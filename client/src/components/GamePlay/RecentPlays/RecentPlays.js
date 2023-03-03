@@ -91,6 +91,7 @@ const RecentPlays = ({ /*socket*/ }) => {
     setIs_playgame_sound(false);
   };
 
+  console.log(gameHistory)
   const historyList = gameHistory.map((item, key) => {
     if (item.game !== "Turtle") {
       let payout = item.payout;
@@ -104,15 +105,15 @@ const RecentPlays = ({ /*socket*/ }) => {
       let multiplier = parseFloat(payout / item.wager).toFixed(3);
 
       let lootImg;
-      if ((item.currencyMode === "mainNug" && item.wager === "0.05") || (item.currencyMode === "bonusNug" && item.wager === "50" || (item.currencyMode === "gem" && item.wager === "50"))) {
+      if ((item.currencyMode === "mainNug" && item.wager === "0.005") || (item.currencyMode === "bonusNug" && item.wager === "50" || (item.currencyMode === "gem" && item.wager === "50"))) {
         lootImg = lootImg1
-      } else if ((item.currencyMode === "mainNug" && item.wager === "0.1") || (item.currencyMode === "bonusNug" && item.wager === "100" || (item.currencyMode === "gem" && item.wager === "100"))) {
+      } else if ((item.currencyMode === "mainNug" && item.wager === "0.01") || (item.currencyMode === "bonusNug" && item.wager === "100" || (item.currencyMode === "gem" && item.wager === "100"))) {
         lootImg = lootImg2
-      } else if ((item.currencyMode === "mainNug" && item.wager === "0.25") || (item.currencyMode === "bonusNug" && item.wager === "250" || (item.currencyMode === "gem" && item.wager === "250"))) {
+      } else if ((item.currencyMode === "mainNug" && item.wager === "0.025") || (item.currencyMode === "bonusNug" && item.wager === "250" || (item.currencyMode === "gem" && item.wager === "250"))) {
         lootImg = lootImg3
-      } else if ((item.currencyMode === "mainNug" && item.wager === "0.5") || (item.currencyMode === "bonusNug" && item.wager === "500" || (item.currencyMode === "gem" && item.wager === "500"))) {
+      } else if ((item.currencyMode === "mainNug" && item.wager === "0.05") || (item.currencyMode === "bonusNug" && item.wager === "500" || (item.currencyMode === "gem" && item.wager === "500"))) {
         lootImg = lootImg4
-      } else if ((item.currencyMode === "mainNug" && item.wager === "1") || (item.currencyMode === "bonusNug" && item.wager === "1000" || (item.currencyMode === "gem" && item.wager === "1000"))) {
+      } else if ((item.currencyMode === "mainNug" && item.wager === "0.1") || (item.currencyMode === "bonusNug" && item.wager === "1000" || (item.currencyMode === "gem" && item.wager === "1000"))) {
         lootImg = lootImg5
       }
 

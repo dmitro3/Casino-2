@@ -11,6 +11,7 @@ import { Box, Modal, Typography, Grid, Button } from "@mui/material";
 import * as Web3 from 'web3'
 import BigNumber from "bignumber.js";
 import constants from '../Tools/config'
+import SweetAlert from 'react-bootstrap-sweetalert';
 
 import game from "../../../assets/images/game.png";
 import bonuses from "../../../assets/images/bonus.png";
@@ -36,7 +37,6 @@ import cashLoader from "../../../assets/images/frog.gif";
 import eth from "../../../assets/images/eth.png";
 import nug from "../../../assets/images/nugget.png";
 import depositImage from "../../../assets/images/deposit.png";
-
 import "./Sidebar.scss";
 import useGameStore from "../../../GameStore";
 import { Dehaze, Launch, People } from "@mui/icons-material";
@@ -47,7 +47,7 @@ import { Transaction } from '@ethereumjs/tx'
 library.add(fas);
 
 const Sidebar = () => {
-  const web3 = new Web3(window.ethereum);
+  const web3 = new Web3(new Web3.providers.HttpProvider('https://arb1.arbitrum.io/rpc'));
   const global = useContext(StoreContext);
   const theme = useTheme();
   const [playgamesoundplay] = useSound(playgame_sound);
@@ -74,6 +74,8 @@ const Sidebar = () => {
   const [focused, setFocused] = useState(false);
   const [walletMode, setWalletMode] = useState("deposit");
   const { gameTHistory, setGameTHistory } = useGameStore();
+  const [ success, setSuccess ] = useState(false);
+  const [ fail, setFail ] = useState(false);
 
   const [extend, setExtend] = useState(false);
   const [ruleModal, setRuleModal] = useState(false);
@@ -87,6 +89,8 @@ const Sidebar = () => {
       setGameClick(true);
     } else setGameClick(false);
   }, [])
+
+
 
   const style = themeBlack
     ? {
@@ -254,12 +258,18 @@ const Sidebar = () => {
 
           if(result.data.status) {
             setNugAmount(result.data.content)
+            setSuccess(true);
           } else {
             console.log("error", result.data.content)
+            setFail(true);
           }
-        } else console.log(res)
+        } else {
+          setFail(true);
+          console.log(res)
+        }
     } catch (err) {
         console.log(err);
+        setFail(true);
     }
   }
   
@@ -277,22 +287,23 @@ const Sidebar = () => {
             walletAddress: global.walletAddress,
             depositAmount: depositNugAmount
           }
-
           const result = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/api/play/depositDai`, body
           );
-
           if(result.data.status) {
             setBonusNugAmount(result.data.content)
+            setSuccess(true);
           } else {
             console.log("error", result.data.content)
+            setFail(true);
           }
-
-        } else console.log(tx)
-
-
+            } else {
+              setFail(true);
+            }
     } catch (err) {
         console.log(err);
+        setFail(true);
+
     }
   }
 
@@ -302,9 +313,6 @@ const Sidebar = () => {
     try {
       const recipient = global.walletAddress; // Replace RECIPIENT_ADDRESS with the address of the recipient
       const amount = web3.utils.toWei(depositAmount.toString(), 'ether'); // Replace 1 with the amount of tokens you want to send
-
-      console.log('recipient', recipient)
-
       web3.eth.accounts.signTransaction({
         to: recipient,
         value: amount,
@@ -317,26 +325,26 @@ const Sidebar = () => {
               walletAddress: global.walletAddress,
               depositAmount: depositAmount
             }
-    
             const result = await axios.post(
               `${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawETH`, body
             );
-    
             if(result.data.status) {
               setNugAmount(result.data.content)
+              setSuccess(true);
             } else {
               console.log("error", result.data.content)
+              setFail(true);
             }
-            console.log('sent', receipt)
-
           });
           sentTx.on("error", err => {
             console.log('error', err)
+            setFail(true);
           });
       });
     } 
     catch (err) {
         console.log(err);
+        setFail(true);
     }
   }
 
@@ -344,81 +352,50 @@ const Sidebar = () => {
   const withdrawForBonus = async () => {
     if (depositNugAmount===0 || depositNugAmount > parseFloat(bonusNugAmount / process.env.REACT_APP_NUGGET_RATIO).toFixed(3)) { alert('Please enter the correct amount!', depositNugAmount)}
     try {
-      const amount = web3.utils.toWei('1', 'ether');
-      const myContract = new web3.eth.Contract(constants.BaseDAI_ABI,constants.BaseDAI_ADDRESS);
-      const txData = {
-        from: process.env.REACT_APP_HOUSE_ADDR, 
-        to: constants.BaseDAI_ADDRESS,
-        gas: 10000000, 
-        value: '0x0',
-        data: myContract.methods.transfer(global.walletAddress, amount).encodeABI() 
-      };
-
-      console.log(txData);
-      console.log(global.walletAddress)
-
-      // web3.eth.accounts.signTransaction(tx, process.env.REACT_APP_HOUSE_PRIV_KEY)
-      // .then((signedTx) => {
-      //   const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
-      //    sentTx.on("receipt", async receipt => {
-      //     console.log('sent', receipt)
-      //     // const body = {
-      //     //   walletAddress: global.walletAddress,
-      //     //   depositAmount: depositAmount
-      //     // }
-      //     // const result = await axios.post(
-      //     //   `${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawETH`, body
-      //     // );
-  
-      //     // if(result.data.status) {
-      //     //   setBonusNugAmount(result.data.content)
-      //     // } else console.log(result.data.status)
-      //   });
-      //   sentTx.on("error", err => {
-      //     console.log('error', err)
-      //   });      
-      // }).catch((err) => {
-      //   console.log('error in sending', err)
-      // });
-      const common = new Common({ chain: Chain.Mainnet, hardfork: Hardfork.Istanbul })
-      const tx = Transaction.fromTxData(txData, { common })
-      const signedTx = tx.sign(process.env.REACT_APP_HOUSE_PRIV_KEY)
-
-      const serializedTx = signedTx.serialize()
-      web3.eth.sendSignedTransaction(serializedTx).on('transactionHash', function (txHash) {
-
-      }).on('receipt', function (receipt) {
-          console.log("receipt:" + receipt);
-      }).on('confirmation', function (confirmationNumber, receipt) {
-          //console.log("confirmationNumber:" + confirmationNumber + " receipt:" + receipt);
-      }).on('error', function (error) {
-
+      const privateKey = process.env.REACT_APP_HOUSE_PRIV_KEY;
+      const account = web3.eth.accounts.privateKeyToAccount(privateKey);
+      await web3.eth.accounts.wallet.add(privateKey);
+      await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      })
+      const daiAbi = constants.BaseDAI_ABI
+      const daiAddress = constants.BaseDAI_ADDRESS;
+      
+      const daiContract = new web3.eth.Contract(daiAbi, daiAddress,{  gas: 800000, gasLimit: 10000000, gasPrice:1000000000 });
+      
+      const to = global.walletAddress;
+      const amountToSend = web3.utils.toWei(depositNugAmount.toString(), 'ether'); // the amount of Dai tokens to send
+      const amount = amountToSend/10**9;
+      console.log('value', amount);
+      daiContract.methods.transfer(to, amount).send({
+        from: account.address
+   
+      }).then(async function(receipt) {
+        const body = {
+          walletAddress: global.walletAddress,
+          depositAmount: depositNugAmount
+        }
+        const result = await axios.post(
+          `${process.env.REACT_APP_BACKEND_URL}/api/play/withdrawDAI`, body
+        );
+        console.log("result", result.data)
+        if(result.data.status) {
+          setBonusNugAmount(result.data.content)
+          setSuccess(true);
+        } else {
+          console.log("error", result.data.content)
+          setFail(true);
+        }
+        console.log('sent', receipt)
+      }).catch(function(error) {
+        console.error('Transaction error: ', error);
+        setFail(true);
       });
+    
     } 
     catch(err) {
         console.log(err);
       }
-    //   const amount = web3.utils.toWei('0.001', 'ether');
-    //   const myContract = new web3.eth.Contract(constants.BaseDAI_ABI,constants.BaseDAI_ADDRESS);
-    //   web3.eth.accounts.signTransaction({
-    //     to: constants.BaseDAI_ADDRESS,
-    //     gas: 20000000,
-    //     value: '0x00',
-    //     data: myContract.methods.transfer(global.walletAddress, amount).encodeABI() 
-    //   }, process.env.REACT_APP_HOUSE_PRIV_KEY)
-    //   .then((signedTx) => {
-    //     const sentTx = web3.eth.sendSignedTransaction(signedTx.raw || signedTx.rawTransaction);
-    //     sentTx.on("receipt",async receipt => {
-    //       console.l0g('receipt', receipt)
-    //       });
-    //       sentTx.on("error", err => {
-    //         console.log('error', err)
-    //       });
-    //   });
-    // } 
-    // catch (err) {
-    //     console.log(err);
-    // }
   }
 
 
@@ -701,8 +678,7 @@ const Sidebar = () => {
             </Grid>
           </Grid>
         </Box>
-      </Modal>
-
+      </Modal>      
       <Modal
         open={walletModal}
         onClose={handleWalletModalClose}
@@ -779,6 +755,12 @@ const Sidebar = () => {
           }
         </Box>
       </Modal>
+      {success && <SweetAlert success title="Success!" onConfirm={()=> setSuccess(false)}>
+        Congratulations! You have just withdrawn your token!
+      </SweetAlert>}
+      {fail && <SweetAlert warning title="Warning!" confirmBtnText="Try again" onConfirm={()=> setFail(false)}>
+        Sorry! Something has error...
+      </SweetAlert>}
     </Grid >
   )
 };

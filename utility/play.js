@@ -69,6 +69,7 @@ const withdrawETH = async (walletAddress, payout) => {
 
 const withdrawDAI = async (walletAddress, payout) => {
   logger.info(`===Withdraw Fund Started===${walletAddress, payout}`);
+  console.log(`===Withdraw Fund Started===${walletAddress, payout}`);
   const query = { walletAddress: walletAddress };
   const bonusNuggetData = await User.findOne(query);
   const bonusNuggetBalance = bonusNuggetData.bonusNugAmount;
@@ -80,7 +81,7 @@ const withdrawDAI = async (walletAddress, payout) => {
     const update = {
       $set:
       {
-        nugAmount: balance,
+        bonusNugAmount: balance,
       }
     }
     const option = { $upsert: true };

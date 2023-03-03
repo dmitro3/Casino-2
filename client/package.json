@@ -36,6 +36,7 @@
     "immer": "^9.0.15",
     "react": "^18.2.0",
     "react-audio-player": "^0.17.0",
+    "react-bootstrap-sweetalert": "^5.2.0",
     "react-component-transition": "^2.1.1",
     "react-csv": "^2.2.2",
     "react-data-table-component": "^7.5.3",

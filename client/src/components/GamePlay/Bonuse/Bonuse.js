@@ -22,6 +22,7 @@ import "./Bonuse.scss";
 import useGameStore from "../../../GameStore";
 import getNum from "../Tools/Calculate";
 import Wheel from "../Tools/Wheel";
+
 import { NavLink } from "react-router-dom";
 
 library.add(fas);
@@ -57,6 +58,7 @@ const Sidebar = () => {
 
 
   const style = themeBlack
+  
     ? {
       textAlign: "center",
       position: "absolute",
@@ -64,6 +66,7 @@ const Sidebar = () => {
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: matchUpSm ? "40vw" : "80vw",
+      height: matchUpSm ? '30vh': '40vh',
       bgcolor: "#1C1F26",
       color: "#fff",
       borderRadius: "10px",
@@ -90,6 +93,7 @@ const Sidebar = () => {
       getHolders();
     }
   }, [global.walletConnected]);
+
   useEffect(() => {
     if (!remain) {
       spinCount(remain)
@@ -120,10 +124,11 @@ const Sidebar = () => {
     }
     setLoading(false);
     setPrize(prize);
+
     const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4);
     if (num) {
       const body = {
-        walletAddress: publicKey?.toBase58(),
+        walletAddress: global.walletAddress,
         num: num,
         reward: prize,
       }
@@ -208,19 +213,20 @@ const Sidebar = () => {
 
   const onReward = async () => {
     if (isMuted) playgamesoundplay();
-    if (!loading) {
+    // if (!loading) {
+      console.log(remain)
       if (!isHolder) return
       if (!global.walletConnected) {
         setConnectWalletModalOpen(true);
       } else {
         setSpinOpen(true)
       }
-    }
+    // }
   }
 
   const getHolders = async () => {
     setLoading(true);
-    if (publicKey?.toBase58()) {
+    if (global.walletAddress) {
       const body = {
         walletAddress: localStorage.walletLocalStorageKey
       }
@@ -244,7 +250,7 @@ const Sidebar = () => {
 
   const getSpinDate = async () => {
     setLoading(true)
-    if (publicKey?.toBase58()) {
+    if (global.walletAddress) {
       const body = {
         walletAddress: localStorage.walletLocalStorageKey
       }
@@ -344,7 +350,7 @@ const Sidebar = () => {
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={style} style={{ width: '250px', height:'140px'}} >
           <h2 id="parent-modal-title">
             Please connect your Wallet
           </h2>
