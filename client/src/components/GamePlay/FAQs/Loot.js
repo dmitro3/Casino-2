@@ -147,7 +147,7 @@ const Loot = () => {
           </Box>
           <Box className="oddGroup">
             <Box className={themeBlack ? "odds fontWhite backgroundBlack" : "odds fontBlack backgroundWhite"} onClick={() => setShow2(!show2)}>
-              <Box>How does the Daily Wheel Spin for MinesRush holders work?</Box>
+              <Box>How does the Daily Wheel Spin for ArbiCasino Game Player</Box>
               <KeyboardArrowDown />
             </Box>
             <Box className={show2 ? "tables show2" : "tables hidden2"}>

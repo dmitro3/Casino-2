@@ -217,46 +217,12 @@ const removeTicket = async (walletAddress) => {
   return true;
 }
 
-// const storage = multer.diskStorage({
-//   destination(req, file, cb) {
-//     cb(null, __dirname + "/nfts");
-//     // cb(null, "../build/nfts");
-//   },
-//   filename(req, file, cb) {
-//     cb(
-//       null,
-//       `${file.originalname}-${file.fieldname}-${Date.now()}-${path.extname(
-//         file.originalname
-//       )}`
-//     );
-//   },
-// });
-// const checkFileType = (file, cb) => {
-//   const fileTypes = /jpg|jpeg|png/;
-//   const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
-//   const mimetype = fileTypes.test(file.mimetype);
-
-//   if (extname && mimetype) {
-//     return cb(null, true);
-//   } else {
-//     cb("Images Only!");
-//   }
-// }
-
-// const upload = multer({
-//   storage,
-//   fileFilter: function (req, file, cb) {
-//     checkFileType(file, cb);
-//   },
-// });
-
 const uploadImgs = async (imgs) => {
   for (let i = 0; i < imgs.length; i++) {
     const data = new Image({
       path: imgs[i],
       date: Date.now()
     })
-    // logger.info(`===data in uploading, ${data}===`);
     await data.save()
   }
   return true;
@@ -295,18 +261,6 @@ const uploadDate = async (date) => {
   return true
 }
 
-// const saveImages = async (images) => {
-//   await Image.remove({});
-//   for (let i = 0; i < images.length; i++) {
-//     const imgs = new Image({
-//       path: images[i],
-//       date: Date.now()
-//     })
-//     await imgs.save();
-//   }
-//   return true;
-// }
-
 const getNfts = async () => {
   const images = await Image.find({});
   return images;
@@ -315,28 +269,6 @@ const getNfts = async () => {
 const savePopup = async (texts) => {
   try {
     await Popup.remove({});
-    // for (let i = 0; i < texts.length;) {
-    //   let chunk = texts.substr(i, texts.indexOf("</", i) - i).trim();
-    //   let type;
-    //   if (!chunk.indexOf("<h>")) {
-    //     type = "header";
-    //     chunk = chunk.substr(3);
-    //   } else if (!chunk.indexOf("<p>")) {
-    //     type = "p"
-    //     chunk = chunk.substr(3);
-    //   } else {
-    //     type = "div";
-    //     chunk = chunk.substr(3);
-    //   }
-    //   const popup = new Popup({
-    //     type: type,
-    //     content: chunk
-    //   })
-    //   await popup.save();
-    //   i = texts.indexOf("</", i) + 4;
-    // }
-    // return true;
-
     const popup = new Popup({
       type: "test",
       content: texts
@@ -351,25 +283,24 @@ const savePopup = async (texts) => {
 
 const getTotalGames = async () => {
   const histories = await History.find({});
-  let totalSOLGames = 0;
+  let totalETHGames = 0;
   let totalNugGames = 0;
-  let totalSOLWager = 0;
-  let totalSOLEarning = 0;
+  let totalETHWager = 0;
+  let totalETHEarning = 0;
   let totalNugWager = 0;
   let totalNugEarning = 0;
   histories.map(async (history, key) => {
     if (history.currencyMode === "mainNug") {
-      totalSOLWager += parseFloat(history.wager);
-      totalSOLEarning += parseFloat(history.payout);
-      totalSOLGames++;
+      totalETHWager += parseFloat(history.wager);
+      totalETHEarning += parseFloat(history.payout);
+      totalETHGames++;
     } else if(history.currencyMode === "bonusNug") {
-      // await History.findOneAndRemove({_id: history._id});
       totalNugGames++;
       totalNugEarning += parseFloat(history.payout);
       totalNugWager += parseFloat(history.wager);
     }
   })
-  return { totalSOLGames: totalSOLGames, totalNugGames: totalNugGames, totalSOLWager: totalSOLWager, totalSOLEarning: totalSOLEarning, totalNugEarning: totalNugEarning, totalNugWager: totalNugWager }
+  return { totalETHGames: totalETHGames, totalNugGames: totalNugGames, totalETHWager: totalETHWager, totalETHEarning: totalETHEarning, totalNugEarning: totalNugEarning, totalNugWager: totalNugWager }
 }
 
 const updateDB = async () => {

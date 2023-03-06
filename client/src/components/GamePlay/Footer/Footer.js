@@ -1,19 +1,18 @@
 import { Box, Grid, Divider } from "@mui/material";
 import twitter from "../../../assets/images/twitter.png";
-import discord from "../../../assets/images/discord.png";
+import telegram from "../../../assets/images/te.png";
 import magiceden from "../../../assets/images/magiceden.png";
 import bomb from "../../../assets/images/bomb.png";
 import axe from "../../../assets/images/axe.png";
-import logo from "../../../assets/images/PirateRushLogo-min.png"
+import logo from "../../../assets/images/arbi_logo1.png"
 import "./Footer.scss";
 import { useEffect } from "react";
 import * as web3 from "@solana/web3.js";
 import useGameStore from "../../../GameStore";
-// import * as env from "../../../private";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Footer = () => {
-  const { solanaTps, setSolanaTps } = useGameStore();
+  const { ETHTps, setETHTps } = useGameStore();
   const { gameHistory } = useGameStore();
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const Footer = () => {
   const getSolTPS = async () => {
     const solana = new web3.Connection(process.env.REACT_APP_QUICK_NODE);
     const perfSample = await solana.getRecentPerformanceSamples(1);
-    setSolanaTps(
+    setETHTps(
       parseInt(perfSample[0].numTransactions / perfSample[0].samplePeriodSecs)
     );
   };
@@ -50,10 +49,10 @@ const Footer = () => {
                   <img className="footer-icons" alt="bomb" src={bomb} />
                 </a>
               )}
-              <a href="https://discord.com/invite/C84Udhnv4j" rel="noreferrer" target="_blank">
-                <img className="footer-icons" alt="footer" src={discord} />
+              <a href=" https://t.me/ArbiCasino_Official" rel="noreferrer" target="_blank">
+                <img className="footer-tgicons" alt="footer" src={telegram} />
               </a>
-              <a href="https://twitter.com/PlayPirateRush" rel="noreferrer" target="_blank">
+              <a href="https://twitter.com/RealArbiCasino" rel="noreferrer" target="_blank">
                 <img className="footer-icons" alt="footer" src={twitter} />
               </a>
               <a
@@ -68,7 +67,7 @@ const Footer = () => {
               <span
                 className={isDesktop ? "solana-speed" : "solana-speed-mobile"}
               >
-                Arbitrum Network: <span style={{ color: "#b8e986" }}> &nbsp;{solanaTps}</span>&nbsp; TPS
+                Arbitrum Network: <span style={{ color: "#b8e986" }}> &nbsp;{ETHTps}</span>&nbsp; TPS
                 <img src={axe} alt="axe" />
               </span>
             </Grid>
@@ -79,7 +78,7 @@ const Footer = () => {
           {isDesktop && (
             <Grid item className="footer-items" xs={4} style={{ textAlign: "center", margin: "auto", marginTop: "22px", marginBottom: "22px" }}>
               <span className={isDesktop ? "copyright" : "copyright-mobile"}>
-                Copyright © 2022 MinesRush
+                Copyright © 2023 ArbiCasino
               </span>
             </Grid>
           )}
@@ -91,3 +90,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+//roulette

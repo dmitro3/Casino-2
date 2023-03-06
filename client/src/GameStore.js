@@ -81,16 +81,14 @@ const useGameStore = create((set) => ({
   mineGameWin: 0,
   mineGameLose: 0,
   maxMine: 24,
-  minMine: 5,
+  minMine: 4,
   netGainList: [],
   nextMultiplier: 1,
   nfts: [],
   nftAvatar: "none",
   nftAvatars: [],
-  // nftData: [],
   nugAmount: 0,
   number: 0,
-  // play: false,
   password: "1817373289",
   previousMultiplier: 1,
   bNugRatio: 10000,
@@ -101,7 +99,7 @@ const useGameStore = create((set) => ({
   showSidebar: false,
   showToast: false,
   spinCount: 1,
-  solanaTps: 2835,
+  ethTps: 777,
   ethAmount: 0,
   spinnerItems: [
     0.001, 10, 0.002, 50, 0.003, 25
@@ -110,7 +108,7 @@ const useGameStore = create((set) => ({
   themeBlack: true,
   timer: "",
   spinDate: 0,
-  userName: "MinesRush",
+  userName: "ArbiCasinoPlayer",
   walletAddress: "0x12345",
   walletAddressList: [],
   winPhrase: [
@@ -310,8 +308,8 @@ const useGameStore = create((set) => ({
   setNugAmount: (val) => {
     set({ nugAmount: val });
   },
-  setSolanaTps: (val) => {
-    set({ solanaTps: val });
+  setethTps: (val) => {
+    set({ ethTps: val });
   },
   setSpinCount: (val) => {
     set({ spinCount: val });

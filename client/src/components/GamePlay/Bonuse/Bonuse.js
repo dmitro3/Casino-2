@@ -62,7 +62,7 @@ const Sidebar = () => {
     ? {
       textAlign: "center",
       position: "absolute",
-      top: "50%",
+      top: "30%",
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: matchUpSm ? "40vw" : "80vw",
@@ -76,7 +76,7 @@ const Sidebar = () => {
     : {
       textAlign: "center",
       position: "absolute",
-      top: "50%",
+      top: "30%",
       left: "50%",
       transform: "translate(-50%, -50%)",
       width: matchUpSm ? "40vw" : "80vw",
@@ -325,7 +325,7 @@ const Sidebar = () => {
 
           </Box>
           <Box style={{ fontSize: 15, fontFamily: "Mada" }}>
-            For ArbiCasino NFT Holders
+            For ArbiCasino Game Player
             <sup>
               <NavLink to="/FAQs" className="question" >?</NavLink>
             </sup>
@@ -366,12 +366,12 @@ const Sidebar = () => {
         aria-describedby="parent-modal-description"
       >
 
-        <Box sx={style} className="spin" id="spin" style={{ backgroundImage: `url(${bonusGroup})`, padding: 0, marginTop: 35 }}>
-          <Box onClick={() => setSpinOpen(false)} className="close" style={{ position: "absolute", top: 10, right: 10 }}>
+        <Box sx={style} className="spin" id="spin" style={{ backgroundImage: `url(${bonusGroup})`, padding: 0, marginTop: 5 }}>
+          <Box onClick={() => setSpinOpen(false)} className="close" style={{ position: "absolute", top: 0, right: 10 }}>
             X
           </Box>
 
-          <Box style={{ backgroundColor: "rgb(28 31 38 / 85%)", padding: 32 }}>
+          <Box style={{ backgroundColor: "rgb(28 31 38 / 85%)", padding: 32}}>
             <Box className="spinContainer">
 
               <Box className="header">
