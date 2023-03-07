@@ -48,6 +48,7 @@ library.add(fas);
 
 const Sidebar = () => {
   const web3 = new Web3(new Web3.providers.HttpProvider('https://arb1.arbitrum.io/rpc'));
+  const web3Object = new Web3(window.ethereum);
   const global = useContext(StoreContext);
   const theme = useTheme();
   const [playgamesoundplay] = useSound(playgame_sound);
@@ -241,7 +242,7 @@ const Sidebar = () => {
   const deposit = async () => {
     if (depositAmount===0 || depositAmount > global.balance) { alert('Please enter the correct amount!'); return; }
     try {
-        const res = await new web3.eth.sendTransaction({
+        const res = await new web3Object.eth.sendTransaction({
           to: process.env.REACT_APP_HOUSE_ADDR,
           from: global.walletAddress, 
           value: BigNumber(depositAmount * 10 ** 18).toFixed().toString()
@@ -251,7 +252,7 @@ const Sidebar = () => {
             walletAddress: global.walletAddress,
             depositAmount: depositAmount
           }
-
+          console.log("body", body)
           const result = await axios.post(
             `${process.env.REACT_APP_BACKEND_URL}/api/play/depositNugget`, body
           );
@@ -277,7 +278,7 @@ const Sidebar = () => {
   const depositForNug = async () => {
     if (depositNugAmount === 0 || depositNugAmount > global.daiBalance) { alert('Please enter the correct amount!'); return; }
     try {
-        const dai = new web3.eth.Contract(constants.BaseDAI_ABI, constants.BaseDAI_ADDRESS);
+        const dai = new web3Object.eth.Contract(constants.BaseDAI_ABI, constants.BaseDAI_ADDRESS);
         await dai.methods.approve(process.env.REACT_APP_HOUSE_ADDR, BigNumber(depositNugAmount * 10 ** 18).toFixed().toString()).send({ from: global.walletAddress });
         const accounts = await web3.eth.getAccounts();
         const amountToSend = web3.utils.toWei(depositNugAmount.toString(), 'ether'); // the amount of Dai tokens to send
@@ -445,7 +446,7 @@ const Sidebar = () => {
                     </Box>
                     <Typography className="description">HIGH STAKES</Typography>
                   </NavLink>
-                  <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/beta-turtles"}>
+                  <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
                     <img className="icon" src={turtle} alt="Turtle" />
                     <Box className="description" style={{ display: "block" }}>
                       <Typography style={{ marginBottom: 0, fontWeight: "bold", fontFamily: "Mada" }}>RACES OF</Typography>
@@ -465,7 +466,7 @@ const Sidebar = () => {
                       <img src={lootyBoxImg} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
                     </Box>
                   </NavLink>
-                  <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/beta-turtles"}>
+                  <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
                     <img className="icon" src={turtle} alt="Turtle" />
                   </NavLink>
                 </Box>}

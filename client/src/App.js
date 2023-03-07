@@ -121,7 +121,7 @@ function App() {
                   <Route path={`/bonuses`} element={ <Bonuses /*socket={socket}*/ />} />
                   <Route path={`/loot`} element={ <ArbiCasino />} />
                   <Route path={`/FAQs`} element={ <FAQs />} />
-                  <Route path={`/beta-turtles`} element={ <Turtle />} />
+                  <Route path={`/turtles`} element={ <Turtle />} />
                   <Route path={`/pirateDeposit`} element={ <PirateDeposit />} />
                   <Route path={`/mintNFTs`} element={ <MintNFTs />} />
                   <Route path={`/*`} element={<NotFoundPage />} />

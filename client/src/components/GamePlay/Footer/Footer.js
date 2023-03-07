@@ -4,7 +4,7 @@ import telegram from "../../../assets/images/te.png";
 import magiceden from "../../../assets/images/magiceden.png";
 import bomb from "../../../assets/images/bomb.png";
 import axe from "../../../assets/images/axe.png";
-import logo from "../../../assets/images/arbi_logo1.png"
+import logo from "../../../assets/images/arbi_logo1.png";
 import "./Footer.scss";
 import { useEffect } from "react";
 import * as web3 from "@solana/web3.js";
@@ -13,7 +13,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 const Footer = () => {
   const { ETHTps, setETHTps } = useGameStore();
-  const { gameHistory } = useGameStore();
 
   useEffect(() => {
     getSolTPS();

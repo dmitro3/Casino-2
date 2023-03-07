@@ -51,6 +51,7 @@ router.post(
   async (req, res) => {
     try {
       logger.info(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
+      console.log(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
         const item = {
           walletAddress: walletAddress,
           depositAmount: req.body.depositAmount

@@ -64,7 +64,6 @@ const Setting = () => {
   const getHouseEdge = async () => {
     const res = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/api/admin/getHouseEdge`);
-    // console.log('result', res.data);
     set_MineHouseEdge(res.data.mineHouseEdge);
     set_DoubleHouseEdge(res.data.doubleHouseEdge);
     set_MaxMine(res.data.maxMine);

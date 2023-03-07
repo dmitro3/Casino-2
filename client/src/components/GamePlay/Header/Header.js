@@ -225,9 +225,9 @@ const Header = () => {
       `${process.env.REACT_APP_BACKEND_URL}/api/play/getHouseEdges`);
     setMineHouseEdge(res.data.mineHouseEdge ? res.data.mineHouseEdge : 0.92);
     setDoubleHouseEdge(res.data.doubleHouseEdge ? res.data.doubleHouseEdge : 1);
-    setMinMine(res.data.minMine ? res.data.minMine : 5);
-    setMaxMine(res.data.maxMine ? res.data.maxMine : 24);
-    setMineAmount(res.data.minMine ? res.data.minMine : 5);
+    setMinMine(res.data.minMine ? res.data.minMine : 4);
+    setMaxMine(res.data.maxMine ? res.data.maxMine : 20);
+    setMineAmount(res.data.minMine ? res.data.minMine : 4);
     setRaffleMode(res.data.raffleOn ? res.data.raffleOn : false);
     setRaffleDate(res.data?.raffleDate);
     setEnableMines(res.data.enableMines);

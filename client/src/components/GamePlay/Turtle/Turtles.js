@@ -8,8 +8,6 @@ import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import getNum from "../Tools/Calculate";
 import useGameStore from "../../../GameStore";
 import "./Turtles.scss"
-import turtleCaptain from "../../../assets/images/turtleCaptain.png";
-import turtleSkeleton from "../../../assets/images/turtleSkeleton.png";
 import turtle1 from "../../../assets/images/turtle/turtle1.png";
 import turtle2 from "../../../assets/images/turtle/turtle2.png";
 import turtle3 from "../../../assets/images/turtle/turtle3.png";
@@ -24,10 +22,8 @@ import rate5 from "../../../assets/images/turtle/rate5.svg";
 import betCount from "../../../assets/images/turtle/betCount.svg";
 import pirateCaptain from "../../../assets/images/turtle/pirateCaptain.svg";
 import pirateSkel from "../../../assets/images/turtle/pirateSkel.png";
-// import nugget from "../../../assets/images/nugget.png";
-// import solImg from "../../../assets/images/sol.png";
 import nugget from "../../../assets/images/nugget.png";
-import solImg from "../../../assets/images/nugget.png";
+import ETHImg from "../../../assets/images/eth.png";
 import gemImg from "../../../assets/images/gem.png";
 import cup1 from "../../../assets/images/turtle/cup1.png";
 import cup1_big from "../../../assets/images/turtle/cup1_big.png";
@@ -85,12 +81,10 @@ const TurtleComponent = () => {
     [66, 7, 7, 3],
     [421, 29, 31, 15, 13]
   ]);
-  // const [multipliers, setMultipliers] = useState();
   const [turtleMulti, setTurtleMulti] = useState([]);
   const [quinellaHouseEdge, setQuinellaHouseEdge] = useState();
   const [time, setTime] = useState(30);
   const rates = [25, 50, 100, 250, 500];
-  // const rates = currencyMode !== "mainNug" ? [25, 50, 100, 250, 500] : [0.025, 0.05, 0.1, 0.25, 0.5];
   const [betAmount, setBetAmount] = useState(rates[0]);
   const [selectedTurtle, setSelectedTurtle] = useState([]);
   const [selectedQuinella, setSelectedQuinella] = useState([]);
@@ -124,10 +118,6 @@ const TurtleComponent = () => {
     getTurtleMultiplier();
     getTurtleHistory();
   }, [])
-
-  // useEffect(() => {
-  //   setBetAmount(rates[0])
-  // }, [currencyMode])
 
   useEffect(() => {
     if (!time) {
@@ -218,21 +208,16 @@ const TurtleComponent = () => {
     const datas = remainedTime;
     let remain = datas;
     let interval
-    // if (datas !== 0) {
     interval = setInterval(() => {
-      // count = true;
       remain--;
 
       if (remain >= 0) {
-        // setTimer(`${date}: ${hour}: ${mins}: ${secs}`)
         setTime(remain);
       }
     }, 1000)
     setTimeout(() => {
       clearInterval(interval)
-      // getRemaining();
     }, datas * 1000)
-    // }
     const formatter = (d) => {
       if (d < 10)
         d = "0" + d;
@@ -276,7 +261,6 @@ const TurtleComponent = () => {
       bets.push(bet);
       totalAmount += betAmount
     }
-    // if (totalAmount > nugAmount) return
     if ((currencyMode === "bonusNug" && totalAmount > bonusNugAmount) || (currencyMode === "gem" && totalAmount > gemAmount)) return
 
     setBetState(bets);
@@ -320,7 +304,6 @@ const TurtleComponent = () => {
       }
       bets.push(bet);
     }
-    // if (totalAmount > nugAmount) return
     if ((currencyMode === "bonusNug" && totalAmount > bonusNugAmount) || (currencyMode === "gem" && totalAmount > gemAmount)) return
 
     setBetState(bets);
@@ -330,7 +313,6 @@ const TurtleComponent = () => {
 
   const clickIndicator = async (id) => {
     if (!connected) return
-    // if (betAmount * 5 > nugAmount) return
     if ((currencyMode === "bonusNug" && betAmount * 5 > bonusNugAmount) || (currencyMode === "gem" && betAmount * 5 > gemAmount)) return
     let quinellaList = [];
     let totalAmount = 0;
@@ -371,7 +353,6 @@ const TurtleComponent = () => {
 
   const playGame = async () => {
     if (connected && (selectedTurtle.length || selectedQuinella.length)) {
-      // if (totalBetAmount <= nugAmount) {
       if ((currencyMode === "bonusNug" || currencyMode === "mainNug" && totalBetAmount <= bonusNugAmount) || (currencyMode === "gem" && totalBetAmount <= gemAmount)) {
         const num = await getNum(localStorage.walletLocalStorageKey, factor1, factor2, factor3, factor4)
         if (num) {
@@ -433,13 +414,6 @@ const TurtleComponent = () => {
       setPlayScene(2)
     } else {
       setPlayScene(3);
-      // console.log("length", selectedQuinella.length)
-      // if (selectedQuinella.length) {
-      //   const lose1 = chooseTurtleImg(selectedQuinella[0].id1)
-      //   const lose2 = chooseTurtleImg(selectedQuinella[0].id2)
-      //   setLose1Turtle(lose1)
-      //   setLose2Turtle(lose2);
-      // }
     }
   }
 
@@ -584,7 +558,7 @@ const TurtleComponent = () => {
           <Typography className="multiColor">{turtleMulti[id - 1]}x</Typography>
           {selected &&
             <Box className="bet">
-              <img src={currencyMode === "mainNug" ? solImg : (currencyMode === "bonusNug" ? nugget : gemImg)} alt="SOL" width="20px" height="20px" />
+              <img src={currencyMode === "mainNug" ? ETHImg : (currencyMode === "bonusNug" ? nugget : gemImg)} alt="SOL" width="20px" height="20px" />
               <Typography>{amount}</Typography>
             </Box>
           }
@@ -597,9 +571,7 @@ const TurtleComponent = () => {
     let selected = false;
     let amount
     selectedQuinella.map((qData) => {
-      // console.log("qData", qData)
       if (qData.id1 === id1 && qData.id2 === id2) {
-        // console.log("in")
         selected = true;
         amount = qData.betAmount
       }
@@ -613,7 +585,7 @@ const TurtleComponent = () => {
         <Typography className="multiColor">{`${multi}x`}</Typography>
         {selected &&
           <Box className="bet">
-            <img src={currencyMode === "mainNug" ? solImg : (currencyMode === "bonusNug" ? nugget : gemImg)} alt="SOL" width="20px" height="20px" />
+            <img src={currencyMode === "mainNug" ? ETHImg : (currencyMode === "bonusNug" ? nugget : gemImg)} alt="SOL" width="20px" height="20px" />
             <Typography>{amount}</Typography>
           </Box>
         }
@@ -670,10 +642,10 @@ const TurtleComponent = () => {
 
   const playCard = (txt, num) => {
     return (
-      <Box className="playCard">
+      <Box className="playCard my-4">
         <Typography className="txt">{txt}</Typography>
         <Box className="sol">
-          <img src={currencyMode === "mainNug" ? solImg : (currencyMode === "bonusNug" ? nugget : gemImg)} alt="SOL" />
+          <img src={currencyMode === "mainNug" ? ETHImg : (currencyMode === "bonusNug" ? nugget : gemImg)} alt="SOL" />
           <Typography>{num}</Typography>
         </Box>
       </Box>
@@ -704,15 +676,9 @@ const TurtleComponent = () => {
   const playerBetMobile = () => {
     return (
       <Box className="playerBet">
-        {/* <Box className="halfRoundButtonUp">
-          <KeyboardDoubleArrowUp />
-        </Box> */}
         <Box className="bets">
           {betPanel()}
         </Box>
-        {/* <Box className="halfRoundButtonDown">
-          <KeyboardDoubleArrowDown />
-        </Box> */}
       </Box>
     )
   }
@@ -755,9 +721,6 @@ const TurtleComponent = () => {
             <Box className="histories">
               {turtleHistory}
             </Box>
-            {/* <Box className="halfRoundButton" style={{ borderRadius: "0px 10px 10px 0px" }}>
-          <KeyboardDoubleArrowRight />
-        </Box> */}
           </Box>
           <Grid item xs={0} sm={1} md={2} lg={2} />
           <Grid item xs={12} sm={10} md={8} lg={8}>
@@ -822,7 +785,7 @@ const TurtleComponent = () => {
                   </Box>
                   <Box className="earning">
                     <Typography>YOU WIN-{earning}</Typography>
-                    <img src={currencyMode === "mainNug" ? solImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
+                    <img src={currencyMode === "mainNug" ? ETHImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
                   </Box>
                 </Box>
                 <Box className="betCounts">
@@ -874,13 +837,12 @@ const TurtleComponent = () => {
             }
             <Box className="playBoard">
               <Box className="playCards">
-                {/* {playCard("Credit", 6447)} */}
                 {playCard("Bet", totalBetAmount)}
                 {playCard("Last Rounds Win/Loses", winAmount)}
               </Box>
               <Box className="rate">
                 <Typography>Bet Amount</Typography>
-                <img src={currencyMode === "mainNug" ? solImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
+                <img src={currencyMode === "mainNug" ? ETHImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
                 <Box className={betAmount === rates[0] ? "selected betAmount" : "betAmount"} onClick={() => setBetAmount(rates[0])}>
                   <img src={rate1} alt="rate" />
                   <Typography color="#D30202">{rates[0]}</Typography>
@@ -909,7 +871,6 @@ const TurtleComponent = () => {
             </Box>
 
           </Grid>
-          {/* <Grid item xs={0} sm={1} md={2} lg={3} /> */}
         </Grid>
         :
         <Grid className="mobile">
@@ -933,7 +894,7 @@ const TurtleComponent = () => {
             </Box>
             <Box className="rate">
               <Typography fontSize="15px">Bet Amount</Typography>
-              <img src={currencyMode === "mainNug" ? solImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
+              <img src={currencyMode === "mainNug" ? ETHImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
               <Box className={betAmount === rates[0] ? "selected betAmount" : "betAmount"} onClick={() => setBetAmount(rates[0])}>
                 <img src={rate1} alt="rate" />
                 <Typography color="#D30202">{rates[0]}</Typography>
@@ -1041,7 +1002,7 @@ const TurtleComponent = () => {
                 </Box>
                 <Box className="earning">
                   <Typography>YOU WIN-{earning}</Typography>
-                  <img src={currencyMode === "mainNug" ? solImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
+                  <img src={currencyMode === "mainNug" ? ETHImg : (currencyMode === "bonusNug" ? nugget : gemImg)} width="25px" alt="SOL" />
                 </Box>
               </Box>
             </Box>
