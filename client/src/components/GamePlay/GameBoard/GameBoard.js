@@ -24,11 +24,7 @@ import doubleornothing from "../../../assets/images/doubleornothing.svg";
 import minesticker from "../../../assets/images/octopus.webm";
 import minestickerPoster from "../../../assets/images/pirateOctor.png";
 
-// import backCircle from "../../assets/images/backCircle.svg";
 import { useWallet } from "@solana/wallet-adapter-react";
-// import * as process.env from "../../../private";
-
-// import Sound from "react-sound";
 import cashoutsound from "../../../assets/audios/CashoutSound.mp3";
 import lootBox from "../../../assets/audios/lootBox1clip.mp3";
 import coinsound from "../../../assets/audios/CoinSound.mp3";
@@ -50,7 +46,6 @@ const GameBoard = () => {
 
   const { isMuted } = useGameStore();
   const { userName } = useGameStore();
-  // const { houseEdge } = useGameStore();
   const { themeBlack } = useGameStore();
   const { streakNum, setStreakNum } = useGameStore();
   const { setGameWin } = useGameStore();
@@ -84,9 +79,7 @@ const GameBoard = () => {
   const [animation1, setAnimation1] = useState(false);
   const [animation2, setAnimation2] = useState(false);
   const [cashLoading, setCashLoading] = useState(false);
-  // const [is_coinsound, setIs_coinsound] = useState(false);
   const [winModalMultiplier, setWinModalMultiplier] = useState(1);
-  // const [is_cashoutsound, setIs_cashoutsound] = useState(false);
   const [gameOverModalOpen, setGameOverModalOpen] = useState(false);
   const [winFinalModalOpen, setWinFinalModalOpen] = useState(false);
   const [doubleWinCount, setDoubleWinCount] = useState(0);
@@ -352,29 +345,6 @@ const GameBoard = () => {
     if (gameMode === "double") setNextMultiplier(2 * doubleHouseEdge);
   };
 
-  // const start = () => {
-  //   setTimeout(function () {
-  //     Confetti.start()
-  //   }, 1000); // 1000 is time that after 1 second start the confetti ( 1000 = 1 sec)
-  // };
-
-  //  for stopping the confetti 
-
-  // const stop = () => {
-  //   setTimeout(function () {
-  //     Confetti.stop()
-  //   }, 5000); // 5000 is time that after 5 second stop the confetti ( 5000 = 5 sec)
-  // };
-
-  // if(gameState === 0 && mineGameWin > 1) {
-  //   setTimeout(() => {
-  //     startConfetti();
-  //   }, 1000)
-  //   setTimeout(() => {
-  //     stopConfetti();
-  //   }, 3000)
-  // }
-
   const clickEvent = async (boardNum) => {
     if (boardClickedState[boardNum] === 1) return;
     if (clicked) return;
@@ -515,8 +485,6 @@ const GameBoard = () => {
                 </Box>
               )
               setHistoryCard(histories);
-              // let reversedHistory = histories.reverse();
-              // setReversed(reversedHistory)
               newBoardClickedState[boardNum] = 1;
               setBoardClickedState(newBoardClickedState);
               setGameState(0);
@@ -530,7 +498,6 @@ const GameBoard = () => {
               setNextMultiplier(1 * houseEdge);
               revealBoardState(allBoardState);
               getHistory();
-              // socket.emit("history", "historyChanged");
               setClicked(false);
               setStreakNum(0);
               setGameWin(false);
@@ -551,8 +518,6 @@ const GameBoard = () => {
               </Box>
             )
             setHistoryCard(histories);
-            // let reversedHistory = histories.reverse();
-            // setReversed(reversedHistory);
             setDoubleWinCount(doubleWinCount + 1);
             if (doubleWinCount >= 1) {
               setTimeout(() => {
@@ -572,7 +537,6 @@ const GameBoard = () => {
               ];
               setBoardClickedState(cboardState);
               setWinModalMultiplier(nextMultiplier);
-              // setWinFinalModalOpen(true);
               changeNextMultiplier();
               setBoardState(newBoardState);
               setGameStep(gameStep + 1);
@@ -957,6 +921,129 @@ const GameBoard = () => {
     )
   }
 
+  const limbo = () => {
+    return (
+      <>
+        <Grid className="gameboard-container" container>
+          <Grid item xs={12} sm={8} md={6} lg={6} className="mainBoard"
+            style={{ flexBasis: !isDesktop && "100%", maxWidth: !isDesktop && "100%" }}
+          >
+            <Box className="octo">
+              <video ref={octoV} autoPlay poster={minestickerPoster} muted preload="yes" style={{ width: "100%" }} playsInline onEnded={() => playOcto()}>
+                <source src={minesticker} type="video/webm" />
+                No supported
+              </video>
+            </Box>
+            <Box className="doubleBoard">
+              <Box style={{ textTransform: "uppercase", color: "white", display: streakNum ? "block" : "none", top: "8%", left: "5%", right: "5%", position: "absolute" }}>
+                <Box>Congrats!</Box>
+                <Box>You are on a {streakNum} win streak</Box>
+              </Box>
+              <Box className="playHistoryContainer" style={{ paddingTop: streakNum ? 100 : 50 }}>
+                <Box className="playHistory">
+                  {historyCard.length ? historyCard :
+                    <Box className="card question">
+                      X.XX
+                    </Box>
+                  }
+                </Box>
+              </Box>
+
+              {/* <div className="doubleBoardImgs" style={{ justifyContent: "center" }}>
+                {boardState[0] === 0 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={questionBoard} onClick={() => clickEvent(0)} alt="Question" />}
+                {boardState[0] === 1 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={coinBoard} onClick={() => clickEvent(0)} alt="Coin" />}
+                {boardState[0] === 2 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={minesBoard} onClick={() => clickEvent(0)} alt="Mine" />}
+                {boardState[0] === 3 && <img className={animation1 ? "disappear revealed" : "doueblBoardImg revealed"} src={coinBoard} onClick={() => clickEvent(0)} alt="Coin" />}
+                {boardState[0] === 4 && <img className={animation1 ? "disappear revealed" : "doueblBoardImg revealed"} src={minesBoard} onClick={() => clickEvent(0)} alt="Mine" />}
+                {boardState[1] === 0 && <img className={animation2 ? "disappear" : "doueblBoardImg "} src={questionBoard} onClick={() => clickEvent(1)} alt="Question" />}
+                {boardState[1] === 1 && <img className={animation2 ? "disappear" : "doueblBoardImg "} src={coinBoard} onClick={() => clickEvent(1)} alt="Coin" />}
+                {boardState[1] === 2 && <img className={animation2 ? "disappear" : "doueblBoardImg"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
+                {boardState[1] === 3 && <img className={animation2 ? "disappear revealed" : "doueblBoardImg revealed"} src={coinBoard} onClick={() => clickEvent(1)} alt="Coin" />}
+                {boardState[1] === 4 && <img className={animation2 ? "disappear revealed" : "doueblBoardImg revealed"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
+              </div> */}
+
+              <img src={doubleornothing} className="doubleButton" alt="Double Or Nothing" />
+            </Box>
+          </Grid>
+          <Modal
+            open={gameOverModalOpen}
+            onClose={handleGameOverModalClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box sx={styleFair} style={{ backgroundColor: "#101112" }}>
+              <Typography
+                variant="h3"
+                component="h2"
+                color="#F7BE44"
+                fontSize="40px"
+                fontFamily="Mada"
+                marginTop="20px"
+              >
+                Fair
+              </Typography>
+              <img className="rectangle-image" alt="rect" src={rectangleImage} />
+              <Grid container style={{ textAlign: "center" }}>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                  <Typography color="#fff" fontSize="18px" fontFamily="Mada">
+                    Playing on the website is secure. The fairness of all bets is
+                    unquestionable since we use cryptography to make sure every
+                    bet is transparently fair and can be checked.
+                  </Typography>
+                </Grid>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={12}>
+                  <img className="yellow-image" alt="yRect" src={yellowrectangle} />
+                </Grid>
+              </Grid>
+            </Box>
+          </Modal>
+          <Modal
+            open={winFinalModalOpen}
+            onClose={handleWinFinalModalClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box sx={styleStop}>
+              <Typography color="#F7BE44" fontSize="70px" fontFamily="Mada">
+                x{parseFloat((nextMultiplier).toFixed(3))}
+              </Typography>
+              <Grid container style={{ textAlign: "center" }}>
+                <Grid item xs={12}>
+                  <img className="claimEmotion" alt="claimEmo" src={claimEmotion} />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid item xs={12}>
+                  <span style={{ color: "#FFFFFF" }}>You Won </span>
+                  <span style={{ color: "#F7BE44" }}>
+                    {" "}
+                    {parseFloat(
+                      (nextMultiplier * bettingAmount).toFixed(3)
+                    )}
+                  </span>
+                </Grid>
+                <Button
+                  variant="contained"
+                  style={{
+                    marginTop: "10px",
+                    color: "#000",
+                    backgroundColor: "#F7BE44",
+                  }}
+                  onClick={onClickStopGame}
+                  fontSize="10px"
+                >
+                  Claim Rewards
+                </Button>
+                <img className="yellow-image-claim" alt="yRect" src={yellowRectangle} />
+              </Grid>
+            </Box>
+          </Modal>
+        </Grid>
+      </>
+    )
+  }
   return (
     <>
       <div className="alert">
@@ -964,6 +1051,7 @@ const GameBoard = () => {
       </div>
       {gameMode === "minesrush" && minesrush()}
       {gameMode === "double" && double()}
+      {gameMode === "limbo" && limbo()}
     </>
   );
 };

@@ -38,6 +38,9 @@ import Turtle from "./pages/Turtle.js";
 import Landing from "./pages/Landing";
 import PirateDeposit from "./pages/PirateDeposit";
 import MintNFTs from "./pages/MintNFTs";
+import Roulette from './components/GamePlay/Roulette/roulette';
+import Limbo from './pages/Limbo.js';
+import Crash from './components/GamePlay/Crash/Crash';
 import { StoreContext } from './store';
 
 
@@ -68,6 +71,8 @@ function App() {
       setMineAmount(1);
     } else if((window.location.href.includes("game/loot"))) {
       setGameMode("loot")
+    } else if((window.location.href.includes("game/limbo"))) {
+      setGameMode("limbo")
     } else {
       setGameMode("minesrush")
       setMineAmount(5);
@@ -125,6 +130,9 @@ function App() {
                   <Route path={`/pirateDeposit`} element={ <PirateDeposit />} />
                   <Route path={`/mintNFTs`} element={ <MintNFTs />} />
                   <Route path={`/*`} element={<NotFoundPage />} />
+                  <Route path={`/roulette`} element={<Roulette />} />
+                  <Route path={`/limbo`} element={<Limbo />} />
+                  <Route path={`/crash`} element={<Crash />} />
                 </Routes>
               </Router>
             </Container>

@@ -6,7 +6,6 @@ import Content from "../components/GamePlay/Content";
 import Footer from "../components/GamePlay/Footer";
 import Splash from "../components/GamePlay/Splash";
 import background from "../assets/images/hero.png";
-// import background_blacktheme from "../assets/images/MinesRushHeader.jpg";
 import background_blacktheme from "../assets/images/piraterushback2new-min2-min.jpg";
 import useGameStore from "../GameStore";
 import useSound from "use-sound";

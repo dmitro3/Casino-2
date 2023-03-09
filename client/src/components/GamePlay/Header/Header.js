@@ -310,7 +310,6 @@ const Header = () => {
  
   const ttt = async () => {
     if (global.walletConnected) {
-      // setSolAmount(balance);
       let deviceId = localStorage.getItem("id");
       if (!deviceId) {
         deviceId = crypto.randomUUID();

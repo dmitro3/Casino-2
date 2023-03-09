@@ -11,7 +11,6 @@ import User from "../components/AdminPanel/User/User";
 import Setting from "../components/AdminPanel/Settings/Setting";
 import Popup from "../components/AdminPanel/Popup/Popup";
 import Password from "../components/AdminPanel/Password/Password";
-// import * as process.env from "../private";
 import minesticker from "../assets/images/piraterush.png";
 
 import "./AdminDashboard.scss";

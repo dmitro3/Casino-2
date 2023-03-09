@@ -32,6 +32,10 @@ import bonusGroup from "../../../assets/images/bonusGroup.webp";
 import playgame_sound from "../../../assets/audios/MinesClickSound.mp3";
 import speaker_blacktheme from "../../../assets/images/speaker_blacktheme.png";
 import speaker_mute_blacktheme from "../../../assets/images/speaker_mute_blacktheme.png";
+import roulette from "../../../assets/images/roulette.png";
+import crash from "../../../assets/images/crash.png";
+import limbo from "../../../assets/images/limbo.png";
+
 import { StoreContext } from "../../../store";
 import cashLoader from "../../../assets/images/frog.gif";
 import eth from "../../../assets/images/eth.png";
@@ -41,8 +45,6 @@ import "./Sidebar.scss";
 import useGameStore from "../../../GameStore";
 import { Dehaze, Launch, People } from "@mui/icons-material";
 
-import { Chain, Common, Hardfork } from '@ethereumjs/common'
-import { Transaction } from '@ethereumjs/tx'
 
 library.add(fas);
 
@@ -432,6 +434,12 @@ const Sidebar = () => {
               </Box>
               {matchUpSm ?
                 <Box className="gameModes">
+                  <NavLink className={gameMode === "double" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("crash")} to={!gameState && "/crash"}>
+                    <Box className="icon" style={{ width: 44, height: 44, background: "#101014", maginLeft: 5, border: "3px solid #3a3a3a", borderRadius: "50%" }}>
+                      <img src={crash} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
+                    </Box>
+                    <Typography className="description">CRASH</Typography>
+                  </NavLink>
                   <NavLink className={gameMode === "minesrush" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("minesrush")} to={!gameState && "/mines"}>
                     <img className="icon" src={minesrushImg} alt="Minesrush" />
                     <Typography className="description">MiNESWEEPER</Typography>
@@ -445,6 +453,18 @@ const Sidebar = () => {
                       <img src={lootyBoxImg} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
                     </Box>
                     <Typography className="description">HIGH STAKES</Typography>
+                  </NavLink>
+                  <NavLink className={gameMode === "double" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("roulette")} to={!gameState && "/roulette"}>
+                    <Box className="icon" style={{ width: 44, height: 44, background: "#101014", maginLeft: 5, border: "3px solid #3a3a3a", borderRadius: "50%" }}>
+                      <img src={roulette} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
+                    </Box>
+                    <Typography className="description">Roulette</Typography>
+                  </NavLink>
+                  <NavLink className={gameMode === "double" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("limbo")} to={!gameState && "/limbo"}>
+                    <Box className="icon" style={{ width: 44, height: 44, background: "#101014", maginLeft: 5, border: "3px solid #3a3a3a", borderRadius: "50%" }}>
+                      <img src={limbo} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
+                    </Box>
+                    <Typography className="description">LIMBO</Typography>
                   </NavLink>
                   <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
                     <img className="icon" src={turtle} alt="Turtle" />
