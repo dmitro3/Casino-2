@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import {
   Box,
   Grid,
@@ -23,6 +23,7 @@ import minesBoard from "../../../assets/images/minesBoard.svg";
 import doubleornothing from "../../../assets/images/doubleornothing.svg";
 import minesticker from "../../../assets/images/octopus.webm";
 import minestickerPoster from "../../../assets/images/pirateOctor.png";
+import { StoreContext } from "../../../store";
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import cashoutsound from "../../../assets/audios/CashoutSound.mp3";
@@ -36,6 +37,8 @@ import getNum from "../Tools/Calculate";
 const GameBoard = () => {
 
   const theme = useTheme();
+  const global = useContext(StoreContext)
+
   const { publicKey } = useWallet();
   const [coinsoundplay] = useSound(coinsound);
   const [cashoutsoundplay] = useSound(cashoutsound);
@@ -75,6 +78,7 @@ const GameBoard = () => {
   const { nextMultiplier, setNextMultiplier } = useGameStore();
   const { boardClickedState, setBoardClickedState } = useGameStore();
   const { factor1, factor2, factor3, factor4 } = useGameStore();
+  const {limboWord} = useGameStore();
 
   const [animation1, setAnimation1] = useState(false);
   const [animation2, setAnimation2] = useState(false);
@@ -84,7 +88,6 @@ const GameBoard = () => {
   const [winFinalModalOpen, setWinFinalModalOpen] = useState(false);
   const [doubleWinCount, setDoubleWinCount] = useState(0);
   const [historyCard, setHistoryCard] = useState([]);
-  const [reversed, setReversed] = useState([]);
 
   const octoV = useRef(null);
 
@@ -96,7 +99,7 @@ const GameBoard = () => {
     }, random * 1000)
   }
 
-  var confetti = {
+  let confetti = {
     maxCount: 150,		//set max confetti count
     speed: 2,			//set the particle animation speed
     frameInterval: 15,	//the confetti animation frame interval in milliseconds
@@ -171,8 +174,8 @@ const GameBoard = () => {
       context.clearRect(0, 0, window.innerWidth, window.innerHeight);
       animationTimer = null;
     } else {
-      var now = Date.now();
-      var delta = now - lastFrameTime;
+      let now = Date.now();
+      let delta = now - lastFrameTime;
       if (!supportsAnimationFrame || delta > confetti.frameInterval) {
         context.clearRect(0, 0, window.innerWidth, window.innerHeight);
         updateParticles();
@@ -184,15 +187,15 @@ const GameBoard = () => {
   }
 
   function startConfetti(timeout, min, max) {
-    var width = window.innerWidth;
-    var height = window.innerHeight;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
     window.requestAnimationFrame = (function () {
       return window.requestAnimationFrame ||
         function (callback) {
           return window.setTimeout(callback, confetti.frameInterval);
         };
     })();
-    var canvas = document.getElementById("confetti-canvas");
+    let canvas = document.getElementById("confetti-canvas");
     if (canvas === null) {
       canvas = document.createElement("canvas");
       canvas.setAttribute("id", "confetti-canvas");
@@ -207,14 +210,14 @@ const GameBoard = () => {
       context = canvas.getContext("2d");
     } else if (context === null)
       context = canvas.getContext("2d");
-    var count = confetti.maxCount;
+    let count = confetti.maxCount;
     if (min) {
       if (max) {
         if (min === max)
           count = particles.length + max;
         else {
           if (min > max) {
-            var temp = min;
+            let temp = min;
             min = max;
             max = temp;
           }
@@ -256,9 +259,9 @@ const GameBoard = () => {
   }
 
   function drawParticles(context) {
-    var particle;
-    var x, x2, y2;
-    for (var i = 0; i < particles.length; i++) {
+    let particle;
+    let x, x2, y2;
+    for (let i = 0; i < particles.length; i++) {
       particle = particles[i];
       context.beginPath();
       context.lineWidth = particle.diameter;
@@ -266,7 +269,7 @@ const GameBoard = () => {
       x = x2 + particle.diameter / 2;
       y2 = particle.y + particle.tilt + particle.diameter / 2;
       if (confetti.gradient) {
-        var gradient = context.createLinearGradient(x, particle.y, x2, y2);
+        let gradient = context.createLinearGradient(x, particle.y, x2, y2);
         gradient.addColorStop("0", particle.color);
         gradient.addColorStop("1.0", particle.color2);
         context.strokeStyle = gradient;
@@ -279,11 +282,11 @@ const GameBoard = () => {
   }
 
   function updateParticles() {
-    var width = window.innerWidth;
-    var height = window.innerHeight;
-    var particle;
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let particle;
     waveAngle += 0.01;
-    for (var i = 0; i < particles.length; i++) {
+    for (let i = 0; i < particles.length; i++) {
       particle = particles[i];
       if (!streamingConfetti && particle.y < -15)
         particle.y = height + 100;
@@ -354,7 +357,6 @@ const GameBoard = () => {
         setClicked(false);
         return;
       }
-      // if (!hack) {
       const houseEdge = mineHouseEdge;
       const newBoardState = boardState;
       const body = {
@@ -396,7 +398,6 @@ const GameBoard = () => {
             setClicked(false);
             setMineGameLose(mineGameLose + 1);
             getHistory();
-            // socket.emit("history", "historyChanged");
             setAlerts({
               type: "error",
               content: losePhrase[phrase]
@@ -459,7 +460,6 @@ const GameBoard = () => {
       setTimeout(async () => {
         setAnimation1(false);
         setAnimation2(false);
-        // if (!hack) {
         const newBoardState = boardState;
         const houseEdge = doubleHouseEdge;
         const body = {
@@ -559,6 +559,7 @@ const GameBoard = () => {
       }, 1000);
     }
   };
+
   const revealBoardState = (allBoardState) => {
     for (let key = 0; key < boardState.length; key++) {
       if (boardClickedState[key] === 0)
@@ -678,6 +679,8 @@ const GameBoard = () => {
     );
   });
 
+
+  // minesrush gameboard
   const minesrush = () => {
     return (
       <>
@@ -714,7 +717,7 @@ const GameBoard = () => {
           >
             <Box sx={styleFair} style={{ backgroundColor: "#101112" }}>
               <Typography
-                variant="h3"
+                letiant="h3"
                 component="h2"
                 color="#F7BE44"
                 fontSize="40px"
@@ -766,7 +769,7 @@ const GameBoard = () => {
                   </span>
                 </Grid>
                 {!cashLoading ? <Button
-                  variant="contained"
+                  letiant="contained"
                   style={{
                     marginTop: "10px",
                     color: "#000",
@@ -792,6 +795,7 @@ const GameBoard = () => {
     )
   }
 
+  // double gameboard
   const double = () => {
     return (
       <>
@@ -849,7 +853,7 @@ const GameBoard = () => {
           >
             <Box sx={styleFair} style={{ backgroundColor: "#101112" }}>
               <Typography
-                variant="h3"
+                letiant="h3"
                 component="h2"
                 color="#F7BE44"
                 fontSize="40px"
@@ -901,7 +905,7 @@ const GameBoard = () => {
                   </span>
                 </Grid>
                 <Button
-                  variant="contained"
+                  letiant="contained"
                   style={{
                     marginTop: "10px",
                     color: "#000",
@@ -921,6 +925,7 @@ const GameBoard = () => {
     )
   }
 
+  // limbo gameboard
   const limbo = () => {
     return (
       <>
@@ -941,28 +946,16 @@ const GameBoard = () => {
               </Box>
               <Box className="playHistoryContainer" style={{ paddingTop: streakNum ? 100 : 50 }}>
                 <Box className="playHistory">
-                  {historyCard.length ? historyCard :
+                  {global.limboHistory ? global.limboHistory :
                     <Box className="card question">
                       X.XX
                     </Box>
                   }
                 </Box>
               </Box>
-
-              {/* <div className="doubleBoardImgs" style={{ justifyContent: "center" }}>
-                {boardState[0] === 0 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={questionBoard} onClick={() => clickEvent(0)} alt="Question" />}
-                {boardState[0] === 1 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={coinBoard} onClick={() => clickEvent(0)} alt="Coin" />}
-                {boardState[0] === 2 && <img className={animation1 ? "disappear" : "doueblBoardImg "} src={minesBoard} onClick={() => clickEvent(0)} alt="Mine" />}
-                {boardState[0] === 3 && <img className={animation1 ? "disappear revealed" : "doueblBoardImg revealed"} src={coinBoard} onClick={() => clickEvent(0)} alt="Coin" />}
-                {boardState[0] === 4 && <img className={animation1 ? "disappear revealed" : "doueblBoardImg revealed"} src={minesBoard} onClick={() => clickEvent(0)} alt="Mine" />}
-                {boardState[1] === 0 && <img className={animation2 ? "disappear" : "doueblBoardImg "} src={questionBoard} onClick={() => clickEvent(1)} alt="Question" />}
-                {boardState[1] === 1 && <img className={animation2 ? "disappear" : "doueblBoardImg "} src={coinBoard} onClick={() => clickEvent(1)} alt="Coin" />}
-                {boardState[1] === 2 && <img className={animation2 ? "disappear" : "doueblBoardImg"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
-                {boardState[1] === 3 && <img className={animation2 ? "disappear revealed" : "doueblBoardImg revealed"} src={coinBoard} onClick={() => clickEvent(1)} alt="Coin" />}
-                {boardState[1] === 4 && <img className={animation2 ? "disappear revealed" : "doueblBoardImg revealed"} src={minesBoard} onClick={() => clickEvent(1)} alt="Mine" />}
-              </div> */}
-
-              <img src={doubleornothing} className="doubleButton" alt="Double Or Nothing" />
+              <span className="limboWord">
+                {limboWord}<span>x</span>
+              </span>
             </Box>
           </Grid>
           <Modal
@@ -973,7 +966,7 @@ const GameBoard = () => {
           >
             <Box sx={styleFair} style={{ backgroundColor: "#101112" }}>
               <Typography
-                variant="h3"
+                letiant="h3"
                 component="h2"
                 color="#F7BE44"
                 fontSize="40px"
@@ -1025,7 +1018,7 @@ const GameBoard = () => {
                   </span>
                 </Grid>
                 <Button
-                  variant="contained"
+                  letiant="contained"
                   style={{
                     marginTop: "10px",
                     color: "#000",

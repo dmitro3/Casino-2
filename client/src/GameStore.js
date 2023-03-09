@@ -51,6 +51,7 @@ const useGameStore = create((set) => ({
   isHolder: false,
   isReward: false,
   isMuted: true,
+  limboWord: 1,
   loading: false,
   loggedIn: false,
   losePhrase: [
@@ -199,6 +200,9 @@ const useGameStore = create((set) => ({
   },
   setHack: (val) => {
     set({ hack: val });
+  },
+  setLimboWord: (val) => {
+    set({ limboWord: val });
   },
   
   setGameHistory: (value) => {

@@ -64,6 +64,9 @@ function App() {
   const [walletAddress, setWalletAddress] = useState('');
   const [balance, setBalance] = useState(0);
   const [daiBalance, setDaiBalance] = useState(0);
+  const [ depositAmount, setDepositAmount] = useState(0.0001);
+  const [ payout, setPayout] = useState();
+  const [ limboHistory, setLimboHistory] = useState([]);
 
   useEffect(() => {
     if (window.location.href.includes("game/coins")) {
@@ -108,6 +111,9 @@ function App() {
     walletAddress, setWalletAddress,
     balance, setBalance,
     daiBalance, setDaiBalance,
+    depositAmount, setDepositAmount,
+    payout, setPayout,
+    limboHistory, setLimboHistory,
   }
 
   return (

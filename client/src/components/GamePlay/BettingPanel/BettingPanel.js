@@ -375,7 +375,7 @@ const BettingPanel = ({
     setConnectWalletModalOpen(false);
   };
 
-  var confetti = {
+  let confetti = {
     maxCount: 150,		//set max confetti count
     speed: 2,			//set the particle animation speed
     frameInterval: 15,	//the confetti animation frame interval in milliseconds

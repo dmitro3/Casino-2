@@ -22,7 +22,6 @@ const HouseEdge = require("../models/houseEdgeModel");
 const Popup = require("../models/popupModel");
 const whiteListModel = require("../models/whiteListModel");
 const withdrawBanModel = require("../models/withdrawBanModel");
-// const { transferNFT } = require("./mintNFT");
 const turtleMultiModel = require("../models/turtleMultiModel");
 const TurtleHistory = require("../models/turtleHistoryModel");
 
@@ -45,7 +44,6 @@ const getMulti = (coinAmount, mineAmount, houseEdge) => {
 
 const withdrawETH = async (walletAddress, payout) => {
   logger.info(`===Withdraw Fund Started===${walletAddress, payout}`);
-  console.log(`===Withdraw Fund Started===${walletAddress, payout}`);
   const query = { walletAddress: walletAddress };
   const nuggetData = await User.findOne(query);
   const nuggetBalance = nuggetData.nugAmount;
@@ -63,13 +61,12 @@ const withdrawETH = async (walletAddress, payout) => {
     }
     const option = { $upsert: true };
     await User.findOneAndUpdate(query, update, option);
-        return { status: "success", content: balance };
+    return { status: "success", content: balance };
   }
 }
 
 const withdrawDAI = async (walletAddress, payout) => {
   logger.info(`===Withdraw Fund Started===${walletAddress, payout}`);
-  console.log(`===Withdraw Fund Started===${walletAddress, payout}`);
   const query = { walletAddress: walletAddress };
   const bonusNuggetData = await User.findOne(query);
   const bonusNuggetBalance = bonusNuggetData.bonusNugAmount;
@@ -86,7 +83,7 @@ const withdrawDAI = async (walletAddress, payout) => {
     }
     const option = { $upsert: true };
     await User.findOneAndUpdate(query, update, option);
-        return { status: "success", content: balance };
+    return { status: "success", content: balance };
   }
 }
 
@@ -106,10 +103,8 @@ const claimReward = async (walletAddress, payout, game, wager) => {
       }
       const multi = getMulti(coinAmount, curBoard.mineAmount, curBoard.houseEdge);
       payAmount = multi * curBoard.bettingAmount;
-      // payAmount *= 0.25 * 0.001;
       logger.info("===payamount on DB is", payAmount);
       logger.info("===payout from client is ", payout);
-      // if (payAmount === payout) {
       let body;
       const nugData = await User.findOne(query);
       if (curBoard.currencyMode === "mainNug") {
@@ -163,47 +158,13 @@ const claimReward = async (walletAddress, payout, game, wager) => {
       }
       await saveTransactionHistory(body);
       return { status: true, content: payAmount };
-      // } else {
-      //   logger.info(`===payamount from DB and request doesn't match in ${walletAddress}===`, payAmount);
-      //   await addHackList(walletAddress);
-      //   return { status: false }
-      // }
     } else if (game === "double") {
       const query = { walletAddress: walletAddress };
       const curBoard = await Boards.findOne(query);
-      // const clickeddata = JSON.parse(curBoard.boardClickedString);
-      // let payAmount = 0;
-      // // if(game === "Minesrush") {
-      //   let coinAmount = 0;
-      //   for (let i = 0; i < 25; i++) {
-      //     if (clickeddata[i] === 1) {
-      //       coinAmount++
-      //     }
-      //   }
-      //   const multi = getMulti(coinAmount, curBoard.mineAmount, curBoard.houseEdge);
-      //   payAmount = multi * curBoard.bettingAmount;
-      //   logger.info("payamount on DB is ", payAmount);
-      // // }
       let payAmount = 2 * curBoard.bettingAmount
-      // if (curBoard.currencyMode === "mainNug") {
-      // let payAmount = 2 * curBoard.bettingAmount
-      // }
-      // else
-      //   payAmount = 2 * 0.25 * 0.001 * curBoard.bettingAmount
       logger.info("===payout from client is===", payout);
       logger.info("===PayAmount from DB is ===", payAmount);
 
-      // if (payAmount === payout) {
-      // const nugData = await User.findOne(query);
-      // let nugBalance = nugData.nugAmount + payout;
-      // const update = {
-      //   $set: {
-      //     walletAddress: walletAddress,
-      //     nugAmount: nugBalance
-      //   }
-      // }
-      // const options = { upsert: true };
-      // await User.findOneAndUpdate(query, update, options);
       let body
       const nugData = await User.findOne(query);
       if (curBoard.currencyMode === "mainNug") {
@@ -257,16 +218,10 @@ const claimReward = async (walletAddress, payout, game, wager) => {
       }
       await saveTransactionHistory(body);
       return { status: true, content: payAmount };
-      // } else {
-      //   logger.info(`===payamount from DB and request doesn't match in ${walletAddress}===`);
-      //   await addHackList(walletAddress);
-      //   return { status: false }
-      // }
     }
   }
   catch (err) {
     logger.debug("Error while cash out.", err);
-    console.log("Error while cash out.", err);
     return false
   };
 };
@@ -360,7 +315,6 @@ const deposit = async (data) => {
     let update = { $set: data };
     const options = { upsert: true };
     let nugData = await User.findOne(query);
-    // if (data.walletAddress !== process.env.HOLDER_ADDR) {
     let nuggetBalance = 0;
     let tHistory
     if (nugData) {
@@ -434,7 +388,6 @@ const deposit = async (data) => {
         update = {
           $set: {
             nugAmount: nuggetBalance,
-            // userName: "Holder"
           }
         }
         await User.findOneAndUpdate(query, update, options);
@@ -454,7 +407,6 @@ const deposit = async (data) => {
         update = {
           $set: {
             bonusNugAmount: nuggetBalance,
-            // userName: "Holder"
           }
         }
         await User.findOneAndUpdate(query, update, options);
@@ -467,7 +419,6 @@ const deposit = async (data) => {
         })
         await tHistory.save();
       }
-      // }
       return true;
     }
   } catch (err) {
@@ -524,10 +475,66 @@ const addUserList = async (data) => {
   await User.findOneAndUpdate(query, update, options);
 }
 
+//Limbo play
+const depositNuggetForLimbo = async (data) => {
+  try {
+    const depositData = await User.findOne({ walletAddress: data.walletAddress });
+    let dbAmount = 0, playAmount = 0;
+    if (depositData) {
+      if (data.currencyMode === "mainNug") {
+        dbAmount = depositData.nugAmount
+      } else if (data.currencyMode === "bonusNug") {
+        dbAmount = depositData.bonusNugAmount
+      } else {
+        dbAmount = depositData.gemAmount
+      }
+    }
+    if (parseFloat(data.payout) > parseFloat(data.limboWord)) {
+      playAmount = parseFloat(dbAmount) - parseFloat(data.amount);
+    } else {
+      playAmount = parseFloat(dbAmount) + parseFloat(data.amount) * (data.payout - 1);
+    }
+    playAmount = parseFloat(playAmount).toFixed(3)
+    console.log('dbAmount', dbAmount);
+    console.log('data.amount', data.amount);
+    console.log('data.payout', data.payout);
+    console.log('data.limboWord', data.limboWord);
+    console.log('playAmount', playAmount);
+
+    
+    let update;
+    if (data.currencyMode === "mainNug") {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        nugAmount: playAmount,
+      }}
+    } else if (data.currencyMode === "bonusNug") {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        bonusNugAmount: playAmount,
+      }}
+    } else {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        gemAmount: playAmount,
+      }}
+    }
+    await User.findOneAndUpdate(
+      { walletAddress: data.walletAddress },
+      update,
+      { upsert: true }
+    )
+    return { status: true, playAmount: playAmount, limboWord: data.limboWord }
+  } catch (err) {
+    console.log("error in deposit utility", err);
+    return { status: false }
+  }
+}
+
+
 const depositNugget = async (data) => {
   try {
     const depositData = await User.findOne({ walletAddress: data.walletAddress });
-    // if(depositData) {
     let dbAmount = 0;
     if (depositData)
       dbAmount = depositData.nugAmount
@@ -554,7 +561,6 @@ const depositNugget = async (data) => {
     console.log("error in deposit utility", err);
     return false
   }
-  // } else
 }
 
 const depositDai = async (data) => {
@@ -780,15 +786,7 @@ const getSpinDate = async ({ walletAddress }) => {
 
   let spinDate = data.spinData;
   let spinNum = data.spinNum;
-  // if(!spinNum) {
-  //   const query = { walletAddress: walletAddress};
-  //   const update = { $set: {
-  //     spinNum: 2
-  //   }}
-  //   const options = {upsert: true};
-  //   await User.findOneAndUpdate(query, update, options);
-  //   spinNum = 2
-  // }
+
   if (!spinDate) {
     const query = { walletAddress: walletAddress };
     const update = {
@@ -831,41 +829,6 @@ const checkCert = async ({ type, walletAddress, num }) => {
 
 const getNFTDeposit = async () => {
   let data = await NFTDeposit.find({});
-  //===Remove Duplicated data===
-  // console.log("prev", data);
-  // let names = []
-  // data.map((dt) => {
-  //   names.push(dt.nftName)
-  // })
-  // console.log("names", names);
-  // data = data.filter((dt) => {
-  //   names.splice(names.indexOf(dt.nftName), 1)
-  //   return !names.includes(dt.nftName)
-  // })
-  // console.log("after", data)
-  // await NFTDeposit.remove({});
-  // data.map(async (dt) => {
-  //   const depositData = new NFTDeposit({
-  //     walletAddress: dt.walletAddress,
-  //     nftName: dt.nftName
-  //   })
-  //   await depositData.save();
-  // })
-
-  //====Remove NFTs that not on house Wallet
-  // console.log("data", data)
-  // logger.info("data", data)
-  // let existingNFT = ["PirateRush #442", "PirateRush #378", "PirateRush #478", "PirateRush #290", "PirateRush #158", "PirateRush #342", "PirateRush #439", "PirateRush #749", "PirateRush #901", "PirateRush #192", "PirateRush #521", "PirateRush #297", "PirateRush #906", "PirateRush #709", "PirateRush #406", "PirateRush #444", "PirateRush #93", "PirateRush #518", "PirateRush #635", "PirateRush #642", "PirateRush #24", "PirateRush #570", "PirateRush #301", "PirateRush #820", "PirateRush #723", "PirateRush #81", "PirateRush #948", "PirateRush #361", "PirateRush #580", "PirateRush #902", "PirateRush #350", "PirateRush #794", "PirateRush #753", "PirateRush #22", "PirateRush #425", "PirateRush #737", "PirateRush #550", "PirateRush #633", "PirateRush #921", "PirateRush #524", "PirateRush #670", "PirateRush #171", "PirateRush #476", "PirateRush #938", "PirateRush #1", "PirateRush #469", "PirateRush #338"]
-
-  // let removeData = data.filter((dt) => {
-  //   console.log("include", existingNFT.includes(dt.nftName))
-  //   return !existingNFT.includes(dt.nftName)
-  // })
-  // console.log("removingData", removeData)
-  // logger.info("removingData", removeData)
-  // removeData.map(async (rmDt) => {
-  //   await NFTDeposit.findOneAndRemove({_id: rmDt._id})
-  // })
   return data.length
 }
 
@@ -928,49 +891,12 @@ const claimRoalty = async (amount) => {
     new web3.PublicKey(process.env.HOLDER_ADDR)
   );
   if (0 < amount * web3.LAMPORTS_PER_SOL < holderbalance) {
-    // for (i = 0; i < accounts.length; i += 10) {
-    //   if (i + 10 > accounts.length - 1) {
-    //     console.log("here1")
-    //     let tx = new web3.Transaction();
-    //     for (let l = i; l < accounts.length; l++) {
-    //       logger.info("address1", accounts[l].walletAddress);
-    //       tx.add(
-    //         web3.SystemProgram.transfer({
-    //           fromPubkey: holderKeypair.publicKey,
-    //           toPubkey: new web3.PublicKey(accounts[l].walletAddress),
-    //           lamports: parseInt(((accounts[l].nftAmount / HashList.length) * amount * web3.LAMPORTS_PER_SOL))
-    //         })
-    //       );
-    //     }
-    //     const sig1 = await web3.sendAndConfirmTransaction(connection, tx, [
-    //       holderKeypair,
-    //     ]);
-    //     logger.info(`===THashValue->${sig1}===`);
-    //   } else {
-    //     console.log("here2")
-    //     let tx = new web3.Transaction();
-    //     for (let l = i; l < i + 10; l++) {
-    //       logger.info("address2", accounts[l].walletAddress);
-    //       tx.add(
-    //         web3.SystemProgram.transfer({
-    //           fromPubkey: holderKeypair.publicKey,
-    //           toPubkey: new web3.PublicKey(accounts[l].walletAddress),
-    //           lamports: parseInt(((accounts[l].nftAmount / HashList.length) * amount * web3.LAMPORTS_PER_SOL))
-    //         })
-    //       );
-    //     }
-    //     const sig1 = await web3.sendAndConfirmTransaction(connection, tx, [
-    //       holderKeypair,
-    //     ]);
-    //     logger.info(`===THashValue->${sig1}===`);
-    //   }
-    // }
+
     for (i = 0; i < accounts.length; i++) {
       while (1) {
         logger.info("address2", accounts[i].walletAddress);
         try {
           let tx = new web3.Transaction();
-          // setTimeout(async () => {
           tx.add(
             web3.SystemProgram.transfer({
               fromPubkey: holderKeypair.publicKey,
@@ -986,28 +912,10 @@ const claimRoalty = async (amount) => {
           );
           logger.info(`===THashValue normal->${sig1}===`);
           break;
-          // }, 1000)
         } catch (err) {
-          // setTimeout(async () => {
           console.log("error loop", err)
           logger.debug("error loop", err)
           logger.debug("wallet loop", accounts[i].walletAddress)
-          //   tx.add(
-          //     web3.SystemProgram.transfer({
-          //       fromPubkey: holderKeypair.publicKey,
-          //       toPubkey: new web3.PublicKey(accounts[i].walletAddress),
-          //       lamports: parseInt(((accounts[i].nftAmount / HashList.length) * amount * web3.LAMPORTS_PER_SOL))
-          //     })
-          //   );
-          //   const sig1 = await web3.sendAndConfirmTransaction(
-          //     connection,
-          //     tx,
-          //     [holderKeypair,],
-          //     { maxRetries: 10 },
-          //   );
-          //   logger.info(`===THashValue error->${sig1}===`);
-          //   console.log(`===THashValue error->${sig1}===`);
-          // // }, 5000)
         }
       }
     }
@@ -1100,7 +1008,6 @@ const setStartTurtle = async (value) => {
 }
 const payout = async () => {
   const date = 1000 * 3600 * 24
-  // const date = 3000
   setInterval(() => {
     const today = new Date().getDay();
     if (today === 1 && payouts) {
@@ -1149,7 +1056,6 @@ const giveLootPrize = async ({ amount, walletAddress, currencyMode, oddOption })
   const query = { walletAddress: walletAddress };
   const pointer = Math.floor(Math.random() * 100000);
   console.log("pointer", pointer);
-  // const pointer = 91001
   const ratios = [
     [0, 40000, 82500, 100000],
     [0, 65000, 84000, 96000, 100000],
@@ -1182,13 +1088,11 @@ const giveLootPrize = async ({ amount, walletAddress, currencyMode, oddOption })
           gemAmount = userData.gemAmount;
         }
         else if (currencyMode === "bonusNug") {
-          // earning *= 0.25 * 0.001;
           nugAmount = userData.nugAmount;
           bonusNugAmount = userData.bonusNugAmount - amount * 1.035 + earning;
           gemAmount = userData.gemAmount;
         }
         else if (currencyMode === "gem") {
-          // earning *= 0.25 * 0.001;
           nugAmount = userData.nugAmount;
           bonusNugAmount = userData.bonusNugAmount;
           gemAmount = userData.gemAmount - amount + earning;
@@ -1205,10 +1109,8 @@ const giveLootPrize = async ({ amount, walletAddress, currencyMode, oddOption })
         const options = { $upsert: true }
         await User.findOneAndUpdate(query, update, options);
 
-        // if (currencyMode === "mainNug") {//to holders
         const queries = { walletAddress: process.env.HOLDER_ADDR }
         const nugData = await User.findOne(queries);
-        // let update
         let raffle = -1;
         if (currencyMode !== "gem") {
           if (nugData) {
@@ -1217,7 +1119,6 @@ const giveLootPrize = async ({ amount, walletAddress, currencyMode, oddOption })
               update = {
                 $set: {
                   nugAmount: nuggetBalance,
-                  // userName: "Holder"
                 }
               }
             }
@@ -1226,7 +1127,6 @@ const giveLootPrize = async ({ amount, walletAddress, currencyMode, oddOption })
               update = {
                 $set: {
                   bonusNugAmount: nuggetBalance,
-                  // userName: "Holder"
                 }
               }
             }
@@ -1313,7 +1213,6 @@ const giveNFTPrize = async ({ amount, walletAddress, currencyMode, oddOption }) 
     const options = { $upsert: true }
     await User.findOneAndUpdate(query, update, options);
 
-    // if (currencyMode === "mainNug") {//to holders
     const queries = { walletAddress: process.env.HOLDER_ADDR }
     const nugData = await User.findOne(queries);
     if (nugData) {
@@ -1322,7 +1221,6 @@ const giveNFTPrize = async ({ amount, walletAddress, currencyMode, oddOption }) 
         update = {
           $set: {
             nugAmount: nuggetBalance,
-            // userName: "Holder"
           }
         }
       } else {
@@ -1330,7 +1228,6 @@ const giveNFTPrize = async ({ amount, walletAddress, currencyMode, oddOption }) 
         update = {
           $set: {
             bonusNugAmount: nuggetBalance,
-            // userName: "Holder"
           }
         }
       }
@@ -1347,7 +1244,6 @@ const giveNFTPrize = async ({ amount, walletAddress, currencyMode, oddOption }) 
     // }
     NFTName = nftAddresses[1];
     if (NFTName !== 0)
-      // transferNFT(walletAddress, NFTName);
       return { nugAmount: nugAmount, bonusNugAmount: bonusNugAmount, earning: nftAddress }
   } else
     return false
@@ -1780,6 +1676,7 @@ module.exports = {
   addHackList,
   addWhiteList,
   addWithdrawBanList,
+  depositNuggetForLimbo,
   addUserList,
   depositNugget,
   depositDai,

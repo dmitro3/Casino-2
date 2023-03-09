@@ -13,6 +13,7 @@ let count = 0;
 const logger = log4js.getLogger("default");
 const {
   insertBoard,
+  depositNuggetForLimbo,
   checkAlreadyDeposit,
   checkMine,
   userFailResetAll,
@@ -58,6 +59,50 @@ router.post(
         };
         const result = await depositNugget(item);
         if (result) {
+          res.json({ status: "success", content: result });
+        } else {
+          res.json({ status: "error", content: "Error while deposit nugget" })
+        }
+      }
+    catch (err) {
+      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
+      res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
+      res.status(500).end();
+    }
+  }
+)
+
+
+router.post(
+  "/limboDeposit",
+  async (req, res) => {
+    try {
+      logger.info(`===Deposit ${req.body.amount} mainNug from ${req.body.walletAddress}`)
+
+      let i = Math.random();
+      let limboWord = parseFloat(1/i).toFixed(2);
+
+        const item = {
+          walletAddress: req.body.walletAddress,
+          amount: req.body.amount,
+          payout: req.body.payout,
+          currencyMode: req.body.currencyMode,
+          limboWord: limboWord,
+        };
+
+        const result = await depositNuggetForLimbo(item);
+        if (result.status) {
+          const body = {
+            walletAddress: req.body.walletAddress,
+            game: 'Limbo',
+            // payout: stopGameResult.content,
+            payout: result.playAmount,
+            wager: req.body.amount,
+
+            currencyMode: req.body.currencyMode
+          }
+          await saveHistory(body);
           res.json({ status: "success", content: result });
         } else {
           res.json({ status: "error", content: "Error while deposit nugget" })
