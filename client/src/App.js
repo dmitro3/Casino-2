@@ -67,6 +67,7 @@ function App() {
   const [ depositAmount, setDepositAmount] = useState(0.0001);
   const [ payout, setPayout] = useState();
   const [ limboHistory, setLimboHistory] = useState([]);
+  const [ start, setStart] = useState(false);
 
   useEffect(() => {
     if (window.location.href.includes("game/coins")) {
@@ -114,6 +115,7 @@ function App() {
     depositAmount, setDepositAmount,
     payout, setPayout,
     limboHistory, setLimboHistory,
+    start, setStart,
   }
 
   return (

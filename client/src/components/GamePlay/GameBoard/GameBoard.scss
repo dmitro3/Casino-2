@@ -347,7 +347,229 @@
 }
 
 .limboWord {
-  color: white;
-  font-size: 40px;
+  color: green;
+  font-size: 60px;
   font-weight: 800;
+  position: absolute;
+  top: 50%;
+  left: 35%;;
+}
+
+.limboWord_red {
+  color: rgb(145, 49, 49);
+  font-size: 60px;
+  font-weight: 800;
+  position: absolute;
+  top: 50%;
+  left: 35%;;
+}
+
+// ==========================================
+//   BASE
+// ==========================================
+$green: #2ecc71;
+$rocket-green: #57ff08;
+$light-blue: #3498db;
+$dark-blue: #2c3e50;
+$anima-duration: 1s;
+
+* {
+  font-family: 'Josefin Sans', Arial;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;  
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.header {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-family: 'Josefin Slab';
+  font-size: 2rem;
+  color: $dark-blue;
+}
+
+.rocket-container {
+  min-height: 250px;
+}
+
+
+.transparent {
+  background-color: transparent;
+  height: 100px;
+}
+
+
+// ======================
+//    ROCKET
+// ======================
+// @keyframes duration | timing-function | delay | iteration-count | direction | fill-mode | play-state | name
+
+/*svg*/.svg-rocket {
+  height: 150px;
+  margin: auto;
+}
+
+// Added extra group to allow for fly off effect of all SVG layers
+.rocket-inner {
+    fill: $rocket-green;
+    animation: $anima-duration ease-in-out 0s infinite backwards rocket-final-takeoff;
+}
+
+  .rocket-inner__rocket-and-lines {
+     animation: $anima-duration ease-in-out 0s infinite backwards rocket-inital-takeoff;    
+     transform-origin: bottom; 
+  }
+
+
+.rocket-rocket {}
+
+
+.rocket__lines {}
+
+    .rocket-lines__lines {
+        //transform: scaleY(0.25);
+        transform-origin: bottom;
+        animation: $anima-duration ease-in-out 0s infinite forwards rocket-lines;
+    }
+
+
+// .rocket-clouds {}
+
+    .rocket-clouds__bubble-group {}
+
+        @for $i from 1 through 5 {
+            .rocket-clouds__bubble--#{$i} {
+                animation: $anima-duration ease-in-out 0s infinite forwards cloud-bubbles--#{$i};
+            }
+        }
+
+    .rocket-clouds__cloud {
+        transform-origin: top;
+        animation: $anima-duration ease-in-out 0s infinite forwards cloud-fade-in;
+    }
+
+
+
+
+
+// ======================
+//    KEYFRAMES
+// ======================
+
+// Rocket & lines 
+@keyframes rocket-inital-takeoff {
+    0% {
+        transform: translate3d(0, 54%, 0) rotate(0deg);
+    }
+  
+    // 40% {
+    //     transform: translate3d(0, 34%, 0);
+    // }
+  
+    80% {
+        transform: translate3d(0, 0, 0);
+    }
+
+    // 60% {
+    //     transform: translate3d(0, 0, 0);
+    // }
+
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+// Entire SVG fly's up
+@keyframes rocket-final-takeoff {
+    0% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(0, -150%, 0);
+    }
+}
+
+// Lines draw
+@keyframes rocket-lines {
+    0% {
+        transform: scaleY(0);
+    }
+
+    // 40% {
+    //     transform: scaleY(0.6);
+    // }
+
+    60% {
+        transform: scaleY(1.0);
+    }
+  
+    80% { transform: scaleY(1.0); }
+
+    100% {
+        transform: scaleY(1.0) translate3d(0, 0, 0);
+    }
+}
+
+// Cloud fades in and scales
+@keyframes cloud-fade-in {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 0, 0) scaley(1.0);
+    }
+
+    40% {
+        opacity: 0;   
+        transform: translate3d(0, 39%, 0) scaley(1);
+    }
+
+    80% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scaley(1.0);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+// Bubbles fade in sequencially
+@for $i from 1 through 5 {
+    @keyframes cloud-bubbles--#{$i} {
+        $start: 56 + ($i * 4);
+        $end: 60 + ($i * 4);
+
+        0% {
+            opacity: 0;
+        }
+
+        // {$start}% {
+        //     opacity: 0;
+        // }
+
+        // #{$end}% {
+        //     opacity: 1;
+        // }
+
+        100% {
+            opacity: 1;
+        }
+  }
 }
