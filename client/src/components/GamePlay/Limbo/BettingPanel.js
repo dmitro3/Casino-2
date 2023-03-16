@@ -38,6 +38,11 @@ const LimboPanel = (props) => {
     
     const inputValue = (e) => {
         global.setPayout(parseFloat(parseFloat(e.target.value).toFixed(4)));
+        let tempPercent = 99/(parseFloat(e.target.value));
+        if (e.target.value === '' ) {
+            setPercent(0);
+        } else 
+            setPercent(tempPercent.toFixed(2));
     }
 
     const clickBet = async () => {
@@ -134,7 +139,7 @@ const LimboPanel = (props) => {
             <input type="number" value={global.depositAmount} onChange={inputAmount} id = 'inputAmount'/>
             <label htmlFor='inputValue' className="text-label">
                 <span style={{ textAlign: 'left', color: 'grey'}}>Payout</span>
-                <span style={{ textAlign: 'right', color: 'grey'}}>Chance{ percent }%</span>
+                <span style={{ textAlign: 'right', color: 'grey'}}>Chance &nbsp;  { percent }%</span>
             </label>
             <input type="number" value={global.payout} onChange={inputValue} id = 'inputValue'/>
             <Button className="betButton" onClick={clickBet}>

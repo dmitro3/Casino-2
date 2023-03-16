@@ -1099,6 +1099,7 @@ const GameBoard = (props) => {
                   }
                 </Box>
               </Box>
+              
               <div className='rocket-container'>
                 <div className="transparent"></div>
               <svg id='rocket' className="svg-rocket" style={{display: launch ? 'block' : 'none' }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 83.07909 127.50572">
