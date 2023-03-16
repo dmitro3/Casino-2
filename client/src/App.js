@@ -69,6 +69,7 @@ function App() {
   const [ depositAmount, setDepositAmount] = useState(0.0001);
   const [ payout, setPayout] = useState();
   const [ limboHistory, setLimboHistory] = useState([]);
+  const [ diceHistory, setDiceHistory] = useState([]);
   const [ start, setStart] = useState(false);
 
   useEffect(() => {
@@ -79,6 +80,8 @@ function App() {
       setGameMode("loot")
     } else if((window.location.href.includes("game/limbo"))) {
       setGameMode("limbo")
+    } else if((window.location.href.includes("game/dice"))) {
+      setGameMode("dice")
     } else {
       setGameMode("minesrush")
       setMineAmount(5);
@@ -117,6 +120,7 @@ function App() {
     depositAmount, setDepositAmount,
     payout, setPayout,
     limboHistory, setLimboHistory,
+    diceHistory, setDiceHistory,
     start, setStart,
   }
 

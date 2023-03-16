@@ -15,9 +15,10 @@ import nugget from '../../../assets/images/nugget.png'
 const LimboPanel = (props) => {
     const { launch, setLaunch, success ,setSuccess } = props;
     const global = useContext(StoreContext)
-    const { nugAmount, bonusNugAmount, gemAmount, limboWord } = useGameStore();
-    const { setNugAmount, setBonusNugAmount, setGemAmount, setLimboWord } = useGameStore();
+    const { nugAmount, bonusNugAmount, gemAmount, limboWord, diceWord } = useGameStore();
+    const { setNugAmount, setBonusNugAmount, setGemAmount, setLimboWord, setDiceWord } = useGameStore();
     const { currencyMode, setAlerts } = useGameStore();
+    const {gameMode} = useGameStore();
     const [ coinImage, setCoinImage ] = useState('');
     const [percent, setPercent] = useState('0.00');
 
@@ -63,7 +64,6 @@ const LimboPanel = (props) => {
             return
         }
 
-
         if (parseFloat(global.depositAmount) > nugAmount || parseFloat(global.depositAmount) > bonusNugAmount  || parseFloat(global.depositAmount) > gemAmount) {
             return
         }
@@ -76,6 +76,7 @@ const LimboPanel = (props) => {
         }
 
        try {
+        if (gameMode === "limbo") {
         await axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/limboDeposit`, object)
           .then((res) => {
@@ -89,8 +90,6 @@ const LimboPanel = (props) => {
                 } else {
                     setGemAmount(res.data.content.playAmount)
                 }
-
-                
 
                 let history = [...global.limboHistory];
                 history.unshift(
@@ -119,6 +118,49 @@ const LimboPanel = (props) => {
                 console.log("Error in play limbo", res.data.content)
            }
           });
+        } else if (gameMode === "dice") {
+            await axios
+          .post(`${process.env.REACT_APP_BACKEND_URL}/api/play/diceDeposit`, object)
+          .then((res) => {
+           if(res.data.status) {
+                console.log("diceWord", res.data.content.diceWord)
+                setDiceWord(res.data.content.diceWord)
+                if(currencyMode === "mainNug") {
+                    setNugAmount(res.data.content.playAmount)
+                } else if (currencyMode === "bonusNug") {
+                    setBonusNugAmount(res.data.content.playAmount)
+                } else {
+                    setGemAmount(res.data.content.playAmount)
+                }
+
+                let history = [...global.diceHistory];
+                history.unshift(
+                    <Box className = {parseFloat(global.payout) > parseFloat(res.data.content.diceWord) ? "fail card" : "doubled card"}>
+                        x{res.data.content.diceWord}
+                    </Box>
+                )
+
+                if (parseFloat(global.payout) > parseFloat(res.data.content.diceWord)) {
+                    setSuccess(true)
+                } else {
+                    setSuccess(false)
+
+                }
+
+                global.setDiceHistory(history);
+
+                setTimeout(() => {
+                    setLaunch(false);
+                }, 800)
+
+           } else {
+                setTimeout(() => {
+                    setLaunch(false);
+                }, 800)
+                console.log("Error in play dice", res.data.content)
+           }
+          });
+        }
       } catch (err) {
         setTimeout(() => {
             setLaunch(false);

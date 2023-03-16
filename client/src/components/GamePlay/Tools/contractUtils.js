@@ -55,7 +55,7 @@ export const setupNetwork = async () => {
             return false
         }
     } else {
-        console.error("Can't setup the BSC network on metamask because window.ethereum is undefined")
+        console.error("Can't setup the Arbitrum network on metamask because window.ethereum is undefined")
         return false
     }
 }
@@ -77,7 +77,7 @@ export const connectWallet = async () => {
         });
 
         const chainId = await window.web3.eth.chainId();
-        if (chainId !== 56) { //56: mainnet, 97: testnet
+        if (chainId !== 42161 ) { //56: mainnet, 97: testnet
             const res = await setupNetwork();
             if (!res) {
                 return {

@@ -495,11 +495,56 @@ const depositNuggetForLimbo = async (data) => {
       playAmount = parseFloat(dbAmount) + parseFloat(data.amount) * (data.payout - 1);
     }
     playAmount = parseFloat(playAmount).toFixed(3)
-    console.log('dbAmount', dbAmount);
-    console.log('data.amount', data.amount);
-    console.log('data.payout', data.payout);
-    console.log('data.limboWord', data.limboWord);
-    console.log('playAmount', playAmount);
+
+    let update;
+    if (data.currencyMode === "mainNug") {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        nugAmount: playAmount,
+      }}
+    } else if (data.currencyMode === "bonusNug") {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        bonusNugAmount: playAmount,
+      }}
+    } else {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        gemAmount: playAmount,
+      }}
+    }
+    await User.findOneAndUpdate(
+      { walletAddress: data.walletAddress },
+      update,
+      { upsert: true }
+    )
+    return { status: true, playAmount: playAmount, limboWord: data.limboWord }
+  } catch (err) {
+    console.log("error in deposit utility", err);
+    return { status: false }
+  }
+}
+
+// Dice play
+const depositNuggetForDice = async (data) => {
+  try {
+    const depositData = await User.findOne({ walletAddress: data.walletAddress });
+    let dbAmount = 0, playAmount = 0;
+    if (depositData) {
+      if (data.currencyMode === "mainNug") {
+        dbAmount = depositData.nugAmount
+      } else if (data.currencyMode === "bonusNug") {
+        dbAmount = depositData.bonusNugAmount
+      } else {
+        dbAmount = depositData.gemAmount
+      }
+    }
+    if (parseFloat(data.payout) > parseFloat(data.diceWord)) {
+      playAmount = parseFloat(dbAmount) - parseFloat(data.amount);
+    } else {
+      playAmount = parseFloat(dbAmount) + parseFloat(data.amount) * (data.payout - 1);
+    }
+    playAmount = parseFloat(playAmount).toFixed(3)
 
     
     let update;
@@ -1711,4 +1756,5 @@ module.exports = {
   getNFTDeposit,
   getRemaining,
   getRemainedNFT,
+  depositNuggetForDice,
 }
