@@ -5,7 +5,7 @@ const MAINNET = 42161
 const ChainID = MAINNET;
 
 export const CHAIN_NAME = {
-    [MAINNET]: 'ETH Mainnet',
+    [MAINNET]: 'Arbi Mainnet',
 }
 
 export const BASE_ETH_SCAN_URLS = {

@@ -35,6 +35,7 @@ import speaker_mute_blacktheme from "../../../assets/images/speaker_mute_blackth
 import roulette from "../../../assets/images/roulette.png";
 import crash from "../../../assets/images/crash.png";
 import limbo from "../../../assets/images/limbo.png";
+import dice from "../../../assets/images/dice.png";
 
 import { StoreContext } from "../../../store";
 import cashLoader from "../../../assets/images/frog.gif";
@@ -465,6 +466,12 @@ const Sidebar = () => {
                       <img src={limbo} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
                     </Box>
                     <Typography className="description">LIMBO</Typography>
+                  </NavLink>
+                  <NavLink className={gameMode === "double" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("dice")} to={!gameState && "/dice"}>
+                    <Box className="icon" style={{ width: 44, height: 44, background: "#101014", maginLeft: 5, border: "3px solid #3a3a3a", borderRadius: "50%" }}>
+                      <img src={dice} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
+                    </Box>
+                    <Typography className="description">CLASSIC DICE</Typography>
                   </NavLink>
                   <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
                     <img className="icon" src={turtle} alt="Turtle" />

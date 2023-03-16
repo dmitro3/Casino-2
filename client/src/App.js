@@ -41,6 +41,8 @@ import MintNFTs from "./pages/MintNFTs";
 import Roulette from './components/GamePlay/Roulette/roulette';
 import Limbo from './pages/Limbo.js';
 import Crash from './components/GamePlay/Crash/Crash';
+import Dice from './pages/Dice.js';
+
 import { StoreContext } from './store';
 
 
@@ -141,6 +143,7 @@ function App() {
                   <Route path={`/roulette`} element={<Roulette />} />
                   <Route path={`/limbo`} element={<Limbo />} />
                   <Route path={`/crash`} element={<Crash />} />
+                  <Route path={`/dice`} element={<Dice />} />
                 </Routes>
               </Router>
             </Container>
