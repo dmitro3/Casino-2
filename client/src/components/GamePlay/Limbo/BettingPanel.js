@@ -75,6 +75,8 @@ const LimboPanel = (props) => {
             walletAddress: global.walletAddress,
         }
 
+        console.log("currencyMode", currencyMode)
+
        try {
         if (gameMode === "limbo") {
         await axios
@@ -173,12 +175,26 @@ const LimboPanel = (props) => {
       }
     }
 
+    const double = () => {
+        let i = 2 * global.depositAmount;
+        global.setDepositAmount(i.toFixed(4));
+    }
+
+    const half = () => {
+        let i = global.depositAmount / 2;
+        global.setDepositAmount(i.toFixed(4));
+    }
+
     return (
         <>
         <FormControl>
             <img src={coinImage} alt='coin' id="coin"/>
             <label htmlFor='inputAmount' className="text-label" style={{ textAlign: 'left', color: 'grey'}}>Amount</label>
-            <input type="number" value={global.depositAmount} onChange={inputAmount} id = 'inputAmount'/>
+            <div className="custom-input">
+                <input className="custom-inputbox" type="number" value={global.depositAmount} onChange={inputAmount} id = 'inputAmount'/>
+                <button className="custom-input-half" onClick={half}>/2</button>
+                <button className="custom-input-double" onClick={double}>x2</button>
+            </div>
             <label htmlFor='inputValue' className="text-label">
                 <span style={{ textAlign: 'left', color: 'grey'}}>Payout</span>
                 <span style={{ textAlign: 'right', color: 'grey'}}>Chance &nbsp;  { percent }%</span>

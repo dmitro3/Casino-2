@@ -193,3 +193,54 @@ input[type=number] {
     animation: flicker 3ms ease-in infinite;
   }
   
+
+  .custom-input {
+    position: relative;
+    width: 300px;
+  }
+  
+  .custom-inputbox {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 100px;
+    padding: 10px 100px 10px 20px; 
+    line-height: 1;
+    box-sizing: border-box;
+    outline: none;
+  }
+  .custom-input-double {
+    position: absolute;
+    right: 15px; 
+    top: 17px;
+    bottom: 3px;
+    border: 0;
+    color: black;
+    outline: none;
+    margin: 0;
+    padding: 0 8px;
+    border-radius: 10px;
+    z-index: 2;
+    height: 35px;
+  }
+
+  .custom-input-double:hover {
+    background-color: rgb(209, 206, 206);
+  }
+  .custom-input-half {
+    height: 35px;
+    position: absolute;
+    right: 50px; 
+    top: 17px;
+    bottom: 3px;
+    border: 0;
+    color: #000;
+    outline: none;
+    margin: 0;
+    padding: 0 9px;
+    border-radius: 10px;
+    z-index: 2;
+  }
+
+  .custom-input-half:hover {
+    background-color: rgb(209, 206, 206);
+  }
