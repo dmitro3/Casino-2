@@ -207,7 +207,7 @@ const useGameStore = create((set) => ({
   },
   
   setDiceWord: (val) => {
-    set({ limboWord: val });
+    set({ diceWord: val });
   },
   
   setGameHistory: (value) => {

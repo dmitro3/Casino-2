@@ -539,7 +539,7 @@ const depositNuggetForDice = async (data) => {
         dbAmount = depositData.gemAmount
       }
     }
-    if (parseFloat(data.payout) > parseFloat(data.diceWord)) {
+    if (parseFloat(data.percent) < parseFloat(data.diceWord)) {
       playAmount = parseFloat(dbAmount) - parseFloat(data.amount);
     } else {
       playAmount = parseFloat(dbAmount) + parseFloat(data.amount) * (data.payout - 1);
@@ -569,7 +569,7 @@ const depositNuggetForDice = async (data) => {
       update,
       { upsert: true }
     )
-    return { status: true, playAmount: playAmount, limboWord: data.limboWord }
+    return { status: true, playAmount: playAmount, diceWord: data.diceWord }
   } catch (err) {
     console.log("error in deposit utility", err);
     return { status: false }

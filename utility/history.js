@@ -165,6 +165,21 @@ const saveHistory = async (historyData) => {
     }
     const history = new History(data);
     await history.save();
+  } else if (historyData.game === "dice") {
+    const userData = await User.findOne(query);
+    data = {
+      walletAddress: historyData.walletAddress,
+      game: historyData.game,
+      player: userData.userName,
+      wager: historyData.wager,
+      payout: historyData.earning === 0 ? 0 : 1,
+      coin: historyData.earning === 0 ? 0 : 1,
+      mine: 1,
+      date: Date.now(),
+      currencyMode: historyData.currencyMode
+    }
+    const history = new History(data);
+    await history.save();
   }
   else {
     const boardData = await Boards.findOne(query);

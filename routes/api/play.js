@@ -123,15 +123,16 @@ router.post(
   "/diceDeposit",
   async (req, res) => {
     try {
-      logger.info(`===Deposit ${req.body.amount} mainNug from ${req.body.walletAddress}`)
+      logger.info(`===Deposit ${req.body.amount} dice from ${req.body.walletAddress}`)
 
-      let i = Math.random();
-      let diceWord = parseFloat(1/i).toFixed(2);
+      let diceWord = parseFloat(100 * Math.random()).toFixed(2);
+      // let diceWord = parseFloat(1/i).toFixed(2);
 
         const item = {
           walletAddress: req.body.walletAddress,
           amount: req.body.amount,
           payout: req.body.payout,
+          percent: req.body.percent,
           currencyMode: req.body.currencyMode,
           diceWord: diceWord,
         };
