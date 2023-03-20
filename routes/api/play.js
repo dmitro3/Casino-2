@@ -54,17 +54,17 @@ router.post(
     try {
       logger.info(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
       console.log(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
-        const item = {
-          walletAddress: walletAddress,
-          depositAmount: req.body.depositAmount
-        };
-        const result = await depositNugget(item);
-        if (result) {
-          res.json({ status: "success", content: result });
-        } else {
-          res.json({ status: "error", content: "Error while deposit nugget" })
-        }
+      const item = {
+        walletAddress: walletAddress,
+        depositAmount: req.body.depositAmount
+      };
+      const result = await depositNugget(item);
+      if (result) {
+        res.json({ status: "success", content: result });
+      } else {
+        res.json({ status: "error", content: "Error while deposit nugget" })
       }
+    }
     catch (err) {
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
@@ -82,33 +82,34 @@ router.post(
       logger.info(`===Deposit ${req.body.amount} mainNug from ${req.body.walletAddress}`)
 
       let i = Math.random();
-      let limboWord = parseFloat(1/i).toFixed(2);
+      let limboWord = parseFloat(1 / i).toFixed(2);
 
-        const item = {
+      const item = {
+        walletAddress: req.body.walletAddress,
+        amount: req.body.amount,
+        payout: req.body.payout,
+        currencyMode: req.body.currencyMode,
+        limboWord: limboWord,
+      };
+
+      const result = await depositNuggetForLimbo(item);
+      if (result.status) {
+        const body = {
           walletAddress: req.body.walletAddress,
-          amount: req.body.amount,
-          payout: req.body.payout,
-          currencyMode: req.body.currencyMode,
-          limboWord: limboWord,
-        };
-
-        const result = await depositNuggetForLimbo(item);
-        if (result.status) {
-          const body = {
-            walletAddress: req.body.walletAddress,
-            game: 'Limbo',
-            // payout: stopGameResult.content,
-            payout: result.playAmount,
-            wager: req.body.amount,
-
-            currencyMode: req.body.currencyMode
-          }
-          await saveHistory(body);
-          res.json({ status: "success", content: result });
-        } else {
-          res.json({ status: "error", content: "Error while deposit nugget" })
+          game: 'Limbo',
+          player: req.body.walletAddress,
+          wager: req.body.amount,
+          payout: req.body.payout * req.body.amount,
+          coin: 1,
+          mine: 1,
+          currencyMode: req.body.currencyMode
         }
+        await saveHistory(body);
+        res.json({ status: "success", content: result });
+      } else {
+        res.json({ status: "error", content: "Error while deposit nugget" })
       }
+    }
     catch (err) {
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
@@ -128,31 +129,33 @@ router.post(
       let diceWord = parseFloat(100 * Math.random()).toFixed(2);
       // let diceWord = parseFloat(1/i).toFixed(2);
 
-        const item = {
+      const item = {
+        walletAddress: req.body.walletAddress,
+        amount: req.body.amount,
+        payout: req.body.payout,
+        percent: req.body.percent,
+        currencyMode: req.body.currencyMode,
+        diceWord: diceWord,
+      };
+
+      const result = await depositNuggetForDice(item);
+      if (result.status) {
+        const body = {
           walletAddress: req.body.walletAddress,
-          amount: req.body.amount,
-          payout: req.body.payout,
-          percent: req.body.percent,
+          game: 'Dice',
+          player: req.body.walletAddress,
+          wager: req.body.amount,
+          payout: req.body.payout * req.body.amount,
+          coin: 1,
+          mine: 1,
           currencyMode: req.body.currencyMode,
-          diceWord: diceWord,
-        };
-
-        const result = await depositNuggetForDice(item);
-        if (result.status) {
-          const body = {
-            walletAddress: req.body.walletAddress,
-            game: 'dice',
-            payout: result.playAmount,
-            wager: req.body.amount,
-
-            currencyMode: req.body.currencyMode
-          }
-          await saveHistory(body);
-          res.json({ status: "success", content: result });
-        } else {
-          res.json({ status: "error", content: "Error while deposit nugget" })
         }
+        await saveHistory(body);
+        res.json({ status: "success", content: result });
+      } else {
+        res.json({ status: "error", content: "Error while deposit nugget" })
       }
+    }
     catch (err) {
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
@@ -167,16 +170,16 @@ router.post(
   async (req, res) => {
     try {
       logger.info(`===Deposit ${req.body.depositAmount} Dai from ${req.body.walletAddress}`)
-        const item = {
-          walletAddress: req.body.walletAddress,
-          depositAmount: req.body.depositAmount,
-        };
-        const result = await depositDai(item);
-        if (result) {
-          res.json({ status: "success", content: result });
-        } else {
-          res.json({ status: "error", content: "Error while deposit nugget" })
-        }
+      const item = {
+        walletAddress: req.body.walletAddress,
+        depositAmount: req.body.depositAmount,
+      };
+      const result = await depositDai(item);
+      if (result) {
+        res.json({ status: "success", content: result });
+      } else {
+        res.json({ status: "error", content: "Error while deposit nugget" })
+      }
     } catch (err) {
       logger.debug("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
@@ -263,9 +266,9 @@ router.post(
   async (req, res) => {
     try {
       logger.info(`===Withdraw ${req.body.depositAmount} ETH from ${req.body.walletAddress} and num is ${req.body.num} started===`)
-        const result = await withdrawETH(req.body.walletAddress, req.body.depositAmount);
-        res.json({ status: result.status, content: result.content });
-        res.status(200).end();
+      const result = await withdrawETH(req.body.walletAddress, req.body.depositAmount);
+      res.json({ status: result.status, content: result.content });
+      res.status(200).end();
     } catch (err) {
       logger.debug("Error while withdraw funds.", err)
       isWithdraw = false
@@ -280,9 +283,9 @@ router.post(
   async (req, res) => {
     try {
       logger.info(`===Withdraw ${req.body.depositAmount} DAI from ${req.body.walletAddress} and num is ${req.body.num} started===`)
-        const result = await withdrawDAI(req.body.walletAddress, req.body.depositAmount);
-        res.json({ status: result.status, content: result.content });
-        res.status(200).end();
+      const result = await withdrawDAI(req.body.walletAddress, req.body.depositAmount);
+      res.json({ status: result.status, content: result.content });
+      res.status(200).end();
     } catch (err) {
       logger.debug("Error while withdraw funds.", err)
       isWithdraw = false
@@ -752,7 +755,7 @@ router.post(
 
 router.post(
   "/admin",
-  async (req, res) => { 
+  async (req, res) => {
     try {
       logger.info("===Is Admin?===")
       if (process.env.ADMIN_WALLETS1 === req.body.walletAddress) {

@@ -157,8 +157,8 @@ const saveHistory = async (historyData) => {
       game: historyData.game,
       player: userData.userName,
       wager: historyData.wager,
-      payout: historyData.earning === 0 ? 0 : 1,
-      coin: historyData.earning === 0 ? 0 : 1,
+      payout: historyData.payout,
+      coin: 1,
       mine: 1,
       date: Date.now(),
       currencyMode: historyData.currencyMode

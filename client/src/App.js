@@ -67,7 +67,7 @@ function App() {
   const [balance, setBalance] = useState(0);
   const [daiBalance, setDaiBalance] = useState(0);
   const [ depositAmount, setDepositAmount] = useState(0.0001);
-  const [ payout, setPayout] = useState();
+  const [ payout, setPayout] = useState('1.98');
   const [ limboHistory, setLimboHistory] = useState([]);
   const [ diceHistory, setDiceHistory] = useState([]);
   const [ start, setStart] = useState(false);

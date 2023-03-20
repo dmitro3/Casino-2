@@ -1101,7 +1101,6 @@ const GameBoard = (props) => {
                   }
                 </Box>
               </Box>
-                  {console.log(diceWord)}
               {<span className={success ? 'limboWord' : 'limboWord_red'} style={{position: "relative", display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center", left: isDesktop ? parseFloat(diceWord * 3.6-180) : 0}}>
                 {diceWord}
                 <img src={DiceImage} alt="DICE" width={80} />

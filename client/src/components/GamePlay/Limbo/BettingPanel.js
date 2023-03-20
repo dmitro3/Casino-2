@@ -147,7 +147,7 @@ const LimboPanel = (props) => {
                             let history = [...global.diceHistory];
                             history.unshift(
                                 <Box className={parseFloat(global.percent) < parseFloat(res.data.content.diceWord) ? "fail card" : "doubled card"}>
-                                    x{res.data.content.diceWord}
+                                    {res.data.content.diceWord}
                                 </Box>
                             )
 

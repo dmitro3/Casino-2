@@ -13,6 +13,8 @@ import nug from "../../../assets/images/nugget.png"
 import gemImg from "../../../assets/images/gem.png"
 import eth from "../../../assets/images/eth.png"
 import coin from "../../../assets/images/coin.png"
+import limbo from "../../../assets/images/limbo.png"
+import dice from "../../../assets/images/diceone.png"
 import double from "../../../assets/images/double.svg";
 import speaker from "../../../assets/images/speaker.png";
 import minesrush from "../../../assets/images/minesrush.svg";
@@ -167,6 +169,8 @@ const RecentPlays = ({ /*socket*/ }) => {
           {isDesktop && item.game === "Minesrush" && <TableCell className="rest img" align="center" style={{ paddingTop: "8px" }}><img src={minesrush} style={{ width: "3vw" }} alt="Minesrush" /></TableCell>}
           {isDesktop && item.game === "double" && <TableCell align="center" className="rest img" style={{ paddingTop: "8px" }}><img src={double} alt="50/50" style={{ width: "3vw" }} /></TableCell>}
           {isDesktop && item.game === "ArbiCasino" && <TableCell align="center" className="rest img" style={{ paddingTop: "8px" }}><img src={lootImg} alt="ArbiCasino" style={{ width: "50px", height: "50px", background: "#101014", border: "3px solid #3a3a3a", borderRadius: "50%" }} /></TableCell>}
+          {isDesktop && item.game === "limbo" && <TableCell align="center" className="rest img" style={{ paddingTop: "8px" }}><img src={limbo} alt="ArbiCasino" style={{ width: "50px", height: "50px", background: "#101014", border: "3px solid #3a3a3a", borderRadius: "50%" }} /></TableCell>}
+          {isDesktop && item.game === "dice" && <TableCell align="center" className="rest img" style={{ paddingTop: "8px" }}><img src={dice} alt="ArbiCasino" style={{ width: "50px", height: "50px", background: "#101014", border: "3px solid #3a3a3a", borderRadius: "50%" }} /></TableCell>}
         </TableRow>
       );
     }
