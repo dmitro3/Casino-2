@@ -15,6 +15,7 @@ import nugget from '../../../assets/images/nugget.png'
 const LimboPanel = (props) => {
     const { launch, setLaunch, success, setSuccess } = props;
     const global = useContext(StoreContext)
+    const { gameHistory, setGameHistory } = useGameStore();
     const { nugAmount, bonusNugAmount, gemAmount, limboWord, diceWord } = useGameStore();
     const { setNugAmount, setBonusNugAmount, setGemAmount, setLimboWord, setDiceWord } = useGameStore();
     const { currencyMode, setAlerts } = useGameStore();
@@ -172,6 +173,7 @@ const LimboPanel = (props) => {
                         }
                     });
             }
+            getHistory();
         } catch (err) {
             setTimeout(() => {
                 setLaunch(false);
@@ -183,7 +185,22 @@ const LimboPanel = (props) => {
             })
         }
     }
-    console.log("success", success)
+    const getHistory = async () => {
+        try {
+            await axios
+                .get(`${process.env.REACT_APP_BACKEND_URL}/api/history/get`)
+                .then((res) => {
+                    const newGameHistory = res.data;
+                    setGameHistory(newGameHistory);
+                });
+        } catch (err) {
+            console.log("Error while getting history: ", err);
+            setAlerts({
+                type: "error",
+                content: err.message
+            })
+        }
+    };
 
     const double = () => {
         let i = 2 * global.depositAmount;

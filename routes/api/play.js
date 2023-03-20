@@ -99,7 +99,7 @@ router.post(
           game: 'Limbo',
           player: req.body.walletAddress,
           wager: req.body.amount,
-          payout: req.body.payout * req.body.amount,
+          payout: result.earning,
           coin: 1,
           mine: 1,
           currencyMode: req.body.currencyMode
@@ -145,12 +145,13 @@ router.post(
           game: 'Dice',
           player: req.body.walletAddress,
           wager: req.body.amount,
-          payout: req.body.payout * req.body.amount,
+          payout: result.earning,
           coin: 1,
           mine: 1,
           currencyMode: req.body.currencyMode,
         }
-        await saveHistory(body);
+      console.log("body", body)
+      await saveHistory(body);
         res.json({ status: "success", content: result });
       } else {
         res.json({ status: "error", content: "Error while deposit nugget" })

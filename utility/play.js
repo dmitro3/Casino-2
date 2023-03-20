@@ -480,6 +480,7 @@ const depositNuggetForLimbo = async (data) => {
   try {
     const depositData = await User.findOne({ walletAddress: data.walletAddress });
     let dbAmount = 0, playAmount = 0;
+    let earning = 0;
     if (depositData) {
       if (data.currencyMode === "mainNug") {
         dbAmount = depositData.nugAmount
@@ -493,6 +494,7 @@ const depositNuggetForLimbo = async (data) => {
       playAmount = parseFloat(dbAmount) - parseFloat(data.amount);
     } else {
       playAmount = parseFloat(dbAmount) + parseFloat(data.amount) * (data.payout - 1);
+      earning = parseFloat(data.amount) * data.payout
     }
     playAmount = parseFloat(playAmount).toFixed(3)
 
@@ -518,7 +520,7 @@ const depositNuggetForLimbo = async (data) => {
       update,
       { upsert: true }
     )
-    return { status: true, playAmount: playAmount, limboWord: data.limboWord }
+    return { status: true, playAmount: playAmount, limboWord: data.limboWord, earning: earning }
   } catch (err) {
     console.log("error in deposit utility", err);
     return { status: false }
@@ -530,6 +532,7 @@ const depositNuggetForDice = async (data) => {
   try {
     const depositData = await User.findOne({ walletAddress: data.walletAddress });
     let dbAmount = 0, playAmount = 0;
+    let earning = 0;
     if (depositData) {
       if (data.currencyMode === "mainNug") {
         dbAmount = depositData.nugAmount
@@ -543,6 +546,7 @@ const depositNuggetForDice = async (data) => {
       playAmount = parseFloat(dbAmount) - parseFloat(data.amount);
     } else {
       playAmount = parseFloat(dbAmount) + parseFloat(data.amount) * (data.payout - 1);
+      earning = parseFloat(data.amount )* data.payout;
     }
     playAmount = parseFloat(playAmount).toFixed(3)
 
@@ -569,7 +573,7 @@ const depositNuggetForDice = async (data) => {
       update,
       { upsert: true }
     )
-    return { status: true, playAmount: playAmount, diceWord: data.diceWord }
+    return { status: true, playAmount: playAmount, diceWord: data.diceWord, earning: earning }
   } catch (err) {
     console.log("error in deposit utility", err);
     return { status: false }

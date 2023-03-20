@@ -165,14 +165,14 @@ const saveHistory = async (historyData) => {
     }
     const history = new History(data);
     await history.save();
-  } else if (historyData.game === "dice") {
+  } else if (historyData.game === "Dice") {
     const userData = await User.findOne(query);
     data = {
       walletAddress: historyData.walletAddress,
       game: historyData.game,
       player: userData.userName,
       wager: historyData.wager,
-      payout: historyData.earning === 0 ? 0 : 1,
+      payout: historyData.payout,
       coin: historyData.earning === 0 ? 0 : 1,
       mine: 1,
       date: Date.now(),

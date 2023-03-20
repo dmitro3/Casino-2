@@ -71,7 +71,7 @@ function App() {
   const [ limboHistory, setLimboHistory] = useState([]);
   const [ diceHistory, setDiceHistory] = useState([]);
   const [ start, setStart] = useState(false);
-  const [ percent, setPercent] = useState('0.00');
+  const [ percent, setPercent] = useState('50');
 
   useEffect(() => {
     if (window.location.href.includes("game/coins")) {

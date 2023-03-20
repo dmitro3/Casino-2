@@ -52,7 +52,7 @@ const useGameStore = create((set) => ({
   isReward: false,
   isMuted: true,
   limboWord: 1,
-  diceWord: 1.98,
+  diceWord: 50,
   loading: false,
   loggedIn: false,
   losePhrase: [

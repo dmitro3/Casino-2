@@ -24,7 +24,7 @@ import doubleornothing from "../../../assets/images/doubleornothing.svg";
 import minesticker from "../../../assets/images/octopus.webm";
 import minestickerPoster from "../../../assets/images/pirateOctor.png";
 import { StoreContext } from "../../../store";
-import DiceImage from '../../../assets/images/diceone.png'
+import DiceImage from '../../../assets/images/dice.png'
 
 import { useWallet } from "@solana/wallet-adapter-react";
 import cashoutsound from "../../../assets/audios/CashoutSound.mp3";
