@@ -2,12 +2,6 @@ const express = require('express');
 const router = express.Router();
 const log4js = require("log4js");
 const bs58 = require("bs58");
-log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
-  categories: { default: { appenders: ["log4js"], level: "ALL" } }
-});
-
-const logger = log4js.getLogger("default");
 
 const {
   saveUser,

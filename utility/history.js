@@ -16,13 +16,6 @@ const NFTDeposit = require("../models/pirateNFTDepositModel");
 const NewNFT = require("../models/newNFTModel");
 // const { dirname } = require("path");
 
-log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
-  categories: { default: { appenders: ["log4js"], level: "ALL" } }
-});
-
-const logger = log4js.getLogger("default");
-
 const getHistory = async () => {
   const histories = await History.find({}).sort({ $natural: -1 }).limit(11);
   const users = await User.find({});

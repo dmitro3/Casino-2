@@ -25,13 +25,6 @@ const withdrawBanModel = require("../models/withdrawBanModel");
 const turtleMultiModel = require("../models/turtleMultiModel");
 const TurtleHistory = require("../models/turtleHistoryModel");
 
-log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
-  categories: { default: { appenders: ["log4js"], level: "ALL" } }
-});
-
-const logger = log4js.getLogger("default");
-
 let payouts = true;
 
 const getMulti = (coinAmount, mineAmount, houseEdge) => {

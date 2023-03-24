@@ -4,13 +4,7 @@ const web3 = require("@solana/web3.js");
 const log4js = require("log4js");
 const axios = require("axios");
 
-log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
-  categories: { default: { appenders: ["log4js"], level: "ALL" } }
-});
-
 let count = 0;
-const logger = log4js.getLogger("default");
 const {
   insertBoard,
   depositNuggetForLimbo,
