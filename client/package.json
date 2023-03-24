@@ -1,7 +1,7 @@
 {
   "name": "minesrush",
   "version": "0.1.0",
-  "homepage": "https://piraterush.com/game/mines",
+  
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.0",
