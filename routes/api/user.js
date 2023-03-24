@@ -3,7 +3,7 @@ const router = express.Router();
 const log4js = require("log4js");
 const bs58 = require("bs58");
 log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/home/jenkins/backend5.log" } },
+  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
   categories: { default: { appenders: ["log4js"], level: "ALL" } }
 });
 
@@ -54,7 +54,7 @@ router.post(
       res.status(200).end();
       // }
     } catch (err) {
-      logger.debug("===Error while getting user Data===", err);
+      console.log("===Error while getting user Data===", err);
       console.log("Error while getting user data:  ", err);
       res.status(400).end();
     };
@@ -72,7 +72,7 @@ router.post(
       res.status(200).end();
       // }
     } catch (err) {
-      logger.debug("===Error while getting user Data===");
+      console.log("===Error while getting user Data===");
       console.log("Error while getting user data:  ", err);
       res.status(400).end();
     };

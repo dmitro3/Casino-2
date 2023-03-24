@@ -4,7 +4,7 @@ const router = express.Router();
 const log4js = require("log4js");
 
 log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/home/jenkins/backend5.log" } },
+  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
   categories: { default: { appenders: ["log4js"], level: "ALL" } }
 });
 
@@ -85,7 +85,6 @@ router.get(
       const result = await getAllHolders();
       res.json({ status: true, content: result });
     } catch (err) {
-      logger.debug(`Error while getting all holders => ${err}`);
       console.log("error on getHolder", err)
       res.json({ status: false });
     }
@@ -195,11 +194,9 @@ router.post(
       }
       const certData = await checkCert(body);
       if ((process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host) && certData) {
-        logger.info(`===Add Ticket from ${req.body.host}, for ${req.body.walletAddress}===`)
         await getRaffle(req.body.walletAddress, req.body.addingTicket, "RewardTicket");
         res.json({ status: true });
       } else {
-        logger.info(`===Add Ticket triggered ${req.body.host}, for ${req.body.walletAddress}===`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in add ticket"
@@ -209,7 +206,6 @@ router.post(
       }
     } catch (err) {
       console.log("Error while adding ticket: ", err);
-      logger.debug("Error while adding ticket: ", err);
       res.json({ status: false, content: err });
       res.status(500).end();
     };
@@ -235,7 +231,6 @@ router.get(
       const result = await getHouseEdge();
       res.json(result)
     } catch (err) {
-      logger.debug("Error while reset DB", err)
       console.log("Error while reset DB", err);
     }
   }
@@ -255,10 +250,8 @@ router.post(
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
         await setHouseEdge(req.body);
-        logger.info(`===Setting houseEdge===(${wallet})`);
         res.json({ status: true });
       } else {
-        logger.info(`===Setting HouseEdge Detected===(${wallet})`);
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setHouseEdges"
@@ -287,11 +280,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===Set PayoutData started===${req.body.walletAddress}`)
         const result = await setPayoutData(req.body.value);
         res.json({ status: true, content: result })
       } else {
-        logger.info(`===Set PayoutData triggered===${req.body.walletAddress}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setPayoutData"
@@ -300,7 +291,6 @@ router.post(
         res.json({ status: false })
       }
     } catch (err) {
-      logger.debug("Error while setPayout API", err);
       console.log("Error while setPayout API", err);
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false })
@@ -320,11 +310,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===Set setRaffelMode started===${req.body.walletAddress}`)
         const result = await setRaffleMode(req.body.value);
         res.json({ status: true, content: result })
       } else {
-        logger.info(`===Set setRaffelMode triggered===${req.body.walletAddress}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setRaffleMode"
@@ -333,7 +321,6 @@ router.post(
         res.json({ status: false })
       }
     } catch (err) {
-      logger.debug("Error while setPayout API", err)
       console.log("Error while setPayout API", err);
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false })
@@ -353,13 +340,11 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===Set setStartTurtle started===${req.body.walletAddress}`)
         const result = await setStartTurtle(req.body.value);
         await generateTurtleMulti(result);
         // console.log("result", result)
         res.json({ status: true, content: result })
       } else {
-        logger.info(`===Set setStartTurtle triggered===${req.body.walletAddress}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setStartTurtle"
@@ -368,7 +353,6 @@ router.post(
         res.json({ status: false })
       }
     } catch (err) {
-      logger.debug("Error while setStartTurtle API", err)
       console.log("Error while setStartTurtle API", err);
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false })
@@ -388,13 +372,11 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===Set MintInterval started===${req.body.walletAddress}`)
         console.log(`===Set MintInterval started===${req.body.walletAddress}`)
         // const result = await setMintInterval({interval: req.body.interval, remainedNFT: req.body.remainedNFT});
         const result = await payUsers()
         res.json({ status: true, content: result })
       } else {
-        logger.info(`===Set Mint Interval triggered===${req.body.walletAddress}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setmintInterval"
@@ -403,7 +385,6 @@ router.post(
         res.json({ status: false })
       }
     } catch (err) {
-      logger.debug("Error while setMintInterval", err)
       console.log("Error while setMintInterval", err);
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false })
@@ -423,12 +404,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===Set Holder payout started===${req.body.walletAddress}`)
         await claimRoalty(req.body.amount); x
-        logger.info(`===Holder Payout finisehd===`)
         res.json({ status: true });
       } else {
-        logger.info(`===Set payout triggered===${req.body.walletAddress}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /payout"
@@ -437,7 +415,6 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("error on payout", err)
       console.log("error on payout", err)
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false });
@@ -512,11 +489,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Give Rewards from ${req.body.walletAddress} (${req.body.amount})(${req.body.host}) `)
         const rewards = await giveRewards(req.body);
         res.json({ rewards: rewards, status: true });
       } else {
-        logger.info(`===Set giveReward triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /giveReward"
@@ -544,11 +519,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Give Bonus Rewards from ${req.body.walletAddress} (${req.body.amount})(${req.body.host}) `)
         const rewards = await giveBRewards(req.body);
         res.json({ rewards: rewards, status: true });
       } else {
-        logger.info(`===Set giveReward triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /giveBReward"
@@ -576,11 +549,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Give Gem Rewards from ${req.body.walletAddress} (${req.body.amount})(${req.body.host}) `)
         const rewards = await giveGemRewards(req.body);
         res.json({ rewards: rewards, status: true });
       } else {
-        logger.info(`===Set giveReward triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /giveGemReward"
@@ -608,7 +579,6 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set addHack started===${req.body.host}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Added by admin"
@@ -616,7 +586,6 @@ router.post(
         await addHackList(body);
         res.json({ status: true });
       } else {
-        logger.info(`===Set addHack triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in play turtle"
@@ -644,11 +613,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set addWhite started===${req.body.host}`)
         await addWhiteList(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===Set addHack triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /addWhite"
@@ -676,11 +643,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set addWithdraw started===${req.body.host}`)
         await addWithdrawBanList(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===Set addHack triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /addWithdrawBanWallet"
@@ -708,11 +673,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set deleteHack started===${req.body.host}`)
         await deleteHackList(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===Set deleteHack triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /deleteHack"
@@ -740,11 +703,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set deleteWhite started===${req.body.host}`)
         await deleteWhiteList(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===Set deleteWhite triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /deleteWhite"
@@ -754,7 +715,6 @@ router.post(
       }
     } catch (err) {
       console.log("Error while add hack", err);
-      logger.debug("Error while delete white", err)
       
       res.json({ status: false });
     }
@@ -773,11 +733,9 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set deleteWithdraw started===${req.body.host}`)
         await deleteWithdrawBanList(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===Set deleteWithdraw triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /deleteWithdraw"
@@ -787,7 +745,6 @@ router.post(
       }
     } catch (err) {
       console.log("Error while add hack", err);
-      logger.debug("Error in delete withdraw", err)
       
       res.json({ status: false });
     }
@@ -806,11 +763,11 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set deleteHack started===${req.body.host}`)
+        console.log(`===Set deleteHack started===${req.body.host}`)
         await deleteUserList(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===Set deleteHack triggered===${req.body.host}`)
+        console.log(`===Set deleteHack triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /deleteUser"
@@ -838,11 +795,11 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set addUser started===${req.body.host}`)
+        console.log(`===Set addUser started===${req.body.host}`)
         await addUserList(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===Set addUser triggered===${req.body.host}`)
+        console.log(`===Set addUser triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /addUser"
@@ -869,11 +826,11 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host)) {
-        logger.info(`===Set addHolder started===${req.body.host}`)
+        console.log(`===Set addHolder started===${req.body.host}`)
         await addHolderList(req.body);
         res.json({ status: true });
       } else {
-        logger.info(`===Set addHolder triggered===${req.body.host}`)
+        console.log(`===Set addHolder triggered===${req.body.host}`)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /addHolder"
@@ -882,7 +839,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug(`Error while adding holders => ${err}`);
+      console.log(`Error while adding holders => ${err}`);
       console.log("error on addHolder", err)
       
       res.json({ status: false });
@@ -903,10 +860,10 @@ router.post(
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
         // await resetDB();
-        logger.info(`===Reset DB started===`, req.body.walletAddress)
+        console.log(`===Reset DB started===`, req.body.walletAddress)
         res.json({ status: true });
       } else {
-        logger.info(`===Reset DB triggered===`, req.body.walletAddress)
+        console.log(`===Reset DB triggered===`, req.body.walletAddress)
         // await addHackList(req.body.walletAddress);
         const body = {
           walletAddress: req.body.walletAddress,
@@ -916,7 +873,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while reset DB", err)
+      console.log("Error while reset DB", err)
       console.log("Error while reset DB", err);
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false })
@@ -937,10 +894,10 @@ router.post(
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
         await resetRaffle();
-        logger.info(`===Reset Raffle started===`, req.body.walletAddress)
+        console.log(`===Reset Raffle started===`, req.body.walletAddress)
         res.json({ status: true });
       } else {
-        logger.info(`===Reset DB triggered===`, req.body.walletAddress)
+        console.log(`===Reset DB triggered===`, req.body.walletAddress)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /resetRaffle"
@@ -949,7 +906,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while reset DB", err)
+      console.log("Error while reset DB", err)
       console.log("Error while reset DB", err);
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false })
@@ -970,7 +927,7 @@ router.post(
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
         const data = await downloadTickets();
-        logger.info(`===Reset Raffle started===`, req.body.walletAddress)
+        console.log(`===Reset Raffle started===`, req.body.walletAddress)
         const fields = [{
           label: 'WalletAddress',
           value: 'walletAddress'
@@ -980,7 +937,7 @@ router.post(
         }]
         res.json({ status: true, data: data });
       } else {
-        logger.info(`===Reset DB triggered===`, req.body.walletAddress)
+        console.log(`===Reset DB triggered===`, req.body.walletAddress)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /downloadTickets"
@@ -989,7 +946,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while reset DB", err)
+      console.log("Error while reset DB", err)
       console.log("Error while reset DB", err);
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false })
@@ -1030,18 +987,18 @@ router.get(
 //   async (req, res) => {
 //     try {
 //       if (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress) {
-//         logger.info(`===raffleNow started===`, req.body.walletAddress)
+//         console.log(`===raffleNow started===`, req.body.walletAddress)
 //         const winners = await raffleWinners();
 //         if (winners)
 //           res.json({ status: true, content: winners });
 //         else res.json({ status: false, content: "Not enough raffle" })
 //       } else {
-//         logger.info(`===raffleNow triggered===`, req.body.walletAddress)
+//         console.log(`===raffleNow triggered===`, req.body.walletAddress)
 //         await addHackList(req.body.walletAddress);
 //         res.json(false);
 //       }
 //     } catch (err) {
-//       logger.debug("Error while raffle", err)
+//       console.log("Error while raffle", err)
 //       console.log("Error while raffle", err)
 //       res.json({ status: false, content: err });
 //     }
@@ -1062,13 +1019,13 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===setDescription started===`, req.body.walletAddress)
+        console.log(`===setDescription started===`, req.body.walletAddress)
         const content = req.body.content;
         await savePopup(content);
         // await updateDB();
         res.json({ status: true });
       } else {
-        logger.info(`===setDescription triggered===`, req.body.walletAddress)
+        console.log(`===setDescription triggered===`, req.body.walletAddress)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setDescription"
@@ -1077,7 +1034,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while raffle", err)
+      console.log("Error while raffle", err)
       console.log("Error while raffle", err)
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false });
@@ -1097,12 +1054,12 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===Uploading Image started===`, req.body.walletAddress)
+        console.log(`===Uploading Image started===`, req.body.walletAddress)
         const result = await uploadImgs(req.body.imgs);
         if (result)
           res.json({ status: true })
       } else {
-        logger.info(`===Uploading Image triggered===`, req.body.walletAddress)
+        console.log(`===Uploading Image triggered===`, req.body.walletAddress)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in play turtle"
@@ -1111,7 +1068,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while uploading images", err)
+      console.log("Error while uploading images", err)
       console.log("Error while uploading images", err)
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false, content: err })
@@ -1125,17 +1082,17 @@ router.post(
     try {
       
       if (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress) {
-        logger.info(`===Uploading Image started===`, req.body.walletAddress)
+        console.log(`===Uploading Image started===`, req.body.walletAddress)
         const result = await updateImgs(req.body.new, req.body.prev);
         if (result)
           res.json({ status: true })
       } else {
-        logger.info(`===Uploading Image triggered===`, req.body.walletAddress)
+        console.log(`===Uploading Image triggered===`, req.body.walletAddress)
         await addHackList(req.body.walletAddress);
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while uploading images", err)
+      console.log("Error while uploading images", err)
       console.log("Error while uploading images", err)
       res.json({ status: false, content: err })
     }
@@ -1148,17 +1105,17 @@ router.post(
     try {
       
       if (process.env.ADMIN_WALLETS1 === req.body.walletAddress) {
-        logger.info(`===Deleting Image started===`, req.body.walletAddress)
+        console.log(`===Deleting Image started===`, req.body.walletAddress)
         const result = await deleteImg(req.body.img);
         if (result)
           res.json({ status: true })
       } else {
-        logger.info(`===Deleting Image triggered===`, req.body.walletAddress)
+        console.log(`===Deleting Image triggered===`, req.body.walletAddress)
         await addHackList(req.body.walletAddress);
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while Deleting images", err)
+      console.log("Error while Deleting images", err)
       console.log("Error while Deleting images", err)
       res.json({ status: false, content: err })
     }
@@ -1177,13 +1134,13 @@ router.post(
       const certData = await checkCert(body);
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
-        logger.info(`===Uploading Date started===`, req.body.walletAddress)
+        console.log(`===Uploading Date started===`, req.body.walletAddress)
         const result = await uploadDate(req.body.date);
         if (result) {
           res.json({ status: true })
         }
       } else {
-        logger.info(`===Uploading Date triggered===`, req.body.walletAddress)
+        console.log(`===Uploading Date triggered===`, req.body.walletAddress)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /uploadDate"
@@ -1192,7 +1149,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug("Error while uploading Dates", err)
+      console.log("Error while uploading Dates", err)
       console.log("Error while uploading Dates", err)
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false, content: err })
@@ -1225,7 +1182,7 @@ router.get(
       // res.json(str);
       res.json(data[0]);
     } catch (err) {
-      logger.debug("Error while getting description", err);
+      console.log("Error while getting description", err);
       console.log("Error while getting description", err);
       res.json(false);
     }
@@ -1244,11 +1201,11 @@ router.post(
       const certData = await checkCert(body);
      
       if ((process.env.ADMIN_WALLETS1 === req.body.host || process.env.ADMIN_WALLETS2 === req.body.host || process.env.ADMIN_WALLETS3 === req.body.host) && certData) {
-        logger.info(`===addTicketWallet started===`, req.body.host)
+        console.log(`===addTicketWallet started===`, req.body.host)
         await addTicketWallet(req.body.walletAddress);
         res.json({ status: true });
       } else {
-        logger.info(`===addTicketWallet triggered===`, req.body.host)
+        console.log(`===addTicketWallet triggered===`, req.body.host)
         const body = {
           walletAddress: req.body.host,
           reason: "Cert doesn't match in /addTicketWallet"
@@ -1257,7 +1214,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.info(`===addTicketWallet Failed===`, err)
+      console.log(`===addTicketWallet Failed===`, err)
       console.log(`===addTicketWallet Failed===`, err)
       
       res.json({ status: false });
@@ -1280,7 +1237,7 @@ router.post(
         const result = await setEnableGames({ type: req.body.type, value: req.body.value })
         res.json({ status: true, content: result });
       } else {
-        logger.info(`===SetEnableGames triggered===`, req.body.walletAddress)
+        console.log(`===SetEnableGames triggered===`, req.body.walletAddress)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setEnableGames"
@@ -1289,7 +1246,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.info(`===Set Enable Games Failed===`, err)
+      console.log(`===Set Enable Games Failed===`, err)
       console.log(`===Set Enable Games Failed===`, err)
       // const random = await generateCert(req.body.walletAddress);
       res.json({ status: false });
@@ -1311,7 +1268,7 @@ router.post(
         await setGemValue(req.body)
         res.json({ status: true});
       } else {
-        logger.info(`===SetEnableGames triggered===`, req.body.walletAddress)
+        console.log(`===SetEnableGames triggered===`, req.body.walletAddress)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /setGemValue"
@@ -1320,7 +1277,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug(`===Error while set gem value(${err})===`)
+      console.log(`===Error while set gem value(${err})===`)
       console.log(`===Error while set gem value(${err})===`)
       res.json({ status: false });
     }

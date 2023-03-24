@@ -17,7 +17,7 @@ const NewNFT = require("../models/newNFTModel");
 // const { dirname } = require("path");
 
 log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/home/jenkins/backend5.log" } },
+  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
   categories: { default: { appenders: ["log4js"], level: "ALL" } }
 });
 
@@ -107,7 +107,7 @@ const getNFTHistory = async () => {
 
 const saveTransactionHistory = async (req) => {
   console.log("reqest", req)
-  logger.info(`===Transaction history saved in ${req.type}, ${req.walletAddress}, ${req.transaction}===`)
+  console.log(`===Transaction history saved in ${req.type}, ${req.walletAddress}, ${req.transaction}===`)
   const history = new THistory({
     walletAddress: req.walletAddress,
     type: req.type,
@@ -351,7 +351,7 @@ const updateDB = async () => {
     }
     await Boards.findOneAndUpdate(query, update, options)
   })
-  logger.info("===Board updated===")
+  console.log("===Board updated===")
 
   deposits.forEach(async (deposit) => {
     const betAmount = deposit.bettingAmount / 1000;
@@ -363,7 +363,7 @@ const updateDB = async () => {
     }
     await Deposit.findOneAndUpdate(query, update, options)
   })
-  logger.info("===Deposit updated===")
+  console.log("===Deposit updated===")
 
   histories.forEach(async (history) => {
     const wager = history.wager / 1000;
@@ -377,7 +377,7 @@ const updateDB = async () => {
     }
     await History.findOneAndUpdate(query, update, options)
   })
-  logger.info("===History updated===")
+  console.log("===History updated===")
 
   tHistories.forEach(async (tHistory) => {
     const amount = tHistory.amount / 1000;
@@ -389,7 +389,7 @@ const updateDB = async () => {
     }
     await THistory.findOneAndUpdate(query, update, options);
   })
-  logger.info("===THistory updated===")
+  console.log("===THistory updated===")
 
   users.forEach(async (user) => {
     const nugAmount = user.nugAmount / 1000;
@@ -401,7 +401,7 @@ const updateDB = async () => {
     }
     await User.findOneAndUpdate(query, update, options);
   })
-  logger.info("===User updated===")
+  console.log("===User updated===")
 
 }
 

@@ -16,7 +16,7 @@ const Image = require("../models/imageModel");
 const { generateTurtleMulti } = require("./play");
 const withdrawBanModel = require("../models/withdrawBanModel");
 log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/home/jenkins/backend5.log" } },
+  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
   categories: { default: { appenders: ["log4js"], level: "ALL" } }
 });
 
@@ -83,14 +83,14 @@ const getNFTHolders = async () => {
           })
           await holder.save();
         }
-        logger.info("New holders added")
+        console.log("New holders added")
         console.log("New holders added")
         fetched = true;
       }
     } catch (err) {
       fetched = true;
       console.log("err", err)
-      logger.debug(`===Error while fetching holder ${err}`)
+      console.log(`===Error while fetching holder ${err}`)
     }
   }, date)
 }
@@ -110,7 +110,7 @@ const saveUserData = async (data) => {
   }
   else isHolder = false
   if (!result) {
-    logger.info(`===Save new User(${data.walletAddress})===`)
+    console.log(`===Save new User(${data.walletAddress})===`)
     console.log(`===Save new User(${data.walletAddress})===`)
     result = new User({
       walletAddress: data.walletAddress,
@@ -172,7 +172,7 @@ const saveUserData = async (data) => {
   }
   const houseEdge = await HouseEdge.find({});
   if (!houseEdge.length) {
-    logger.info(`===Creat House Edge(0.92 & 1)===`)
+    console.log(`===Creat House Edge(0.92 & 1)===`)
     const setHouseEdge = new HouseEdge({
       mineHouseEdge: 0.92,
       doubleHouseEdge: 1,

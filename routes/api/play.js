@@ -5,7 +5,7 @@ const log4js = require("log4js");
 const axios = require("axios");
 
 log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/home/jenkins/backend5.log" } },
+  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
   categories: { default: { appenders: ["log4js"], level: "ALL" } }
 });
 
@@ -52,7 +52,7 @@ router.post(
   "/depositNugget",
   async (req, res) => {
     try {
-      logger.info(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
+      console.log(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
       console.log(`===Deposit ${req.body.depositAmount} ETH from ${req.body.walletAddress}`)
       const item = {
         walletAddress: walletAddress,
@@ -66,7 +66,7 @@ router.post(
       }
     }
     catch (err) {
-      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
       res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
       res.status(500).end();
@@ -79,7 +79,7 @@ router.post(
   "/limboDeposit",
   async (req, res) => {
     try {
-      logger.info(`===Deposit ${req.body.amount} mainNug from ${req.body.walletAddress}`)
+      console.log(`===Deposit ${req.body.amount} mainNug from ${req.body.walletAddress}`)
 
       let i = Math.random();
       let limboWord = parseFloat(1 / i).toFixed(2);
@@ -111,7 +111,7 @@ router.post(
       }
     }
     catch (err) {
-      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
       res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
       res.status(500).end();
@@ -124,7 +124,7 @@ router.post(
   "/diceDeposit",
   async (req, res) => {
     try {
-      logger.info(`===Deposit ${req.body.amount} dice from ${req.body.walletAddress}`)
+      console.log(`===Deposit ${req.body.amount} dice from ${req.body.walletAddress}`)
 
       let diceWord = parseFloat(100 * Math.random()).toFixed(2);
       // let diceWord = parseFloat(1/i).toFixed(2);
@@ -158,7 +158,7 @@ router.post(
       }
     }
     catch (err) {
-      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
       res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
       res.status(500).end();
@@ -170,7 +170,7 @@ router.post(
   "/depositDai",
   async (req, res) => {
     try {
-      logger.info(`===Deposit ${req.body.depositAmount} Dai from ${req.body.walletAddress}`)
+      console.log(`===Deposit ${req.body.depositAmount} Dai from ${req.body.walletAddress}`)
       const item = {
         walletAddress: req.body.walletAddress,
         depositAmount: req.body.depositAmount,
@@ -182,7 +182,7 @@ router.post(
         res.json({ status: "error", content: "Error while deposit nugget" })
       }
     } catch (err) {
-      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
       res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
       res.status(500).end();
@@ -195,7 +195,7 @@ router.post(
   async (req, res) => {
     try {
       const { walletAddress, signedTx, nugValue, num } = req.body;
-      logger.info(`===pirateNFT Deposit from ${req.body.walletAddress} started===`)
+      console.log(`===pirateNFT Deposit from ${req.body.walletAddress} started===`)
       const body = {
         type: "pirateNFTDeposit",
         walletAddress: walletAddress,
@@ -211,16 +211,16 @@ router.post(
             commitment: "finalized",
           });
         }
-        logger.info("hash in pirateNFTDeposit", hash);
+        console.log("hash in pirateNFTDeposit", hash);
         console.log("hash in pirateNFTDeposit", hash);
         const resu = await connection.getSignatureStatus(hash.toString(), { searchTransactionHistory: true, });
         if (resu.value?.status?.Err) {
           await addHackList(walletAddress);
-          logger.info(`===Deposit pirateNFT Failed(${walletAddress})===`)
+          console.log(`===Deposit pirateNFT Failed(${walletAddress})===`)
           console.log(`===Deposit pirateNFT Failed(${walletAddress})===`)
           res.json({ status: "error", content: "Error in Solana network." });
         } else {
-          logger.info(`===Deposit pirateNFT succeed(${walletAddress} value) ===`);
+          console.log(`===Deposit pirateNFT succeed(${walletAddress} value) ===`);
           console.log(`===Deposit pirateNFT succeed(${walletAddress} value) ===`);
           for (let i = 0; i < nugValue.length; i++) {
             const nftNugData = await axios.get(
@@ -238,12 +238,12 @@ router.post(
             };
             await pirateNFTDeposit(item);
             console.log("nftItem", item)
-            logger.info("nftItem", item)
+            console.log("nftItem", item)
           }
           res.json({ status: "success" })
         }
       } else {
-        logger.info("===Checking failed in Deposit NFT===", walletAddress);
+        console.log("===Checking failed in Deposit NFT===", walletAddress);
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /pirateNFTDeposit"
@@ -252,7 +252,7 @@ router.post(
         res.json({ status: "error", content: "Error while deposit nugget" })
       }
     } catch (err) {
-      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
       const random = req.body.num
       res.json({ status: "error", content: "Please try again. Solana is busy at the moment." });
@@ -266,12 +266,12 @@ router.post(
   "/withdrawETH",
   async (req, res) => {
     try {
-      logger.info(`===Withdraw ${req.body.depositAmount} ETH from ${req.body.walletAddress} and num is ${req.body.num} started===`)
+      console.log(`===Withdraw ${req.body.depositAmount} ETH from ${req.body.walletAddress} and num is ${req.body.num} started===`)
       const result = await withdrawETH(req.body.walletAddress, req.body.depositAmount);
       res.json({ status: result.status, content: result.content });
       res.status(200).end();
     } catch (err) {
-      logger.debug("Error while withdraw funds.", err)
+      console.log("Error while withdraw funds.", err)
       isWithdraw = false
       res.json({ status: "error", content: err });
     }
@@ -283,12 +283,12 @@ router.post(
   "/withdrawDAI",
   async (req, res) => {
     try {
-      logger.info(`===Withdraw ${req.body.depositAmount} DAI from ${req.body.walletAddress} and num is ${req.body.num} started===`)
+      console.log(`===Withdraw ${req.body.depositAmount} DAI from ${req.body.walletAddress} and num is ${req.body.num} started===`)
       const result = await withdrawDAI(req.body.walletAddress, req.body.depositAmount);
       res.json({ status: result.status, content: result.content });
       res.status(200).end();
     } catch (err) {
-      logger.debug("Error while withdraw funds.", err)
+      console.log("Error while withdraw funds.", err)
       isWithdraw = false
       res.json({ status: "error", content: err });
     }
@@ -299,11 +299,11 @@ router.post(
   "/withdrawFundstart",
   async (req, res) => {
     try {
-      logger.info(`===WithdrawStart ${req.body.amount} Sol from ${req.body.walletAddress} and num is ${req.body.num} started===`)
+      console.log(`===WithdrawStart ${req.body.amount} Sol from ${req.body.walletAddress} and num is ${req.body.num} started===`)
       res.json({ data: true });
       res.status(200).end();
     } catch (err) {
-      logger.debug("Error while withdraw funds.", err)
+      console.log("Error while withdraw funds.", err)
       console.log("Error while withdraw funds.", err)
       res.json({ data: true });
     }
@@ -314,7 +314,7 @@ router.post(
   "/checkAlreadyDeposit",
   async (req, res) => {
     try {
-      logger.info(`===checkAlreadyDeposit from ${req.body.walletAddress}, num is ${req.body.num} started===`)
+      console.log(`===checkAlreadyDeposit from ${req.body.walletAddress}, num is ${req.body.num} started===`)
       const body = {
         type: "CheckDeposit",
         walletAddress: req.body.walletAddress,
@@ -339,7 +339,7 @@ router.post(
           res.json({ status: "error", content: "Request Rejected." });
         }
       } else {
-        logger.info(`===checkAlreadyDeposit from ${req.body.walletAddress}, num is ${req.body.num} failed===`)
+        console.log(`===checkAlreadyDeposit from ${req.body.walletAddress}, num is ${req.body.num} failed===`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /checkAlreadyDeposit"
@@ -348,7 +348,7 @@ router.post(
         res.json({ status: "error", content: "Request Rejected." });
       }
     } catch (err) {
-      logger.debug("Error while checking deposit", err)
+      console.log("Error while checking deposit", err)
       console.log("Error while checking deposit", err)
       res.json({ status: "error", content: err })
       res.status(500).end();
@@ -369,7 +369,7 @@ router.post(
       let ratio = 1.1;
       if (currencyMode !== "mainNug") ratio *= 1000
       if (certData) {
-        logger.info(`===Betting Amount: (${bettingAmount}), CurrencyMode: ${currencyMode}, mines: ${mineAmount}, WalletAddress: ${req.body.walletAddress})`)
+        console.log(`===Betting Amount: (${bettingAmount}), CurrencyMode: ${currencyMode}, mines: ${mineAmount}, WalletAddress: ${req.body.walletAddress})`)
         if (bettingAmount > 0 && bettingAmount < 1 * ratio) {
           const item = {
             walletAddress: walletAddress,
@@ -386,7 +386,7 @@ router.post(
           }
         }
         else {
-          logger.info(`===Deposit failed (${bettingAmount}NUG, ${mineAmount}mines from ${req.body.walletAddress})===out of range`)
+          console.log(`===Deposit failed (${bettingAmount}NUG, ${mineAmount}mines from ${req.body.walletAddress})===out of range`)
           const body = {
             walletAddress: req.body.walletAddress,
             reason: `Out of limit in bet amount(${bettingAmount})`
@@ -395,7 +395,7 @@ router.post(
           res.json({ status: "error" });
         }
       } else {
-        logger.info(`===Deposit failed (${bettingAmount}NUG, ${mineAmount}mines from ${req.body.walletAddress})===checking failed`)
+        console.log(`===Deposit failed (${bettingAmount}NUG, ${mineAmount}mines from ${req.body.walletAddress})===checking failed`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /verifyDeposit"
@@ -404,7 +404,7 @@ router.post(
         res.json({ status: "error" });
       }
     } catch (err) {
-      logger.debug("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
       console.log("===Error while verifying deposit===", err);
       res.json({ status: "error" });
       res.status(500).end();
@@ -464,12 +464,12 @@ router.post(
           res.json({ status: true });
           res.status(200).end();
         } else {
-          logger.info("===add hacklist in postPlay===")
+          console.log("===add hacklist in postPlay===")
           await addHackList(walletAddress);
           res.json({ status: false, content: "Request Rejected." });
         }
       } else {
-        logger.info("===add hacklist in postPlay===")
+        console.log("===add hacklist in postPlay===")
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in '/'"
@@ -478,7 +478,7 @@ router.post(
         res.json({ status: false, content: "Request Rejected." });
       }
     } catch (err) {
-      logger.debug("Error while inserting board")
+      console.log("Error while inserting board")
       res.json({ status: false, content: err });
       res.status(500).end();
     }
@@ -535,7 +535,7 @@ router.post(
         res.json({ result: "coin", board: data.fail });
       }
     } catch (err) {
-      logger.debug("Error while checking mines", err);
+      console.log("Error while checking mines", err);
       console.log("Error while checking mines", err);
       res.status(500).end();
     };
@@ -575,7 +575,7 @@ router.post(
         res.json({ status: "error", content: "Request Rejected." });
       }
     } catch (err) {
-      logger.debug("Error while cashout.", err)
+      console.log("Error while cashout.", err)
       console.log("Error while cashout.", err)
       res.json({ status: "error", content: err })
       res.status(500).end();
@@ -596,7 +596,7 @@ router.post(
       }
       res.json({ changedBal: changedBal });
     } catch (err) {
-      logger.debug("Error while checking balance", err);
+      console.log("Error while checking balance", err);
       console.log("Error while checking balance", err);
       res.status(500).end();
     }
@@ -636,7 +636,7 @@ router.post(
         else
           res.json({ status: "error" });
       } else {
-        logger.info(`===getRaffles from ${req.body.walletAddress})===invaild cert`)
+        console.log(`===getRaffles from ${req.body.walletAddress})===invaild cert`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /getRaffle"
@@ -646,7 +646,7 @@ router.post(
       }
     } catch (err) {
       console.log("Error in Raffle API", err);
-      logger.debug("Error in getting raffle", err)
+      console.log("Error in getting raffle", err)
       res.json({ status: "error" });
     }
   }
@@ -660,7 +660,7 @@ router.get(
       const data = await getDescription();
       res.json(data);
     } catch (err) {
-      logger.debug("Error while getting description", err);
+      console.log("Error while getting description", err);
       console.log("Error while getting description", err);
       res.json(false);
     }
@@ -674,7 +674,7 @@ router.post(
       const data = await getHolders(req.body.walletAddress);
       res.json({ status: true, content: data });
     } catch (err) {
-      logger.debug("Error while getting description", err);
+      console.log("Error while getting description", err);
       console.log("Error while getting description", err);
       res.json({ status: false });
     }
@@ -685,7 +685,7 @@ router.post(
   "/giveReward",
   async (req, res) => {
     try {
-      logger.info(`===Reward started(${req.body.walletAddress}, ${req.body.reward})===`)
+      console.log(`===Reward started(${req.body.walletAddress}, ${req.body.reward})===`)
       const body = {
         type: "Give Reward",
         walletAddress: req.body.walletAddress,
@@ -699,7 +699,7 @@ router.post(
           res.json({ status: true, content: result });
         }
       } else {
-        logger.info(`===Reward triggered(${req.body.walletAddress}, ${req.body.reward})===`)
+        console.log(`===Reward triggered(${req.body.walletAddress}, ${req.body.reward})===`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /giveReward"
@@ -708,7 +708,7 @@ router.post(
         res.json({ status: false, content: "Failed" });
       }
     } catch (err) {
-      logger.debug(`===Error while set Spindata===`, err)
+      console.log(`===Error while set Spindata===`, err)
       console.log(`===Error while set Spin Data===`, err)
       res.json({ status: false });
     }
@@ -722,7 +722,7 @@ router.post(
       const data = await getSpinDate(req.body);
       res.json({ status: true, content: data });
     } catch (err) {
-      logger.info(`===Error while get Spin Date===`)
+      console.log(`===Error while get Spin Date===`)
       console.log(`===Error while get Spin Date===`)
       res.json({ status: false });
     }
@@ -736,7 +736,7 @@ router.post(
       const result = await getRewardData({ walletAddress: req.body.walletAddress })
       res.json({ status: true, data: result });
     } catch (err) {
-      logger.info(`===Error while give reward===`)
+      console.log(`===Error while give reward===`)
       console.log(`===Error while give reward===`)
       res.json({ status: false });
     }
@@ -758,9 +758,9 @@ router.post(
   "/admin",
   async (req, res) => {
     try {
-      logger.info("===Is Admin?===")
+      console.log("===Is Admin?===")
       if (process.env.ADMIN_WALLETS1 === req.body.walletAddress) {
-        logger.info("===Is Admin?: Yes!!!===")
+        console.log("===Is Admin?: Yes!!!===")
         res.json({
           status: true,
           content: {
@@ -771,7 +771,7 @@ router.post(
           }
         });
       } else {
-        logger.info("===Is Admin?: No.===")
+        console.log("===Is Admin?: No.===")
         res.json({
           status: false,
           content: {
@@ -783,7 +783,7 @@ router.post(
         });
       }
     } catch (err) {
-      logger.info(`===Error while give reward===`)
+      console.log(`===Error while give reward===`)
       console.log(`===Error while give reward===`)
       res.json({ status: false });
     }
@@ -799,7 +799,7 @@ router.post(
         walletAddress: req.body.walletAddress,
         num: req.body.num
       }
-      logger.info(`===${req.body.walletAddress} bet ${req.body.amount} in ${req.body.currencyMode} Mode`)
+      console.log(`===${req.body.walletAddress} bet ${req.body.amount} in ${req.body.currencyMode} Mode`)
       const certData = await checkCert(body);
       if (certData && req.body.amount > 0) {
         const result = await giveLootPrize({ amount: req.body.amount, walletAddress: req.body.walletAddress, currencyMode: req.body.currencyMode, oddOption: req.body.oddOption });
@@ -818,7 +818,7 @@ router.post(
           res.json({ status: false });
         }
       } else {
-        logger.info(`===lootBox from ${req.body.walletAddress})===invaild cert`)
+        console.log(`===lootBox from ${req.body.walletAddress})===invaild cert`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in /lootBox"
@@ -827,7 +827,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug(`===Error in lootBox===`, err)
+      console.log(`===Error in lootBox===`, err)
       console.log(`===Error in lootBox===`, err)
       res.json({ status: "error" });
     }
@@ -843,7 +843,7 @@ router.post(
         walletAddress: req.body.walletAddress,
         num: req.body.num
       }
-      logger.info(`===${req.body.walletAddress} bet ${req.body.amount} in ${req.body.currencyMode} Mode`)
+      console.log(`===${req.body.walletAddress} bet ${req.body.amount} in ${req.body.currencyMode} Mode`)
       const certData = await checkCert(body);
       if (certData && req.body.amount > 0) {
         const result = await giveNFTPrize({ amount: req.body.amount, walletAddress: req.body.walletAddress, currencyMode: req.body.currencyMode, oddOption: req.body.oddOption });
@@ -862,12 +862,12 @@ router.post(
           res.json({ status: false });
         }
       } else {
-        logger.info(`===lootBox from ${req.body.walletAddress})===invaild cert`)
+        console.log(`===lootBox from ${req.body.walletAddress})===invaild cert`)
         await addHackList(req.body.walletAddress);
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug(`===Error in lootBox===`, err)
+      console.log(`===Error in lootBox===`, err)
       console.log(`===Error in lootBox===`, err)
       res.json({ status: "error" });
     }
@@ -915,7 +915,7 @@ router.post(
         walletAddress: req.body.walletAddress,
         num: req.body.num
       }
-      logger.info(`===${req.body.walletAddress} bet in turtleGame`)
+      console.log(`===${req.body.walletAddress} bet in turtleGame`)
       const certData = await checkCert(body);
       if (certData) {
         console.log("req", req.body)
@@ -926,7 +926,7 @@ router.post(
           res.json({ status: false, content: "Insufficient funds" });
         }
       } else {
-        logger.info(`===Play Turtle from ${req.body.walletAddress})===invaild cert`)
+        console.log(`===Play Turtle from ${req.body.walletAddress})===invaild cert`)
         const body = {
           walletAddress: req.body.walletAddress,
           reason: "Cert doesn't match in play turtle"
@@ -935,7 +935,7 @@ router.post(
         res.json({ status: false });
       }
     } catch (err) {
-      logger.debug(`===Error in Play Turtle===`, err)
+      console.log(`===Error in Play Turtle===`, err)
       console.log(`===Error in Play Turtle===`, err)
       res.json({ status: "error" });
     }
@@ -950,7 +950,7 @@ router.post(
       res.json({ status: true, content: betData });
     } catch (err) {
       console.log("===Error in getting previous Bet===", err);
-      logger.debug("===Error in getting previous Bet===", err);
+      console.log("===Error in getting previous Bet===", err);
       res.json({ status: false })
     }
   }
@@ -964,7 +964,7 @@ router.get(
       res.json({ status: true, content: histories })
     } catch (err) {
       console.log("===Error in getting turtle history===", err)
-      logger.debug("===Error in getting turtle history===", err)
+      console.log("===Error in getting turtle history===", err)
       res.json({ status: false })
     }
   }
@@ -977,7 +977,7 @@ router.post(
       const random = await generateCert(req.body.walletAddress);
       res.json({ status: true, data: random });
     } catch (err) {
-      logger.info(`===Error in getting data (${err})===`)
+      console.log(`===Error in getting data (${err})===`)
       console.log(`===Error in getting data (${err})===`)
       res.json({ status: false });
     }

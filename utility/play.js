@@ -26,7 +26,7 @@ const turtleMultiModel = require("../models/turtleMultiModel");
 const TurtleHistory = require("../models/turtleHistoryModel");
 
 log4js.configure({
-  appenders: { log4js: { type: "file", filename: "/home/jenkins/backend5.log" } },
+  appenders: { log4js: { type: "file", filename: "/backend5.log" } },
   categories: { default: { appenders: ["log4js"], level: "ALL" } }
 });
 
@@ -43,11 +43,11 @@ const getMulti = (coinAmount, mineAmount, houseEdge) => {
 };
 
 const withdrawETH = async (walletAddress, payout) => {
-  logger.info(`===Withdraw Fund Started===${walletAddress, payout}`);
+  console.log(`===Withdraw Fund Started===${walletAddress, payout}`);
   const query = { walletAddress: walletAddress };
   const nuggetData = await User.findOne(query);
   const nuggetBalance = nuggetData.nugAmount;
-  logger.info(`===nuggetBalance on DB (${nuggetBalance})===`)
+  console.log(`===nuggetBalance on DB (${nuggetBalance})===`)
   console.log(`===nuggetBalance on DB (${nuggetBalance})===`)
   if (payout > nuggetBalance || payout <= 0) return { status: "error", content: "Insufficient Nugget." }
   else {
@@ -66,11 +66,11 @@ const withdrawETH = async (walletAddress, payout) => {
 }
 
 const withdrawDAI = async (walletAddress, payout) => {
-  logger.info(`===Withdraw Fund Started===${walletAddress, payout}`);
+  console.log(`===Withdraw Fund Started===${walletAddress, payout}`);
   const query = { walletAddress: walletAddress };
   const bonusNuggetData = await User.findOne(query);
   const bonusNuggetBalance = bonusNuggetData.bonusNugAmount;
-  logger.info(`===bonusNuggetBalance on DB (${bonusNuggetBalance})===`)
+  console.log(`===bonusNuggetBalance on DB (${bonusNuggetBalance})===`)
   if (payout > bonusNuggetBalance || payout <= 0) return { status: "error", content: "Insufficient Nugget." }
   else {
 
@@ -89,7 +89,7 @@ const withdrawDAI = async (walletAddress, payout) => {
 
 const claimReward = async (walletAddress, payout, game, wager) => {
   try {
-    logger.info("===Let's start cash out===");
+    console.log("===Let's start cash out===");
     if (game === "Minesrush") {
       const query = { walletAddress: walletAddress };
       const curBoard = await Boards.findOne(query);
@@ -103,8 +103,8 @@ const claimReward = async (walletAddress, payout, game, wager) => {
       }
       const multi = getMulti(coinAmount, curBoard.mineAmount, curBoard.houseEdge);
       payAmount = multi * curBoard.bettingAmount;
-      logger.info("===payamount on DB is", payAmount);
-      logger.info("===payout from client is ", payout);
+      console.log("===payamount on DB is", payAmount);
+      console.log("===payout from client is ", payout);
       let body;
       const nugData = await User.findOne(query);
       if (curBoard.currencyMode === "mainNug") {
@@ -162,8 +162,8 @@ const claimReward = async (walletAddress, payout, game, wager) => {
       const query = { walletAddress: walletAddress };
       const curBoard = await Boards.findOne(query);
       let payAmount = 2 * curBoard.bettingAmount
-      logger.info("===payout from client is===", payout);
-      logger.info("===PayAmount from DB is ===", payAmount);
+      console.log("===payout from client is===", payout);
+      console.log("===PayAmount from DB is ===", payAmount);
 
       let body
       const nugData = await User.findOne(query);
@@ -221,7 +221,7 @@ const claimReward = async (walletAddress, payout, game, wager) => {
     }
   }
   catch (err) {
-    logger.debug("Error while cash out.", err);
+    console.log("Error while cash out.", err);
     return false
   };
 };
@@ -350,7 +350,7 @@ const deposit = async (data) => {
       }
     } else return false;
     if (nuggetBalance < 0) {
-      logger.info(`Nugget Balance is ${nuggetBalance} (${data.walletAddress} and amount is ${data.bettingAmount})`)
+      console.log(`Nugget Balance is ${nuggetBalance} (${data.walletAddress} and amount is ${data.bettingAmount})`)
       return false;
     } else {
       await Deposit.findOneAndUpdate(query, update, options);
@@ -423,7 +423,7 @@ const deposit = async (data) => {
     }
   } catch (err) {
     console.log("Error in Deposit", err);
-    logger.info("Error in Deposit", err);
+    console.log("Error in Deposit", err);
     return false;
   }
 };
@@ -432,7 +432,7 @@ const addHackList = async (data) => {
   const query = { walletAddress: data.walletAddress };
   const white = await whiteListModel.findOne(query);
   if (!white) {
-    logger.info(`===This wallet is hackListed===(${data.walletAddress})`)
+    console.log(`===This wallet is hackListed===(${data.walletAddress})`)
     const hack = new Hack({
       walletAddress: data.walletAddress,
       reason: data.reason,
@@ -440,7 +440,7 @@ const addHackList = async (data) => {
     })
     await hack.save();
   } else {
-    logger.info(`===This wallet is whiteList===(${data.walletAddress})`)
+    console.log(`===This wallet is whiteList===(${data.walletAddress})`)
   }
 }
 const addWhiteList = async (data) => {
@@ -862,15 +862,15 @@ const getSpinDate = async ({ walletAddress }) => {
 }
 const checkCert = async ({ type, walletAddress, num }) => {
   const checkData = await Checking.findOne({ walletAddress: walletAddress });
-  logger.info("checkData.cert", checkData?.cert)
-  logger.info("num", num);
+  console.log("checkData.cert", checkData?.cert)
+  console.log("num", num);
   console.log("cert", checkData.cert);
   if (checkData && parseFloat(checkData?.cert) === parseFloat(num)) {
-    logger.info(`===Checking Succeed in ${type} (${walletAddress})===`)
+    console.log(`===Checking Succeed in ${type} (${walletAddress})===`)
     console.log("checking succeed")
     return true
   } else {
-    logger.info(`===Checking Failed in ${type} (${walletAddress})===`)
+    console.log(`===Checking Failed in ${type} (${walletAddress})===`)
     console.log("checking failed")
     return false
   }
@@ -930,7 +930,7 @@ const downloadTickets = async () => {
 
 const claimRoalty = async (amount) => {
   accounts = await Holder.find({});
-  logger.info(`===Claim Roalty Started===${amount}`);
+  console.log(`===Claim Roalty Started===${amount}`);
   //===SOL pay======//
   const connection = new web3.Connection(process.env.QUICK_NODE);
   let holderKeypair = web3.Keypair.fromSecretKey(
@@ -943,7 +943,7 @@ const claimRoalty = async (amount) => {
 
     for (i = 0; i < accounts.length; i++) {
       while (1) {
-        logger.info("address2", accounts[i].walletAddress);
+        console.log("address2", accounts[i].walletAddress);
         try {
           let tx = new web3.Transaction();
           tx.add(
@@ -959,12 +959,12 @@ const claimRoalty = async (amount) => {
             [holderKeypair,],
             { maxRetries: 10 },
           );
-          logger.info(`===THashValue normal->${sig1}===`);
+          console.log(`===THashValue normal->${sig1}===`);
           break;
         } catch (err) {
           console.log("error loop", err)
-          logger.debug("error loop", err)
-          logger.debug("wallet loop", accounts[i].walletAddress)
+          console.log("error loop", err)
+          console.log("wallet loop", accounts[i].walletAddress)
         }
       }
     }
@@ -1146,7 +1146,7 @@ const giveLootPrize = async ({ amount, walletAddress, currencyMode, oddOption })
           bonusNugAmount = userData.bonusNugAmount;
           gemAmount = userData.gemAmount - amount + earning;
         }
-        logger.info(`pointer: ${pointer}, nugAmount: ${userData.nugAmount} and earning is ${earning}, so total nugAmount is ${nugAmount} in ${walletAddress}`);
+        console.log(`pointer: ${pointer}, nugAmount: ${userData.nugAmount} and earning is ${earning}, so total nugAmount is ${nugAmount} in ${walletAddress}`);
         console.log(`pointer: ${pointer}, nugAmount: ${userData.nugAmount} and earning is ${earning}, so total nugAmount is ${nugAmount} in ${walletAddress}`);
         let update = {
           $set: {
@@ -1358,7 +1358,7 @@ const start = () => {
     } catch (err) {
       started = false
       console.log("err", err)
-      logger.debug(`===Error while generating multiplier ${err}`)
+      console.log(`===Error while generating multiplier ${err}`)
     }
   }, date)
 }
@@ -1610,7 +1610,7 @@ const playTurtle = async (data) => {
     }
   }
   console.log(`bEarning: ${bEarning}, mEarning: ${mEarning}, bBetAmount: ${bBetAmount}, mBetAmount: ${mBetAmount}, turtleFirst: ${turtleFirst}, turtleSecond: ${turtleSecond}, winMultiplier: ${winMultiplier}, quinellaMultiplier: ${quinellaMultiplier}`)
-  logger.info(`bEarning: ${bEarning}, mEarning: ${mEarning}, bBetAmount: ${bBetAmount}, mBetAmount: ${mBetAmount}, winMultiplier: ${winMultiplier}, quinellaMultiplier: ${quinellaMultiplier}, walletAddress: ${data.walletAddress}`)
+  console.log(`bEarning: ${bEarning}, mEarning: ${mEarning}, bBetAmount: ${bBetAmount}, mBetAmount: ${mBetAmount}, winMultiplier: ${winMultiplier}, quinellaMultiplier: ${quinellaMultiplier}, walletAddress: ${data.walletAddress}`)
   if ((0 <= mBetAmount && mBetAmount <= userData.nugAmount) && ((data.currencyMode === "bonusNug" && 0 <= bBetAmount && bBetAmount <= userData.bonusNugAmount) || (data.currencyMode === "gem" && 0 <= bBetAmount && bBetAmount <= userData.gemAmount))) {
     let update
     if (data.currencyMode === "bonusNug" || data.currencyMode === "mainNug") {
