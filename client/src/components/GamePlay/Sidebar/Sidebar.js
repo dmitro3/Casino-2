@@ -473,13 +473,13 @@ const Sidebar = () => {
                     </Box>
                     <Typography className="description">CLASSIC DICE</Typography>
                   </NavLink>
-                  <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
+                  {/* <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
                     <img className="icon" src={turtle} alt="Turtle" />
                     <Box className="description" style={{ display: "block" }}>
                       <Typography style={{ marginBottom: 0, fontWeight: "bold", fontFamily: "Mada" }}>RACES OF</Typography>
                       <Typography style={{ fontWeight: "bold", fontFamily: "Mada" }}>TORTUGA</Typography>
                     </Box>
-                  </NavLink>
+                  </NavLink> */}
                 </Box> :
                 <Box className="gameModes_mobile">
                   <NavLink className={gameMode === "minesrush" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("minesrush")} to={!gameState && "/mines"}>
@@ -493,9 +493,9 @@ const Sidebar = () => {
                       <img src={lootyBoxImg} alt="LOOT" style={{ width: 50, height: 50, margin: 0, padding: 0, position: "relative", left: -3, top: -3 }} />
                     </Box>
                   </NavLink>
-                  <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
+                  {/* <NavLink className={gameMode === "" ? "gameMode clicked" : "gameMode"} onClick={() => changeGameMode("turtle")} to={!gameState && "/turtles"}>
                     <img className="icon" src={turtle} alt="Turtle" />
-                  </NavLink>
+                  </NavLink> */}
                 </Box>}
             </Box>
             <NavLink onClick={clickDetails} className="buttons bonus" to="/bonuses" >

@@ -47,7 +47,10 @@ const LimboPanel = (props) => {
             global.setPercent(tempPercent.toFixed(2));
     }
 
+    console.log("gemAmount", gemAmount)
+
     const clickBet = async () => {
+        console.log("in", global.depositAmount)
         global.setStart(true);
         if (!global.walletAddress) {
             setAlerts({
@@ -65,7 +68,14 @@ const LimboPanel = (props) => {
             return
         }
 
-        if (parseFloat(global.depositAmount) > nugAmount || parseFloat(global.depositAmount) > bonusNugAmount || parseFloat(global.depositAmount) > gemAmount) {
+        let amount = gemAmount
+        if(currencyMode === "mainNug") {
+            amount = nugAmount
+        } else if (currencyMode === "bonusNug") {
+            amount = bonusNugAmount
+        }
+        if (parseFloat(global.depositAmount) > amount) {
+            console.log("out")
             return
         }
         setLaunch(true);

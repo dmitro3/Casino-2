@@ -93,12 +93,12 @@ input[type=number] {
     background-color: #143754;
   }
   
-  .container {
+  /* .containers {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  }
+  } */
   
   .rocket {
     width: 230px;

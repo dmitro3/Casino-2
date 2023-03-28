@@ -323,6 +323,7 @@ const Header = () => {
         await axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/api/user/getUserData`, body)
           .then((res) => {
+            console.log("resdata", res.data)
             if (res.data) {
               setSUserName(res.data.userName);
               setNugAmount(parseFloat(res.data.amount).toFixed(3));

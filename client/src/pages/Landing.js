@@ -161,9 +161,9 @@ const Landing = () => {
                 <NavLink to="/coins" onClick={() => clickNavLink("double")}>
                   {pirateOriginal(coin, coin, "#F8CE3F", "#F7AA01", "ArbiCasino ORIGINAL", "FLIPCOIN")}
                 </NavLink>
-                <NavLink to="/turtles">
+                {/* <NavLink to="/turtles">
                   {pirateOriginal(turtle1, turtle2, "#187973", "#108059", "LAUNCHING SOON", "RACES OF TORTUGA")}
-                </NavLink>
+                </NavLink> */}
               </Box>
             </Box>
             <Box className="statistics">
