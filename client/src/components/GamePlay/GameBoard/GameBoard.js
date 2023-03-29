@@ -82,7 +82,7 @@ const GameBoard = (props) => {
   const { nextMultiplier, setNextMultiplier } = useGameStore();
   const { boardClickedState, setBoardClickedState } = useGameStore();
   const { factor1, factor2, factor3, factor4 } = useGameStore();
-  const { limboWord, diceWord } = useGameStore();
+  const { limboWord, diceWord, crashWord } = useGameStore();
 
   const [animation1, setAnimation1] = useState(false);
   const [animation2, setAnimation2] = useState(false);
@@ -1190,6 +1190,123 @@ const GameBoard = (props) => {
       </>
     )
   }
+
+  // crash gameboard
+  const crash = () => {
+    return (
+      <>
+        <Grid className="gameboard-container" container>
+          <Grid item xs={12} sm={8} md={6} lg={6} className="mainBoard"
+            style={{ flexBasis: !isDesktop && "100%", maxWidth: !isDesktop && "100%" }}
+          >
+            <Box className="octo">
+              <video ref={octoV} autoPlay poster={minestickerPoster} muted preload="yes" style={{ width: "100%" }} playsInline onEnded={() => playOcto()}>
+                <source src={minesticker} type="video/webm" />
+                No supported
+              </video>
+            </Box>
+            <Box className="doubleBoard">
+              <Box style={{ textTransform: "uppercase", color: "white", display: streakNum ? "block" : "none", top: "8%", left: "5%", right: "5%", position: "absolute" }}>
+                <Box>Congrats!</Box>
+                <Box>You are on a {streakNum} win streak</Box>
+              </Box>
+              <Box className="playHistoryContainer" style={{ paddingTop: streakNum ? 100 : 50 }}>
+                <Box className="playHistory">
+                  {global.diceHistory ? global.diceHistory :
+                    <Box className="card question">
+                      X.XX
+                    </Box>
+                  }
+                </Box>
+              </Box>
+              {<span className={success ? 'limboWord' : 'limboWord_red'} style={{position: "relative", display: "flex", flexDirection: "column", alignItems:"center", justifyContent: "center", left: isDesktop ? parseFloat(crashWord * 3.6-180) : 0}}>
+                {crashWord}
+              </span>}
+             
+              <div className='crash-container'>
+                {/* <input className="range" type="range" value={global.percent} min={0} max={100} style={{width: !isDesktop && "250px"}} /> */}
+              </div>
+            </Box>
+          </Grid>
+          <Modal
+            open={gameOverModalOpen}
+            onClose={handleGameOverModalClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box sx={styleFair} style={{ backgroundColor: "#101112" }}>
+              <Typography
+                letiant="h3"
+                component="h2"
+                color="#F7BE44"
+                fontSize="40px"
+                fontFamily="Mada"
+                marginTop="20px"
+              >
+                Fair
+              </Typography>
+              <img className="rectangle-image" alt="rect" src={rectangleImage} />
+              <Grid container style={{ textAlign: "center" }}>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={10}>
+                  <Typography color="#fff" fontSize="18px" fontFamily="Mada">
+                    Playing on the website is secure. The fairness of all bets is
+                    unquestionable since we use cryptography to make sure every
+                    bet is transparently fair and can be checked.
+                  </Typography>
+                </Grid>
+                <Grid item xs={1}></Grid>
+                <Grid item xs={12}>
+                  <img className="yellow-image" alt="yRect" src={yellowrectangle} />
+                </Grid>
+              </Grid>
+            </Box>
+          </Modal>
+          <Modal
+            open={winFinalModalOpen}
+            onClose={handleWinFinalModalClose}
+            aria-labelledby="parent-modal-title"
+            aria-describedby="parent-modal-description"
+          >
+            <Box sx={styleStop}>
+              <Typography color="#F7BE44" fontSize="70px" fontFamily="Mada">
+                x{parseFloat((nextMultiplier).toFixed(3))}
+              </Typography>
+              <Grid container style={{ textAlign: "center" }}>
+                <Grid item xs={12}>
+                  <img className="claimEmotion" alt="claimEmo" src={claimEmotion} />
+                </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                <Grid item xs={12}>
+                  <span style={{ color: "#FFFFFF" }}>You Won </span>
+                  <span style={{ color: "#F7BE44" }}>
+                    {" "}
+                    {parseFloat(
+                      (nextMultiplier * bettingAmount).toFixed(3)
+                    )}
+                  </span>
+                </Grid>
+                <Button
+                  letiant="contained"
+                  style={{
+                    marginTop: "10px",
+                    color: "#000",
+                    backgroundColor: "#F7BE44",
+                  }}
+                  onClick={onClickStopGame}
+                  fontSize="10px"
+                >
+                  Claim Rewards
+                </Button>
+                <img className="yellow-image-claim" alt="yRect" src={yellowRectangle} />
+              </Grid>
+            </Box>
+          </Modal>
+        </Grid>
+      </>
+    )
+  }
   return (
     <>
       <div className="alert">
@@ -1199,6 +1316,7 @@ const GameBoard = (props) => {
       {gameMode === "double" && double()}
       {gameMode === "limbo" && limbo()}
       {gameMode === "dice" && dice()}
+      {gameMode === "crash" && crash()}
     </>
   );
 };

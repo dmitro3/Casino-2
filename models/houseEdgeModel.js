@@ -18,9 +18,9 @@ const houseEdgeSchema = mongoose.Schema(
       type: Number,
       default: 0.37
     },
-    turtleTime: {
+    crashTime: {
       type: Number,
-      default: 60
+      default: 5
     },
     minMine: {
       type: Number,

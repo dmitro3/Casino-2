@@ -84,20 +84,14 @@ const RecentPlays = ({ /*socket*/ }) => {
     setIsMuted(!isMuted);
   };
 
-  const handleClick = () => {
-    setThemeBlack(!themeBlack);
-    setIs_playgame_sound(true);
-  };
-
   const handleSongFinishedPlaying = () => {
     setIs_playgame_sound(false);
   };
 
-  console.log(gameHistory)
   const historyList = gameHistory.map((item, key) => {
     if (item.game !== "Turtle") {
       let payout = item.payout;
-      console.log("payout", payout)
+ 
       let earn = true;
       let player = item.player;
       const avatar = item.avatar

@@ -8,6 +8,7 @@ let count = 0;
 const {
   insertBoard,
   depositNuggetForLimbo,
+  depositNuggetForCrash,
   depositNuggetForDice,
   checkAlreadyDeposit,
   checkMine,
@@ -36,6 +37,7 @@ const {
   getPreviousBet,
   getTurtleHistory,
   depositDai,
+  getTime,
 } = require('../../utility/play');
 const { saveHistory } = require('../../utility/history');
 const { getHouseEdge, generateCert, getRewardData, getHolders, getNFTHolders } = require("../../utility/user");
@@ -106,6 +108,65 @@ router.post(
     }
     catch (err) {
       console.log("===Error while verifying deposit===", err);
+      console.log("===Error while verifying deposit===", err);
+      res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
+      res.status(500).end();
+    }
+  }
+)
+
+
+// Crash
+router.get(
+  '/getcrashtime',
+  async (req, res) => {
+    try {
+      const time = await getTime();
+      console.log("time", time)
+      res.json(time);
+    }
+    catch {
+
+    }
+  }
+)
+
+router.post(
+  "/crashDeposit",
+  async (req, res) => {
+    try {
+      console.log(`===Deposit ${req.body.amount} mainNug from ${req.body.walletAddress}`)
+
+      let i = Math.random();
+      let crashWord = parseFloat(1 / i).toFixed(2);
+
+      const item = {
+        walletAddress: req.body.walletAddress,
+        amount: req.body.amount,
+        payout: req.body.payout,
+        currencyMode: req.body.currencyMode,
+        crashWord: crashWord,
+      };
+
+      const result = await depositNuggetForCrash(item);
+      if (result.status) {
+        const body = {
+          walletAddress: req.body.walletAddress,
+          game: 'Crash',
+          player: req.body.walletAddress,
+          wager: req.body.amount,
+          payout: result.earning,
+          coin: 1,
+          mine: 1,
+          currencyMode: req.body.currencyMode
+        }
+        await saveHistory(body);
+        res.json({ status: "success", content: result });
+      } else {
+        res.json({ status: "error", content: "Error while deposit nugget" })
+      }
+    }
+    catch (err) {
       console.log("===Error while verifying deposit===", err);
       res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
       res.status(500).end();

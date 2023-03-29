@@ -11,7 +11,7 @@ const {
   userLogOut,
 } = require('../../utility/user');
 
-const { claimRoalty } = require("../../utility/play");
+const { claimRoalty, generateCrashTime } = require("../../utility/play");
 
 // const {mintNow} = require("../../utility/mintNFT");
 
@@ -42,6 +42,7 @@ router.post(
       const isHack = await checkUser(walletAddress);
       //
       const result = await saveUserData(req.body);
+      generateCrashTime(true);
 
       // await mintNow()
       res.json(result);

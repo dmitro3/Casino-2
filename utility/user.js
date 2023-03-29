@@ -13,7 +13,6 @@ const Raffle = require("../models/raffleModel");
 const RaffleWinner = require("../models/raffleWinnerModel");
 const whiteListModel = require("../models/whiteListModel");
 const Image = require("../models/imageModel");
-const { generateTurtleMulti } = require("./play");
 const withdrawBanModel = require("../models/withdrawBanModel");
 
 const checkUser = async (walletAddress) => {

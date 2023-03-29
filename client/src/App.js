@@ -31,7 +31,6 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFoundPage from "./pages/NotFound";
 import DoubleGame from "./pages/DoubleGame";
 import Bonuses from "./pages/Bonuses";
-import ComingSoon from "./pages/ComingSoon";
 import ArbiCasino from "./pages/ArbiCasino";
 import FAQs from "./pages/FAQs.js";
 import Turtle from "./pages/Turtle.js";
@@ -40,7 +39,7 @@ import PirateDeposit from "./pages/PirateDeposit";
 import MintNFTs from "./pages/MintNFTs";
 import Roulette from './components/GamePlay/Roulette/roulette';
 import Limbo from './pages/Limbo.js';
-import Crash from './components/GamePlay/Crash/Crash';
+import Crash from './pages/Crash.js';
 import Dice from './pages/Dice.js';
 
 import { StoreContext } from './store';
@@ -83,6 +82,8 @@ function App() {
       setGameMode("limbo")
     } else if((window.location.href.includes("game/dice"))) {
       setGameMode("dice")
+    } else if((window.location.href.includes("game/crash"))) {
+      setGameMode("crash")
     } else {
       setGameMode("minesrush")
       setMineAmount(5);

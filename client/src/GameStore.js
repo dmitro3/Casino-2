@@ -11,6 +11,7 @@ const useGameStore = create((set) => ({
   boardState: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
   boardClickedState: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
   bonusNugAmount: 0,
+  crashWord: 1,
   clicked: false,
   currencyMode: "mainNug",
   doubleCheck: false,
@@ -205,11 +206,12 @@ const useGameStore = create((set) => ({
   setLimboWord: (val) => {
     set({ limboWord: val });
   },
-  
+  setCrashWord: (val) => {
+    set({ crashWord: val });
+  },
   setDiceWord: (val) => {
     set({ diceWord: val });
   },
-  
   setGameHistory: (value) => {
     set({ gameHistory: value });
   },

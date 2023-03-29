@@ -520,6 +520,58 @@ const depositNuggetForLimbo = async (data) => {
   }
 }
 
+//Crash play
+const depositNuggetForCrash = async (data) => {
+  try {
+    const depositData = await User.findOne({ walletAddress: data.walletAddress });
+    let dbAmount = 0, playAmount = 0;
+    let earning = 0;
+    if (depositData) {
+      if (data.currencyMode === "mainNug") {
+        dbAmount = depositData.nugAmount
+      } else if (data.currencyMode === "bonusNug") {
+        dbAmount = depositData.bonusNugAmount
+      } else {
+        dbAmount = depositData.gemAmount
+      }
+    }
+    if (parseFloat(data.payout) > parseFloat(data.crashWord)) {
+      playAmount = parseFloat(dbAmount) - parseFloat(data.amount);
+    } else {
+      playAmount = parseFloat(dbAmount) + parseFloat(data.amount) * (data.payout - 1);
+      earning = parseFloat(data.amount) * data.payout
+    }
+    playAmount = parseFloat(playAmount).toFixed(3)
+
+    let update;
+    if (data.currencyMode === "mainNug") {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        nugAmount: playAmount,
+      }}
+    } else if (data.currencyMode === "bonusNug") {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        bonusNugAmount: playAmount,
+      }}
+    } else {
+      update = {$set: {
+        walletAddress: data.walletAddress,
+        gemAmount: playAmount,
+      }}
+    }
+    await User.findOneAndUpdate(
+      { walletAddress: data.walletAddress },
+      update,
+      { upsert: true }
+    )
+    return { status: true, playAmount: playAmount, crashWord: data.crashWord, earning: earning }
+  } catch (err) {
+    console.log("error in deposit utility", err);
+    return { status: false }
+  }
+}
+
 // Dice play
 const depositNuggetForDice = async (data) => {
   try {
@@ -1292,12 +1344,12 @@ const giveNFTPrize = async ({ amount, walletAddress, currencyMode, oddOption }) 
 }
 
 //====Turtles Race====
-let startTurtle
-const date = 1000 * 35
+let startCrash
+const date = 1000 * 5
 let clock = date / 1000;
 let started = false;
 const start = () => {
-  startTurtle = setInterval(async () => {
+  startCrash = setInterval(async () => {
     try {
       if (!started) {
         started = true;
@@ -1313,39 +1365,6 @@ const start = () => {
           }, date)
         }
         timer();
-        const houseOddsMultiplier = 0.7 + Math.random() * 0.1;
-        const quinellaMultiplier = 0.35 + Math.random() * 0.05;
-        const update = {
-          $set: {
-            turtleHouseEdge: houseOddsMultiplier,
-            quinellaHouseEdge: quinellaMultiplier
-          }
-        }
-        const option = { $upsert: true }
-        await HouseEdge.findOneAndUpdate({}, update, option)
-        let horseOdds = [];
-        let houseOdds = [];
-        let sum = 0;
-        for (let i = 0; i < 6; i++) {
-          const horseOdd = Math.random() * 0.5;
-          sum += horseOdd;
-          horseOdds.push(horseOdd);
-        }
-        horseOdds = horseOdds.map((horseOdd) => {
-          const houseOdd = (sum / horseOdd * houseOddsMultiplier).toFixed(1)
-          houseOdds.push(houseOdd);
-          return horseOdd / sum
-        })
-        await TurtleMulti.remove({});
-        for (let i = 0; i < 6; i++) {
-          const turtleMulti = new TurtleMulti({
-            turtle: i + 1,
-            horseOdd: horseOdds[i],
-            multiplier: houseOdds[i]
-          })
-          await turtleMulti.save();
-        }
-        await pickWinner()
         started = false
       }
     } catch (err) {
@@ -1355,81 +1374,36 @@ const start = () => {
     }
   }, date)
 }
-const updateTime = async (turtleTime) => {
+const updateTime = async (crashTime) => {
   const update = {
     $set: {
-      turtleTime: turtleTime
+      crashTime: crashTime
     }
   }
   const options = { $upsert: true }
   await HouseEdge.findOneAndUpdate({}, update, options)
 }
-const pickWinner = async () => {
-  // pick first
-  const first = Math.random();
-  const horseOdds = await TurtleMulti.find({});
-  const houseEdge = await HouseEdge.find({});
-  let prev = 0;
-  let turtleFirst = 0;
-  let turtleSecond;
-  let foundSec = false;
-  for (let i = 0; i < horseOdds.length; i++) {
-    let next = prev + horseOdds[i].horseOdd;
-    if (prev < first && first < next) {
-      turtleFirst = i
-      break;
-    } else {
-      prev = next;
-    }
-  }
-  // pick second
-  while (!foundSec) {
-    prev = 0;
-    let second = Math.random();
-    for (let i = 0; i < horseOdds.length; i++) {
-      let next = prev + horseOdds[i].horseOdd;
-      if (prev < second && second < next) {
-        turtleSecond = i
-        if (turtleSecond === turtleFirst) break;
-        else
-          foundSec = true
-        break;
-      } else {
-        prev = next;
-      }
-    }
-  }
-  const update = {
-    $set: {
-      turtleFirst: turtleFirst,
-      turtleSecond: turtleSecond
-    }
-  }
-  const options = { $upsert: true }
-  await HouseEdge.findOneAndUpdate({}, update, options)
-  const turtleHistory = new TurtleHistory({
-    first: turtleFirst,
-    second: turtleSecond,
-    winMultiplier: horseOdds[turtleFirst].multiplier,
-    quinellaMultiplier: horseOdds[turtleFirst].multiplier * horseOdds[turtleSecond].multiplier * houseEdge[0].quinellaHouseEdge
-  })
-  await turtleHistory.save()
+
+const getTime = async () => {
+  const houseData = await HouseEdge.find({});
+  const time = houseData[0].crashTime;
+  return time
 }
-const generateTurtleMulti = async (isStart) => {
+const generateCrashTime = async (isStart) => {
   // const date = 1000 * 3600 * 12
 
   console.log("Turtle Multiplier Generate.");
 
 
   if (isStart) {
-    if (startTurtle) {
+    if (startCrash) {
       console.log("already started")
     } else {
       start();
     }
   } else {
     console.log("clearInterval")
-    if (startTurtle) clearInterval(startTurtle);
+    if (startCrash) clearInterval(startCrash);
   }
 }
 
@@ -1719,6 +1693,8 @@ module.exports = {
   addWhiteList,
   addWithdrawBanList,
   depositNuggetForLimbo,
+  depositNuggetForCrash,
+  getTime,
   addUserList,
   depositNugget,
   depositDai,
@@ -1746,7 +1722,7 @@ module.exports = {
   getSpinDate,
   giveLootPrize,
   giveNFTPrize,
-  generateTurtleMulti,
+  generateCrashTime,
   isBanned,
   getMultiplier,
   pirateNFTDeposit,

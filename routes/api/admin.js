@@ -46,7 +46,6 @@ const {
   giveBRewards,
   addWithdrawBanList,
   setStartTurtle,
-  generateTurtleMulti,
   setMintInterval,
   setEnableGames,
   giveGemRewards,
@@ -334,7 +333,6 @@ router.post(
      
       if (certData && (process.env.ADMIN_WALLETS1 === req.body.walletAddress || process.env.ADMIN_WALLETS2 === req.body.walletAddress || process.env.ADMIN_WALLETS3 === req.body.walletAddress)) {
         const result = await setStartTurtle(req.body.value);
-        await generateTurtleMulti(result);
         // console.log("result", result)
         res.json({ status: true, content: result })
       } else {
