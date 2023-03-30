@@ -8,8 +8,8 @@ import { Grid, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
 const Content = ({
-    loading,
-    setLoading,
+    // loading,
+    // setLoading,
 }) => {
 
   const theme = useTheme();
@@ -25,25 +25,15 @@ const Content = ({
             }}
             style = {{display: !isDesktop && "flex", flexDirection: !isDesktop && "column-reverse", alignContent: !isDesktop &&  "center"}}
             >
-                <Grid xs={1} item sm={2} md={2} lg={2} />
-                <Grid item xs={12} lg={3} style={{ marginTop: isDesktop && '100px'}}>
-                    <BettingPanel
-                        loading={loading}
-                        setLoading={setLoading}
-                        launch={launch}
-                        setLaunch={setLaunch}
-                        success = {success}
-                        setSuccess = { setSuccess}
-                    />
+                <Grid/>
+                    <Grid>
+                        <GameBoard 
+                            launch={launch}
+                            setLaunch={setLaunch}
+                            success = {success}
+                            setSuccess = { setSuccess} />
+                    </Grid>
                 </Grid>
-                <Grid item xs={8} lg={7}>
-                    <GameBoard 
-                        launch={launch}
-                        setLaunch={setLaunch}
-                        success = {success}
-                        setSuccess = { setSuccess} />
-                </Grid>
-            </Grid>
             <GameInfo />
             <RecentPlays />
         </>

@@ -50,7 +50,6 @@ const LimboPanel = (props) => {
     console.log("gemAmount", gemAmount)
 
     const clickBet = async () => {
-        console.log("in", global.depositAmount)
         global.setStart(true);
         if (!global.walletAddress) {
             setAlerts({

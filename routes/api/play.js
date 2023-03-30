@@ -173,6 +173,22 @@ router.post(
     }
   }
 )
+router.get(
+  "/crash",
+  async (req, res) => {
+    try {
+      let i = Math.random();
+      let crashTime = parseFloat(1 / i).toFixed(2);
+      
+      res.json({ status: "success", content: crashTime })
+    }
+    catch (err) {
+      console.log("===Error while verifying crash status===", err);
+      res.json({ status: "catchError", content: "Sorry, Seems like Arbitrum is busy at the moment. Please try again." });
+      res.status(500).end();
+    }
+  }
+)
 
 // dice 
 router.post(
