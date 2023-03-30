@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
 import Logo from "../Logo";
 import GameBoard from "../Crash/GameBoard";
-import BettingPanel from "../Crash/BettingPanel";
+// import UserHistory from "../Crash/UserHistory";
 import RecentPlays from "../RecentPlays";
 import GameInfo from "../GameInfo/GameInfo";
 import { Grid, useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 
-const Content = ({
-    // loading,
-    // setLoading,
-}) => {
+const Content = () => {
 
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up("sm"));
   const [launch, setLaunch] = useState(false);
     const [success, setSuccess] = useState(false);
+    const [ readyTime, setReadyTime ] = useState(false);
 
     return (
         <>
@@ -31,8 +29,14 @@ const Content = ({
                             launch={launch}
                             setLaunch={setLaunch}
                             success = {success}
-                            setSuccess = { setSuccess} />
+                            setSuccess = { setSuccess}
+                            readyTime = { readyTime }
+                            setReadyTime = { setReadyTime}
+                        />
                     </Grid>
+                    {/* <Grid>
+                        <UserHistory />
+                    </Grid> */}
                 </Grid>
             <GameInfo />
             <RecentPlays />

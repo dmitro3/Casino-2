@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { StoreContext } from "../../../store";
 import useGameStore from "../../../GameStore";
-import { Box, FormControl } from '@mui/material';
+import { Box, FormControl, useMediaQuery, useTheme } from '@mui/material';
 import { Button } from "@mui/material";
 import axios from "axios";
 
@@ -15,6 +15,8 @@ import nugget from '../../../assets/images/nugget.png'
 const LimboPanel = (props) => {
     const { launch, setLaunch, success, setSuccess } = props;
     const global = useContext(StoreContext)
+    const theme = useTheme();
+    const isDesktop = useMediaQuery(theme.breakpoints.up("sm"));
     const { gameHistory, setGameHistory } = useGameStore();
     const { nugAmount, bonusNugAmount, gemAmount, limboWord, diceWord } = useGameStore();
     const { setNugAmount, setBonusNugAmount, setGemAmount, setLimboWord, setDiceWord } = useGameStore();
@@ -236,7 +238,7 @@ const LimboPanel = (props) => {
                     <span style={{ textAlign: 'right', color: 'grey' }}>Chance &nbsp;  {global.percent}%</span>
                 </label>
                 <input type="number" value={global.payout} onChange={inputValue} id='inputValue' />
-                <Button className="betButton" onClick={clickBet}>
+                <Button className="betButton" onClick={clickBet} style = {{ width: !isDesktop && '200px !important', margin: !isDesktop && 'auto !important'}}>
                     BET NOW
                 </Button>
             </FormControl>

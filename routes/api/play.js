@@ -179,8 +179,17 @@ router.get(
     try {
       let i = Math.random();
       let crashTime = parseFloat(1 / i).toFixed(2);
-      
-      res.json({ status: "success", content: crashTime })
+      let timeRemaing = crashTime;
+      console.log('crashTime', crashTime);
+      let timeCounting = setInterval(() => {
+        timeRemaing-=0.1;
+        console.log('timeRemaing', timeRemaing);
+
+        if (timeRemaing<0.1) {
+          clearInterval(timeCounting);
+          res.json({ status: "success", content: crashTime })
+        }
+      }, 100);
     }
     catch (err) {
       console.log("===Error while verifying crash status===", err);
